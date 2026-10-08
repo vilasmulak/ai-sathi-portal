@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शिक्षण विभाग | AI साथी</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.header{
+    background:linear-gradient(135deg,#075985,#2563eb);
+    color:white;
+    padding:28px 20px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+.header p{
+    margin:0;
+    opacity:.9;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    padding:0 18px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:22px;
+    padding:10px 18px;
+    background:white;
+    color:#2563eb;
+    text-decoration:none;
+    border-radius:10px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    font-weight:bold;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title h2{
+    margin:0 0 8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+    border:1px solid #e5e7eb;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin:0 0 10px;
+    color:#1e3a8a;
+}
+
+.card p{
+    color:#64748b;
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 12px;
+    background:#f1f5f9;
+    color:#64748b;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px 18px;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    padding:30px 15px;
+    color:#64748b;
+}
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:25px;
+    }
+
+    .card{
+        padding:22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>🎓 शिक्षण विभाग</h1>
+    <p>AI साथी | शिक्षण • व्यवस्थापन • मूल्यमापन</p>
+</header>
+
+<main class="container">
+
+    <a href="index.html" class="back">← मुख्य Dashboard</a>
+
+    <div class="title">
+        <h2>शिक्षण विभागातील सेवा</h2>
+        <p>शाळा व्यवस्थापन आणि शैक्षणिक कार्यासाठी डिजिटल सुविधा</p>
+    </div>
+
+    <section class="grid">
+
+        <div class="card">
+            <div class="icon">🍱</div>
+            <h3>शालेय पोषण आहार व्यवस्थापन</h3>
+            <p>
+                शालेय पोषण आहाराशी संबंधित दैनंदिन नोंदी,
+                उपस्थिती, साठा आणि अहवाल व्यवस्थापनासाठी प्रणाली.
+            </p>
+            <span class="badge">लवकरच उपलब्ध</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>सातत्यपूर्ण सर्वंकष मूल्यमापन (CCE)</h3>
+            <p>
+                विद्यार्थ्यांच्या सातत्यपूर्ण मूल्यमापनासाठी
+                आणि शैक्षणिक प्रगतीच्या नोंदीसाठी डिजिटल प्रणाली.
+            </p>
+            <span class="badge">लवकरच उपलब्ध</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📋</div>
+            <h3>समग्र प्रगती पत्रक</h3>
+            <p>
+                Holistic Progress Card साठी विद्यार्थ्यांच्या
+                सर्वांगीण प्रगतीचे डिजिटल व्यवस्थापन.
+            </p>
+            <span class="badge">लवकरच उपलब्ध</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">💻</div>
+            <h3>Digital School Management</h3>
+            <p>
+                शाळेतील विविध प्रशासकीय आणि शैक्षणिक
+                कामकाजाचे डिजिटल व्यवस्थापन.
+            </p>
+            <span class="badge">लवकरच उपलब्ध</span>
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    © 2026 AI साथी | Vilas Mulak
+</footer>
+
+</body>
+</html>
