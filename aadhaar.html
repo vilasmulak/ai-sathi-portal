@@ -1,63 +1,65 @@
 <!doctype html>
-<html lang="en">
+<html lang="mr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aadhaar Name Update – UIDAI Annexure A to F</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#eef3f8;font-family:Arial,sans-serif;color:#172033}.toolbar{position:sticky;top:0;z-index:50;background:#083b66;color:#fff;padding:12px}.toolbar .row{max-width:1100px;margin:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar strong{margin-right:auto}.toolbar button{border:0;border-radius:8px;padding:9px 13px;font-weight:700;cursor:pointer}.toolbar button.active{background:#0b8f62;color:#fff}.toolbar button:not(.active){background:#fff;color:#083b66}.hint{max-width:1100px;margin:14px auto;background:#fff;padding:12px 15px;border-radius:10px;box-shadow:0 2px 10px #0001}.pages{max-width:900px;margin:14px auto}.page{width:210mm;height:297mm;position:relative;background:#fff;margin:14px auto;overflow:hidden;box-shadow:0 2px 14px #0002}.page img.bg{position:absolute;inset:0;width:100%;height:100%;display:block}.field{position:absolute;z-index:3;border:0!important;border-radius:0;background:transparent!important;outline:0;font-family:Georgia,serif;font-size:10.5pt;color:#111;padding:0 1px;line-height:1;height:1.25%!important}.field:focus{background:transparent!important;border:0!important;outline:0}.field::placeholder{color:#777;font-family:Arial,sans-serif;font-size:8pt;opacity:.75}.screen-only{display:block}.page.annexA img{user-select:none}.aPages{display:none}.formPage{display:none}.formPage.active{display:block}.aPages.active{display:block}.printbar{max-width:900px;margin:10px auto;text-align:right}.printbar button{padding:10px 14px;border:0;border-radius:8px;background:#1769ff;color:#fff;font-weight:700}.legend{font-size:13px;color:#526074}
+*{box-sizing:border-box}
+body{margin:0;background:#eef3f8;color:#172033;font-family:Arial,sans-serif}
+.top{position:sticky;top:0;z-index:50;background:#083b66;color:#fff;padding:10px 14px;box-shadow:0 2px 10px #0002}
+.topin{max-width:1250px;margin:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}.tabs button{border:0;border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer;background:#fff;color:#083b66}.tabs button.active{background:#0b8f62;color:#fff}
+.wrap{max-width:1250px;margin:16px auto;padding:0 12px}.notice{background:#fff;border-radius:12px;padding:12px 15px;box-shadow:0 2px 12px #0001;margin-bottom:14px;font-size:14px}
+.workspace{display:grid;grid-template-columns:430px minmax(0,1fr);gap:18px;align-items:start}
+.formbox{background:#fff;border-radius:14px;box-shadow:0 2px 14px #0001;padding:18px;position:sticky;top:78px;max-height:calc(100vh - 95px);overflow:auto}
+.formhead{display:flex;align-items:center;gap:8px;border-bottom:1px solid #e5e9ef;padding-bottom:12px;margin-bottom:14px}.formhead h2{font-size:18px;margin:0}.badge{margin-left:auto;font-size:12px;color:#6b7280}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.label{font-size:12px;font-weight:700;margin-bottom:5px;color:#344054}.fieldui,input,textarea,select{width:100%;font:inherit;border:1px solid #d8e0ea;border-radius:9px;padding:10px;background:#f8fafc;outline:none}.fieldui:focus,input:focus,textarea:focus,select:focus{border-color:#1769ff;background:#fff}.small{font-size:11px;color:#667085;margin-top:4px}.section{background:#fff9e8;border:1px solid #f4d67a;border-radius:11px;padding:11px;margin:12px 0}.section.green{background:#f0fff8;border-color:#9be2c5}.section h3{font-size:13px;margin:0 0 8px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer}.primary{background:#1769ff;color:#fff}.greenbtn{background:#087f5b;color:#fff}.light{background:#edf2f7;color:#243b53}.danger{background:#fff0f0;color:#a61b1b}
+.previewbox{background:#dfe7f0;border-radius:14px;padding:10px;min-height:400px;overflow:auto}.previewhead{display:flex;align-items:center;gap:8px;padding:7px 5px 10px}.previewhead strong{margin-right:auto}.a4{width:210mm;height:297mm;background:#fff;position:relative;margin:0 auto;overflow:hidden;box-shadow:0 2px 15px #0003}.a4 img{position:absolute;inset:0;width:100%;height:100%;display:block}.overlay{position:absolute;z-index:2;color:#111;font-family:Georgia,serif;font-size:10.5pt;line-height:1;white-space:nowrap;overflow:hidden}.overlay.wraptext{white-space:normal;line-height:1.05}.preview-placeholder{padding:80px;text-align:center;color:#667085}
+.aPage{display:none}.aPage.active{display:block}
+@media(max-width:950px){.workspace{grid-template-columns:1fr}.formbox{position:static;max-height:none}.previewbox{overflow:auto}.a4{transform-origin:top center}}
 @media print{
  @page{size:A4 portrait;margin:0}
  html,body{margin:0!important;padding:0!important;background:#fff!important}
- .toolbar,.hint,.printbar,.screen-only{display:none!important}
- .pages{margin:0!important;max-width:none!important}
- .page{margin:0!important;width:210mm!important;height:297mm!important;box-shadow:none!important;page-break-after:always;break-after:page}
- .page:last-child{page-break-after:auto;break-after:auto}
- .field{border:0!important;background:transparent!important;border-radius:0!important;padding:0!important;color:#111!important;box-shadow:none!important}
- .aPages{display:none!important}.aPages.active{display:block!important}
- .formPage{display:none!important}.formPage.active{display:block!important}
+ .top,.notice,.formbox,.previewhead{display:none!important}
+ .wrap{margin:0!important;padding:0!important;max-width:none!important}
+ .workspace{display:block!important}.previewbox{padding:0!important;background:#fff!important;overflow:visible!important}
+ .a4{margin:0!important;box-shadow:none!important;width:210mm!important;height:297mm!important;page-break-after:always;break-after:page}
+ .aPage .a4:last-child{page-break-after:auto}
 }
-</style></head>
+</style>
+</head>
 <body>
-<div class="toolbar"><div class="row"><strong>🪪 Aadhaar Name Update – UIDAI Annexure A ते F</strong>
-<button class="active" onclick="show('b',this)">Annexure B</button><button onclick="show('c',this)">C</button><button onclick="show('d',this)">D</button><button onclick="show('e',this)">E</button><button onclick="show('f',this)">F</button><button onclick="show('a',this)">Annexure A</button><button onclick="window.print()">🖨️ Print / Save PDF</button></div></div>
-<div class="hint"><b>कसे वापरावे:</b> फक्त निळ्या बॉक्समध्ये आवश्यक माहिती भरा. मूळ UIDAI PDF चा मजकूर व मांडणी बदललेली नाही. Print / Save as PDF केल्यावर A4 मध्ये मूळ नमुन्यावरच माहिती बसते. Annexure B–F प्रत्येक एक स्वतंत्र A4 पान आहे. Annexure A अधिकृत PDF प्रमाणे 4 पाने आहे. <span class="legend">मजकूर/नमुना UIDAI SOP, 18-09-2026 वर आधारित.</span></div>
-<div class="pages">
-<!-- Annexure B page 7 -->
-<div id="page-b" class="page formPage active"><img class="bg" src="assets/page-07.png">
-<input class="field" style="left:26.8%;top:25.3%;width:27%;" placeholder="Name" id="b1">
-<input class="field" style="left:65.2%;top:25.3%;width:22%;" placeholder="S/o, D/o, W/o" id="b2">
-<input class="field" style="left:12%;top:28.2%;width:44.5%;" placeholder="Address" id="b3">
-<input class="field" style="left:48.1%;top:33.4%;width:16%;" placeholder="Aadhaar number" id="b4">
-<input class="field" style="left:38.3%;top:36.7%;width:22%;" placeholder="Correct name" id="b5">
-<input class="field" style="left:44%;top:40.1%;width:44%;" placeholder="Name recorded in Aadhaar" id="b6">
-<input class="field" style="left:47.5%;top:42.7%;width:27%;" placeholder="Correct name" id="b7">
-<input class="field" style="left:19.8%;top:75.6%;width:9%;" placeholder="Place" id="b8">
-<input class="field" style="left:34.7%;top:75.6%;width:8%;" placeholder="Day" id="b9">
-<input class="field" style="left:46%;top:75.6%;width:12%;" placeholder="Month/Year" id="b10">
-</div>
-<!-- C page 8 -->
-<div id="page-c" class="page formPage"><img class="bg" src="assets/page-08.png">
-<input class="field" style="left:26.8%;top:26.2%;width:27%;height:2.1%" placeholder="Name" id="c1"><input class="field" style="left:69%;top:26.2%;width:20%;height:2.1%" placeholder="S/o, D/o, W/o" id="c2"><input class="field" style="left:12%;top:28.8%;width:44%;height:2.1%" placeholder="Address" id="c3"><input class="field" style="left:36.5%;top:31.3%;width:23%;height:2.1%" placeholder="Minor name" id="c4"><input class="field" style="left:72%;top:36.2%;width:15%;height:2.1%" placeholder="Aadhaar" id="c5"><input class="field" style="left:45%;top:36.2%;width:20%;height:2.1%" placeholder="Minor name" id="c6"><input class="field" style="left:48%;top:43%;width:41%;height:2.1%" placeholder="Recorded name" id="c7"><input class="field" style="left:48%;top:45.7%;width:27%;height:2.1%" placeholder="Correct name" id="c8"><input class="field" style="left:19.8%;top:76.2%;width:9%;height:2.1%" placeholder="Place" id="c9"><input class="field" style="left:34.5%;top:76.2%;width:8%;height:2.1%" placeholder="Day" id="c10"><input class="field" style="left:46%;top:76.2%;width:12%;height:2.1%" placeholder="Month/Year" id="c11">
-</div>
-<!-- D page 9 -->
-<div id="page-d" class="page formPage"><img class="bg" src="assets/page-09.png">
-<input class="field" style="left:23%;top:18.6%;width:29%;height:2.1%" placeholder="Name" id="d1"><input class="field" style="left:58.5%;top:18.6%;width:25%;height:2.1%" placeholder="Father's name" id="d2"><input class="field" style="left:84%;top:18.6%;width:10%;height:2.1%" placeholder="Husband" id="d3"><input class="field" style="left:12%;top:21.7%;width:15%;height:2.1%" placeholder="(where applicable)" id="d4"><input class="field" style="left:56%;top:21.7%;width:28%;height:2.1%" placeholder="Address" id="d5"><input class="field" style="left:48%;top:27.8%;width:17%;height:2.1%" placeholder="Aadhaar" id="d6"><input class="field" style="left:53%;top:31.7%;width:25%;height:2.1%" placeholder="Old name" id="d7"><input class="field" style="left:18%;top:37.2%;width:25%;height:2.1%" placeholder="Marriage/divorce date" id="d8"><input class="field" style="left:43%;top:39.7%;width:20%;height:2.1%" placeholder="Surname" id="d9"><input class="field" style="left:63%;top:39.7%;width:22%;height:2.1%" placeholder="Full name" id="d10"><input class="field" style="left:18%;top:44.3%;width:20%;height:2.1%" placeholder="Earlier surname" id="d11"><input class="field" style="left:52%;top:44.3%;width:20%;height:2.1%" placeholder="Present surname" id="d12"><input class="field" style="left:19.8%;top:75.9%;width:9%;height:2.1%" placeholder="Place" id="d13"><input class="field" style="left:36%;top:75.9%;width:8%;height:2.1%" placeholder="Day" id="d14"><input class="field" style="left:47%;top:75.9%;width:12%;height:2.1%" placeholder="Month/Year" id="d15">
-</div>
-<!-- E page 10 -->
-<div id="page-e" class="page formPage"><img class="bg" src="assets/page-10.png">
-<input class="field" style="left:27%;top:24.9%;width:23%;height:2.1%" placeholder="Name" id="e1"><input class="field" style="left:64%;top:24.9%;width:25%;height:2.1%" placeholder="S/o, D/o, W/o" id="e2"><input class="field" style="left:12%;top:27.5%;width:44%;height:2.1%" placeholder="Address" id="e3"><input class="field" style="left:48%;top:33.8%;width:27%;height:2.1%" placeholder="Aadhaar" id="e4"><input class="field" style="left:42%;top:37.2%;width:24%;height:2.1%" placeholder="Name / alias" id="e5"><input class="field" style="left:18%;top:40.1%;width:24%;height:2.1%" placeholder="Second name" id="e6"><input class="field" style="left:42%;top:44.5%;width:25%;height:2.1%" placeholder="Name to retain" id="e7"><input class="field" style="left:20%;top:46.9%;width:24%;height:2.1%" placeholder="Alias/urf" id="e8"><input class="field" style="left:19.8%;top:75.6%;width:9%;" placeholder="Place" id="e9"><input class="field" style="left:34.7%;top:75.6%;width:8%;" placeholder="Day" id="e10"><input class="field" style="left:46%;top:75.6%;width:12%;" placeholder="Month/Year" id="e11">
-</div>
-<!-- F page 11 -->
-<div id="page-f" class="page formPage"><img class="bg" src="assets/page-11.png">
-<input class="field" style="left:27%;top:24.9%;width:27%;height:2.1%" placeholder="Name" id="f1"><input class="field" style="left:65%;top:24.9%;width:22%;height:2.1%" placeholder="S/o, D/o, W/o" id="f2"><input class="field" style="left:12%;top:27.5%;width:44%;height:2.1%" placeholder="Address" id="f3"><input class="field" style="left:35%;top:30.1%;width:23%;height:2.1%" placeholder="Minor name" id="f4"><input class="field" style="left:22%;top:36.2%;width:30%;height:2.1%" placeholder="Minor name" id="f5"><input class="field" style="left:51%;top:38.7%;width:25%;height:2.1%" placeholder="Aadhaar number" id="f6"><input class="field" style="left:19%;top:43.7%;width:27%;height:2.1%" placeholder="Recorded name" id="f7"><input class="field" style="left:50%;top:43.7%;width:24%;height:2.1%" placeholder="Alias" id="f8"><input class="field" style="left:22%;top:51.2%;width:28%;height:2.1%" placeholder="Name to retain" id="f9"><input class="field" style="left:52%;top:51.2%;width:27%;height:2.1%" placeholder="Alias/urf" id="f10"><input class="field" style="left:20%;top:76.1%;width:9%;height:2.1%" placeholder="Place" id="f11"><input class="field" style="left:34.7%;top:75.6%;width:8%;" placeholder="Day" id="f12"><input class="field" style="left:46%;top:75.6%;width:12%;" placeholder="Month/Year" id="f13">
-</div>
-<!-- Annexure A exact source pages 3-6 -->
-<div id="page-a" class="aPages"><div class="page"><img class="bg" src="assets/page-03.png"></div><div class="page"><img class="bg" src="assets/page-04.png"></div><div class="page"><img class="bg" src="assets/page-05.png"></div><div class="page"><img class="bg" src="assets/page-06.png"></div></div>
-</div>
+<div class="top"><div class="topin"><div class="brand">🪪 Aadhaar Name Update – UIDAI Annexure A ते F</div><div class="tabs" id="tabs"></div></div></div>
+<div class="wrap">
+<div class="notice"><b>वापरण्याची पद्धत:</b> डावीकडे फक्त आवश्यक माहिती भरा. उजवीकडे मूळ UIDAI नमुन्याच्या जागेवर माहिती आपोआप दिसेल. Preview मध्ये कोणतेही अतिरिक्त input box किंवा रेषा दिसत नाहीत. Print / Save as PDF केल्यावर A4 format मध्ये फक्त भरलेली माहिती आणि मूळ अधिकृत नमुना दिसेल.</div>
+<div class="workspace">
+<div class="formbox"><div class="formhead"><span>🖊️</span><h2 id="formTitle">प्रतिज्ञापत्र माहिती भरा</h2><span class="badge">A4 Stamp Paper</span></div><div id="form"></div></div>
+<div class="previewbox"><div class="previewhead"><strong>👁️ Preview (A4)</strong><div class="actions" style="margin:0"><button class="btn light" onclick="sample()">✨ नमुना डेटा</button><button class="btn light" onclick="clearForm()">↺ साफ करा</button><button class="btn greenbtn" onclick="window.print()">🖨️ Print / Save as PDF</button></div></div><div id="preview"></div></div>
+</div></div>
 <script>
-const ids=['b','c','d','e','f','a'];
-function show(id,btn){ids.forEach(x=>{const el=document.getElementById('page-'+x);if(el)el.classList.toggle('active',x===id)});document.querySelectorAll('.toolbar button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-// Preserve values while switching tabs.
-document.querySelectorAll('.field').forEach(el=>{const k='aadhaar_'+el.id;el.value=localStorage.getItem(k)||'';el.addEventListener('input',()=>localStorage.setItem(k,el.value))});
+const DATA={
+ b:{title:'Annexure B (for adults)', fields:[
+ ['b1','शीर्षक (Title)','select','Shri|Smt.|Ms.'],['b2','अर्जदाराचे पूर्ण नाव (Full Name)','text','उदा. Tadi Rama Durga Prasad'],['b3','नाते (Relation)','select','S/o (मुलगा)|D/o (मुलगी)|W/o (पत्नी)'],['b4','वडील / पतीचे नाव (Father/Husband)','text','उदा. Tadi Satyanarayana'],['b5','पूर्ण पत्ता (Resident of)','textarea','उदा. H.No. 4-12, Main Road, Ghonsi Khurd, Dist. Jalna'],['b6','आधार क्रमांक (Aadhaar Number)','text','12 अंकी Aadhaar क्रमांक'],['b7','आधारमध्ये चुकीचे नाव (Incorrectly Recorded)','text','उदा. T R D Prasad'],['b8','खरे व योग्य नाव (Correct Name)','text','उदा. Tadi Rama Durga Prasad'],['b9','सत्यापन ठिकाण (Verified at)','text','उदा. Jalna'],['b10','दिवस (Day)','text','8'],['b11','महिना (Month)','text','October'],['b12','वर्ष (Year)','text','2026']],
+ img:'assets/page-07.png', overlays:{b1:[27,25.4,20],b2:[65,25.4,23],b3:[28,27.9,18],b4:[67,27.9,20],b5:[12,30.0,45],b6:[48,35.5,18],b7:[40,39.0,22],b8:[48,42.1,25],b9:[19.5,76.0,10],b10:[34.6,76.0,7],b11:[43.0,76.0,13],b12:[58,76.0,8]}}
+ ,c:{title:'Annexure C (for minors)',fields:[
+ ['c1','शीर्षक (Title)','select','Shri|Smt.|Ms.'],['c2','पालकाचे पूर्ण नाव','text','पालकाचे नाव'],['c3','नाते','select','S/o (मुलगा)|D/o (मुलगी)|W/o (पत्नी)'],['c4','वडील/आई/कायदेशीर पालकाचे नाव','text','नाव'],['c5','पूर्ण पत्ता (Resident of)','textarea','पत्ता'],['c6','अल्पवयीन मुलाचे नाव','text','Minor name'],['c7','Aadhaar Number','text','12 अंकी क्रमांक'],['c8','मुलाचे योग्य नाव','text','Correct name'],['c9','Aadhaar मध्ये नोंदलेले नाव','text','Recorded name'],['c10','योग्य नाव','text','Correct name'],['c11','ठिकाण','text','Place'],['c12','दिवस','text','Day'],['c13','महिना/वर्ष','text','Month/Year']],img:'assets/page-08.png',overlays:{c1:[27,26.2,18],c2:[68,26.2,20],c3:[28,28.8,18],c4:[58,28.8,25],c5:[12,31.0,45],c6:[37,33.5,25],c7:[72,37.1,16],c8:[45,37.1,20],c9:[48,43.1,40],c10:[48,45.7,27],c11:[20,76.2,9],c12:[35,76.2,8],c13:[46,76.2,13]}}
+ ,d:{title:'Annexure D',fields:[
+ ['d1','नाव','text','Name'],['d2','वडिलांचे नाव','text','Father'],['d3','पतीचे नाव','text','Husband'],['d4','पत्ता','textarea','Address'],['d5','Aadhaar Number','text','12 अंकी क्रमांक'],['d6','लग्न/घटस्फोटापूर्वीचे नाव','text','Old name'],['d7','लग्न/घटस्फोटाची तारीख','text','Date'],['d8','वर्तमान आडनाव','text','Surname'],['d9','पूर्ण नाव','text','Full name'],['d10','वर्तमान आडनाव','text','Present surname'],['d11','ठिकाण','text','Place'],['d12','दिवस','text','Day'],['d13','महिना/वर्ष','text','Month/Year']],img:'assets/page-09.png',overlays:{d1:[23,18.8,27],d2:[58,18.8,24],d3:[84,18.8,10],d4:[56,22.0,28],d5:[48,28.0,18],d6:[53,31.9,25],d7:[18,37.3,24],d8:[43,39.8,20],d9:[63,39.8,22],d10:[52,44.4,20],d11:[20,76.0,9],d12:[36,76.0,8],d13:[47,76.0,13]}}
+ ,e:{title:'Annexure E (for adults)',fields:[
+ ['e1','नाव','text','Name'],['e2','नाते/पालकाचे नाव','text','Name'],['e3','पूर्ण पत्ता','textarea','Address'],['e4','Aadhaar Number','text','12 अंकी क्रमांक'],['e5','Aadhaar मधील urf/alias नाव','text','Name / alias'],['e6','एकाच व्यक्तीचा दुसरा संदर्भ','text','Name'],['e7','ठेवायचे नाव','text','Name to retain'],['e8','alias/urf म्हणून बंद करायचे नाव','text','Alias/urf'],['e9','ठिकाण','text','Place'],['e10','दिवस','text','Day'],['e11','महिना/वर्ष','text','Month/Year']],img:'assets/page-10.png',overlays:{e1:[27,25.0,23],e2:[64,25.0,25],e3:[12,27.8,44],e4:[48,34.0,27],e5:[42,37.4,24],e6:[18,40.2,24],e7:[42,44.6,25],e8:[20,47.0,24],e9:[20,75.8,9],e10:[35,75.8,8],e11:[46,75.8,13]}}
+ ,f:{title:'Annexure F (for minors)',fields:[
+ ['f1','पालकाचे नाव','text','Name'],['f2','नाते/पालकाचे नाव','text','Name'],['f3','पूर्ण पत्ता','textarea','Address'],['f4','अल्पवयीन मुलाचे नाव','text','Minor name'],['f5','मुलाचे नाव','text','Minor name'],['f6','Aadhaar Number','text','12 अंकी क्रमांक'],['f7','Aadhaar मधील urf/alias नाव','text','Recorded name'],['f8','alias/urf','text','Alias'],['f9','ठेवायचे नाव','text','Name to retain'],['f10','alias/urf म्हणून बंद करायचे नाव','text','Alias/urf'],['f11','ठिकाण','text','Place'],['f12','दिवस','text','Day'],['f13','महिना/वर्ष','text','Month/Year']],img:'assets/page-11.png',overlays:{f1:[27,25.0,27],f2:[65,25.0,22],f3:[12,27.8,44],f4:[35,30.2,23],f5:[22,36.3,30],f6:[51,38.8,25],f7:[19,43.8,27],f8:[50,43.8,24],f9:[22,51.3,28],f10:[52,51.3,27],f11:[20,76.0,9],f12:[35,75.7,8],f13:[46,75.7,13]}}
+};
+const tabs=[['b','Annexure B'],['c','Annexure C'],['d','Annexure D'],['e','Annexure E'],['f','Annexure F'],['a','Annexure A']];
+let current='b';
+function initTabs(){document.getElementById('tabs').innerHTML=tabs.map(x=>`<button id="tab-${x[0]}" onclick="show('${x[0]}')">${x[1]}</button>`).join('');}
+function show(id){current=id;document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id)?.classList.add('active');if(id==='a'){document.getElementById('formTitle').textContent='Annexure A – माहिती';document.getElementById('form').innerHTML='<p>Annexure A हा अधिकृत UIDAI SOP मधील 4 पानांचा reference table आहे. येथे स्वतंत्र माहिती भरण्याची गरज नाही.</p>';document.getElementById('preview').innerHTML='<div class="aPage active">'+[3,4,5,6].map(n=>`<div class="a4"><img src="assets/page-0${n}.png"></div>`).join('')+'</div>';return;}const d=DATA[id];document.getElementById('formTitle').textContent=d.title+' – माहिती भरा';document.getElementById('form').innerHTML=renderForm(d);document.getElementById('preview').innerHTML=`<div class="a4"><img src="${d.img}">${Object.entries(d.overlays).map(([id,p])=>`<span id="ov-${id}" class="overlay" style="left:${p[0]}%;top:${p[1]}%;width:${p[2]}%"></span>`).join('')}</div>`;bind(d);}
+function renderForm(d){return '<div class="grid">'+d.fields.map((f,i)=>{let [id,label,type,ph]=f;let el=type==='textarea'?`<textarea id="${id}" rows="2" placeholder="${ph}"></textarea>`:type==='select'?`<select id="${id}">${ph.split('|').map(x=>`<option>${x}</option>`).join('')}</select>`:`<input id="${id}" placeholder="${ph}">`;return `<div class="${type==='textarea'?'full':''}"><div class="label">${label}</div>${el}</div>`}).join('')+'</div><div class="actions"><button class="btn greenbtn" onclick="window.print()">🖨️ Print / Save as PDF</button></div>';}
+function bind(d){d.fields.forEach(f=>{let id=f[0],el=document.getElementById(id);if(!el)return;el.value=localStorage.getItem('uidai_'+id)||'';el.addEventListener('input',()=>{localStorage.setItem('uidai_'+id,el.value);sync(id,el.value)});el.addEventListener('change',()=>{localStorage.setItem('uidai_'+id,el.value);sync(id,el.value)});sync(id,el.value);});}
+function sync(id,v){let o=document.getElementById('ov-'+id);if(o){o.textContent=v;autoFit(o);}}
+function autoFit(o){let max=10.5;let min=7.2;o.style.fontSize=max+'pt';while(o.scrollWidth>o.clientWidth&&max>min){max-=.3;o.style.fontSize=max+'pt';}}
+function sample(){const s={b:{b1:'Shri',b2:'Vilas Bhagwan Mulak',b3:'S/o (मुलगा)',b4:'Bhagwan Mulak',b5:'M. Chincholi, Ta. Ghansawangi, Dist. Jalna',b6:'111111111111',b7:'Vilas Mulak',b8:'Vilas Bhagwan Mulak',b9:'Jalna',b10:'8',b11:'October',b12:'2026'}}[current]||{};Object.entries(s).forEach(([id,v])=>{let e=document.getElementById(id);if(e){e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))}})}
+function clearForm(){const d=DATA[current];if(!d)return;d.fields.forEach(f=>{localStorage.removeItem('uidai_'+f[0]);let e=document.getElementById(f[0]);if(e){e.value='';e.dispatchEvent(new Event('input',{bubbles:true))}})}function init(){initTabs();show('b')}init();
 </script>
 </body></html>
