@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Tools | AI साथी</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, "Noto Sans Devanagari", sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: linear-gradient(135deg, #00695c, #00897b);
+      color: white;
+      padding: 24px 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 29px;
+      margin-bottom: 7px;
+    }
+
+    header p {
+      font-size: 15px;
+      opacity: 0.92;
+    }
+
+    .container {
+      width: min(1100px, 94%);
+      margin: 25px auto 50px;
+    }
+
+    .back {
+      display: inline-block;
+      text-decoration: none;
+      color: #00796b;
+      font-weight: bold;
+      margin-bottom: 22px;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    .intro {
+      background: white;
+      padding: 23px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .intro h2 {
+      color: #00796b;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .intro p {
+      color: #5d6678;
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+      border: 1px solid #e5e9ef;
+      transition: 0.25s;
+      min-height: 205px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.13);
+    }
+
+    .icon {
+      font-size: 46px;
+      margin-bottom: 13px;
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: #222b45;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #687386;
+      line-height: 1.55;
+    }
+
+    .badge {
+      display: inline-block;
+      margin: 13px auto 0;
+      padding: 6px 13px;
+      border-radius: 20px;
+      background: #e7f7f4;
+      color: #00796b;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #697386;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 175px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🤖 AI Tools</h1>
+    <p>कृत्रिम बुद्धिमत्तेच्या उपयोगी साधनांचा संग्रह</p>
+  </header>
+
+  <main class="container">
+
+    <a href="index.html" class="back">← मुख्यपृष्ठावर जा</a>
+
+    <section class="intro">
+      <h2>AI Tools विभाग</h2>
+
+      <p>
+        शिक्षण, लेखन, संशोधन, चित्रनिर्मिती, व्हिडिओ,
+        नोट्स आणि दैनंदिन कामांसाठी उपयोगी AI साधने.
+      </p>
+    </section>
+
+    <section class="grid">
+
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3>ChatGPT</h3>
+        <p>
+          लेखन, प्रश्नोत्तरे, कल्पना, अभ्यास आणि विविध कामांसाठी AI सहाय्यक.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">✨</div>
+        <h3>Google Gemini</h3>
+        <p>
+          माहिती, लेखन, कल्पना आणि AI आधारित कामांसाठी Google चे AI साधन.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">📚</div>
+        <h3>NotebookLM</h3>
+        <p>
+          PDF व दस्तऐवजांवर आधारित अभ्यास, नोट्स आणि माहितीचे विश्लेषण.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎨</div>
+        <h3>Canva AI</h3>
+        <p>
+          पोस्टर, सादरीकरण, डिझाइन आणि विविध शैक्षणिक साहित्य तयार करण्यासाठी.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Google AI Studio</h3>
+        <p>
+          AI आधारित प्रयोग, प्रॉम्प्ट आणि AI अॅप्स तयार करण्यासाठी.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎬</div>
+        <h3>AI Video Tools</h3>
+        <p>
+          AI च्या मदतीने व्हिडिओ, स्क्रिप्ट आणि शैक्षणिक व्हिडिओ तयार करण्यासाठी.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>AI Notes</h3>
+        <p>
+          अभ्यासासाठी नोट्स, सारांश आणि प्रश्नसंच तयार करण्यासाठी.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">❓</div>
+        <h3>AI Quiz Generator</h3>
+        <p>
+          विद्यार्थ्यांसाठी MCQ, प्रश्नमंजुषा आणि सराव प्रश्न तयार करण्यासाठी.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">👨‍🏫</div>
+        <h3>AI Teacher Assistant</h3>
+        <p>
+          शिक्षकांसाठी Lesson Plan, प्रश्नपत्रिका आणि अध्यापन सहाय्य.
+        </p>
+        <span class="badge">लवकरच उपलब्ध</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    🤖 AI साथी | Vilas Mulak
+    <br>
+    ज्ञान • सुविधा • माहिती • तंत्रज्ञान
+  </footer>
+
+</body>
+</html>
