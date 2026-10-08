@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>नागरिक सुविधा | AI साथी</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    background:#f5f7fb;
+    color:#172033;
+}
+
+.header{
+    background:linear-gradient(135deg,#4338ca,#7c3aed);
+    color:white;
+    padding:28px 20px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+.header p{
+    margin:0;
+    opacity:.9;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    padding:0 18px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:22px;
+    padding:10px 18px;
+    background:white;
+    color:#4338ca;
+    text-decoration:none;
+    border-radius:10px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    font-weight:bold;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.title h2{
+    margin:0 0 8px;
+    color:#312e81;
+}
+
+.title p{
+    color:#64748b;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:28px 22px;
+    box-shadow:0 6px 20px rgba(0,0,0,.07);
+    transition:.2s;
+    text-decoration:none;
+    color:inherit;
+    display:block;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+
+.icon{
+    font-size:45px;
+    margin-bottom:14px;
+}
+
+.card h3{
+    margin:0 0 10px;
+    color:#312e81;
+    font-size:21px;
+}
+
+.card p{
+    color:#64748b;
+    line-height:1.6;
+    margin:0;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:18px;
+    padding:9px 16px;
+    background:#4f46e5;
+    color:white;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.footer{
+    text-align:center;
+    padding:35px 15px;
+    color:#64748b;
+}
+
+@media(max-width:850px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:25px;
+    }
+
+    .card{
+        padding:23px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>🏛️ नागरिक सुविधा</h1>
+    <p>नागरिकांसाठी विविध अर्ज, प्रमाणपत्रे आणि ऑनलाइन सेवा</p>
+</header>
+
+<main class="container">
+
+    <a href="index.html" class="back">← मुख्य Dashboard</a>
+
+    <div class="title">
+        <h2>नागरिक सुविधा विभाग</h2>
+        <p>आवश्यक नागरिक सेवांची माहिती आणि डिजिटल सुविधा</p>
+    </div>
+
+    <section class="grid">
+
+        <!-- AADHAAR -->
+        <a href="aadhaar-services.html" class="card">
+            <div class="icon">🪪</div>
+            <h3>Aadhaar Services</h3>
+            <p>
+                आधार संबंधित उपलब्ध SOP आणि अधिकृत
+                Annexure Formats.
+            </p>
+            <span class="btn">सेवा उघडा →</span>
+        </a>
+
+        <!-- APPLICATIONS -->
+        <a href="#" class="card">
+            <div class="icon">📄</div>
+            <h3>विविध अर्ज</h3>
+            <p>
+                सरकारी कार्यालयांमध्ये लागणारे विविध
+                अर्ज आणि नमुने.
+            </p>
+            <span class="btn">लवकरच उपलब्ध</span>
+        </a>
+
+        <!-- CERTIFICATES -->
+        <a href="#" class="card">
+            <div class="icon">📜</div>
+            <h3>प्रमाणपत्रे</h3>
+            <p>
+                उत्पन्न, रहिवासी, जात आणि इतर
+                आवश्यक प्रमाणपत्रांची माहिती.
+            </p>
+            <span class="btn">लवकरच उपलब्ध</span>
+        </a>
+
+        <!-- ONLINE SERVICES -->
+        <a href="#" class="card">
+            <div class="icon">💻</div>
+            <h3>ऑनलाइन सेवा</h3>
+            <p>
+                विविध अधिकृत ऑनलाइन सेवांची
+                माहिती आणि मार्गदर्शन.
+            </p>
+            <span class="btn">लवकरच उपलब्ध</span>
+        </a>
+
+        <!-- DOWNLOAD -->
+        <a href="#" class="card">
+            <div class="icon">📥</div>
+            <h3>डाउनलोड सेंटर</h3>
+            <p>
+                अर्ज, PDF, नमुने आणि आवश्यक
+                कागदपत्रे डाउनलोड करण्याची सुविधा.
+            </p>
+            <span class="btn">लवकरच उपलब्ध</span>
+        </a>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    © 2026 AI साथी | Vilas Mulak
+</footer>
+
+</body>
+</html>
