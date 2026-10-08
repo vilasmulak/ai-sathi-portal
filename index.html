@@ -1,1103 +1,123 @@
-<!DOCTYPE html>
-<html lang="mr">
-<head>
+<html lang="mr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="description" content="AI साथी – शिक्षण, नागरिक सुविधा, शासकीय योजना आणि AI Tools यांचे मराठी डिजिटल पोर्टल.">
 <title>AI साथी | मराठी डिजिटल पोर्टल</title>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:#f5f7fb;color:#172033;line-height:1.6;overflow-x:hidden
-}
-header{
-  background:linear-gradient(135deg,#4338ca,#7c3aed);
-  color:white;padding:18px 5%;position:sticky;top:0;z-index:1000;
-  box-shadow:0 3px 15px #0002
-}
-.header{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.logo{font-size:28px;font-weight:800}.tagline{font-size:13px;opacity:.9}
+body{font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f5f7fb;color:#172033;line-height:1.6;overflow-x:hidden}
+header{background:linear-gradient(135deg,#4338ca,#7c3aed);color:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 3px 15px #0002}
+.header{max-width:1250px;margin:auto;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:27px;font-weight:800}.tagline{font-size:12px;opacity:.9}
 nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
-nav a{color:white;text-decoration:none;padding:8px 11px;border-radius:8px;font-size:14px}
+nav a{color:#fff;text-decoration:none;padding:8px 11px;border-radius:8px;font-size:14px}
 nav a:hover{background:#ffffff25}
-.hero{
-  background:linear-gradient(135deg,#eef2ff,#faf5ff);
-  padding:58px 5%;text-align:center
-}
-.hero h1{font-size:44px;color:#312e81;margin-bottom:12px}
-.hero p{max-width:800px;margin:auto;color:#596275;font-size:17px}
-.search{
-  max-width:750px;margin:28px auto 0;display:flex;background:white;
-  border-radius:12px;box-shadow:0 5px 25px #00000012;overflow:hidden
-}
-.search input{flex:1;padding:16px;border:0;outline:none;font-size:16px;min-width:0}
-.search button{padding:15px 25px;border:0;background:#4f46e5;color:white;font-size:16px;cursor:pointer}
-.search button:hover{background:#3730a3}
-
-/* MAIN DASHBOARD - only top-level categories */
-.dashboard{max-width:1250px;margin:0 auto;padding:35px 5% 15px}
-.dashboard-title{text-align:center;margin-bottom:25px}
-.dashboard-title h2{color:#312e81;font-size:29px}
-.dashboard-title p{color:#687386}
-.dashboard-grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px
-}
-.dashboard-card{
-  background:#fff;border:1px solid #e7e9ef;border-radius:20px;padding:28px 22px;
-  text-align:center;text-decoration:none;color:#172033;
-  box-shadow:0 7px 24px #0000000d;transition:.25s;cursor:pointer;
-  min-height:175px;display:flex;flex-direction:column;align-items:center;justify-content:center
-}
-.dashboard-card:hover{
-  transform:translateY(-6px);box-shadow:0 15px 32px #00000018;border-color:#c7d2fe
-}
-.dashboard-card .big-icon{font-size:45px;margin-bottom:8px}
-.dashboard-card h3{color:#312e81;font-size:19px;margin-bottom:4px}
-.dashboard-card p{font-size:13px;color:#687386}
-.dashboard-card .open-label{margin-top:9px;color:#4f46e5;font-weight:700;font-size:13px}
-
-/* CATEGORY VIEW */
-.category-view{
-  max-width:1250px;margin:25px auto 0;padding:0 5% 45px;display:none
-}
-.category-view.active{display:block}
-.category-head{
-  display:flex;align-items:center;justify-content:space-between;gap:15px;
-  margin-bottom:25px;background:linear-gradient(135deg,#eef2ff,#faf5ff);
-  border:1px solid #e0e7ff;border-radius:18px;padding:20px 24px
-}
-.category-head h2{color:#312e81;font-size:27px}
-.category-head p{color:#687386}
-.back-btn{
-  border:0;background:#4f46e5;color:#fff;padding:10px 16px;border-radius:9px;
-  cursor:pointer;font-weight:700;white-space:nowrap
-}
-.back-btn:hover{background:#3730a3}
-
-.grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch
-}
-.card{
-  cursor:default;
-  background:white;padding:24px;border-radius:17px;box-shadow:0 5px 20px #0000000d;
-  border:1px solid #e7e9ef;transition:.25s;min-width:0;height:100%
-}
-.card:hover{transform:translateY(-5px);box-shadow:0 12px 30px #00000018}
-.icon{font-size:38px;margin-bottom:10px}
-.card h3{color:#312e81;margin-bottom:7px}
-.card p{color:#687386;font-size:14px}
-.card a{display:inline-block;margin-top:14px;text-decoration:none;color:#4f46e5;font-weight:bold}
-.card a:hover{text-decoration:underline}
-.card details{margin-top:10px}.card summary{cursor:pointer;color:#4f46e5;font-weight:bold}
-.card h4{color:#312e81;margin-top:12px}.card ul{padding-left:20px;margin-top:5px}
-.notice{
-  background:#eef2ff;border-left:5px solid #4f46e5;padding:18px;border-radius:10px;margin-bottom:25px
-}
-.updates{background:white;border-radius:16px;padding:25px;box-shadow:0 5px 20px #0000000d}
-.update{padding:15px 5px;border-bottom:1px solid #e5e7eb}.update:last-child{border-bottom:0}
-.update span{display:inline-block;background:#eef2ff;color:#4338ca;padding:4px 9px;border-radius:6px;font-size:12px;margin-right:8px}
-.no-result{display:none;text-align:center;padding:30px;color:#687386}
-footer{background:#111827;color:white;text-align:center;padding:35px 5%;margin-top:10px}
-footer h3{font-size:22px;margin-bottom:8px} footer p{opacity:.8;font-size:14px;margin:5px}
-.footer-links{margin:18px 0}.footer-links a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
-.footer-links a:hover{text-decoration:underline}
-
-/* Featured Aadhaar inside Citizen */
-.aadhaar-feature{
-  background:linear-gradient(135deg,#fff,#f5f3ff);border:1px solid #c4b5fd;
-  border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 10px 30px #4f46e51a
-}
-.aadhaar-feature h3{color:#312e81;font-size:23px}
-.aadhaar-feature p{color:#687386;font-size:14px}
-.aadhaar-badge{display:inline-block;background:#ede9fe;color:#5b21b6;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;margin-bottom:7px}
-.aadhaar-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
-.aadhaar-mini{background:#fff;border:1px solid #e5e7eb;border-radius:15px;padding:19px}
-.aadhaar-mini h4{color:#312e81;font-size:18px}.aadhaar-mini p{font-size:13px}
-.aadhaar-mini a{display:inline-block;margin-top:10px;color:#4f46e5;font-weight:700;text-decoration:none}
-
-/* Search results mode */
-#searchResults{display:none}
-.search-result-title{text-align:center;color:#312e81;margin-bottom:20px}
-.search-result-card{display:none}
-
-/* Responsive */
-@media(max-width:900px){
-  .header{flex-direction:column;text-align:center}
-  nav{width:100%}
-  .hero h1{font-size:36px}
-  .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:600px){
-  .hero{padding:45px 5%}.hero h1{font-size:30px}.hero p{font-size:15px}
-  .dashboard-grid,.grid,.aadhaar-mini-grid{grid-template-columns:1fr}
-  .search{display:block;background:transparent;box-shadow:none;overflow:visible}
-  .search input{width:100%;border-radius:10px;margin-bottom:8px;box-shadow:0 4px 15px #00000010}
-  .search button{width:100%;border-radius:10px}
-  .category-head{flex-direction:column;align-items:flex-start}
-  nav a{font-size:13px}
-}
-
-.subsection{margin-top:35px}
-.subsection .section-title{margin-bottom:22px}
-.category-view .section-title{margin-top:0}
-.subsection{display:none}.category-view.active .subsection{display:block}</style>
+.hero{background:linear-gradient(135deg,#eef2ff,#faf5ff);padding:58px 5%;text-align:center}
+.hero h1{font-size:44px;color:#312e81;margin-bottom:12px}.hero p{max-width:800px;margin:auto;color:#596275;font-size:17px}
+.search{max-width:750px;margin:28px auto 0;display:flex;background:#fff;border-radius:12px;box-shadow:0 5px 25px #00000012;overflow:hidden}
+.search input{flex:1;padding:16px;border:0;outline:none;font-size:16px;min-width:0}.search button{padding:15px 25px;border:0;background:#4f46e5;color:#fff;font-size:16px;cursor:pointer}
+.dashboard{max-width:1250px;margin:auto;padding:40px 5% 45px}.dashboard-title{text-align:center;margin-bottom:25px}.dashboard-title h2{color:#312e81;font-size:29px}.dashboard-title p{color:#687386}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.dashboard-card{background:#fff;border:1px solid #e7e9ef;border-radius:20px;padding:28px 22px;text-align:center;text-decoration:none;color:#172033;box-shadow:0 7px 24px #0000000d;transition:.25s;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dashboard-card:hover{transform:translateY(-6px);box-shadow:0 15px 32px #00000018;border-color:#c7d2fe}.big-icon{font-size:45px;margin-bottom:8px}.dashboard-card h3{color:#312e81;font-size:19px;margin-bottom:4px}.dashboard-card p{font-size:13px;color:#687386}.open-label{margin-top:9px;color:#4f46e5;font-weight:700;font-size:13px}
+.notice{max-width:1250px;margin:0 auto 35px;padding:16px 5%;background:#eef2ff;border-left:5px solid #4f46e5;color:#39446a}
+.section{max-width:1250px;margin:0 auto 35px;padding:0 5%}.section-box{background:#fff;border-radius:16px;padding:24px;box-shadow:0 5px 20px #0000000d}
+.section h2{color:#312e81;margin-bottom:8px}.section p{color:#687386}.update{padding:13px 4px;border-bottom:1px solid #e5e7eb}.update:last-child{border-bottom:0}.update span{display:inline-block;background:#eef2ff;color:#4338ca;padding:4px 9px;border-radius:6px;font-size:12px;margin-right:8px}
+footer{background:#111827;color:#fff;text-align:center;padding:32px 5%;margin-top:20px}footer h3{font-size:21px;margin-bottom:8px}footer p{opacity:.8;font-size:14px;margin:4px}.footer-links{margin:16px 0}.footer-links a{color:#fff;text-decoration:none;margin:0 8px;font-size:14px}.footer-links a:hover{text-decoration:underline}
+@media(max-width:900px){.header{flex-direction:column;text-align:center}.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:36px}}
+@media(max-width:600px){.header{padding:13px 4%}.logo{font-size:24px}nav{width:100%}nav a{font-size:12px;padding:7px 8px}.hero{padding:42px 4%}.hero h1{font-size:29px}.hero p{font-size:15px}.search{display:block;background:transparent;box-shadow:none;overflow:visible}.search input{width:100%;border-radius:10px;margin-bottom:8px;box-shadow:0 4px 15px #00000010}.search button{width:100%;border-radius:10px}.dashboard{padding:32px 4%}.dashboard-grid{grid-template-columns:1fr}.dashboard-card{min-height:155px}.notice{padding:14px 4%;margin-bottom:28px}.section{padding:0 4%}}
+</style>
 </head>
-
 <body>
-
-<!-- HEADER -->
-
 <header>
   <div class="header">
-
     <div>
       <div class="logo">🤖 AI साथी</div>
       <div class="tagline">ज्ञान • सुविधा • माहिती • तंत्रज्ञान</div>
     </div>
-
-    <nav>
-      <a href="#home">मुख्यपृष्ठ</a>
-      <a href="#education">शिक्षण</a>
-      <a href="#citizen">नागरिक सुविधा</a>
-      <a href="#schemes">शासकीय योजना</a>
-      <a href="#ai">AI Tools</a>
+    <nav aria-label="मुख्य मेनू">
+      <a href="index.html">मुख्यपृष्ठ</a>
+      <a href="education.html">शिक्षण</a>
+      <a href="citizen.html">नागरिक सुविधा</a>
+      <a href="schemes.html">शासकीय योजना</a>
+      <a href="ai-tools.html">AI Tools</a>
       <a href="#updates">अपडेट्स</a>
     </nav>
-
   </div>
 </header>
 
-
-<!-- HERO -->
-
 <section class="hero" id="home">
-
   <h1>AI साथी मध्ये आपले स्वागत आहे! 🤖</h1>
-
-  <p>
-    शिक्षण, नागरिक सुविधा, शासकीय योजना,
-    विद्यार्थी माहिती, अर्ज, डाउनलोड आणि
-    उपयुक्त AI Tools एकाच ठिकाणी.
-  </p>
-
+  <p>शिक्षण, नागरिक सुविधा, शासकीय योजना, विद्यार्थी माहिती, अर्ज, डाउनलोड आणि उपयुक्त AI Tools एकाच ठिकाणी.</p>
   <div class="search">
-    <input
-      id="searchBox"
-      type="text"
-      placeholder="उदा. शिष्यवृत्ती, अर्ज, अभ्यासक्रम, AI..."
-      onkeyup="searchPortal()">
-
-    <button onclick="searchPortal()">
-      🔎 शोधा
-    </button>
+    <input id="searchBox" type="text" placeholder="उदा. शिष्यवृत्ती, अर्ज, अभ्यासक्रम, AI...">
+    <button type="button" onclick="searchPortal()">🔎 शोधा</button>
   </div>
-
 </section>
 
-
-<!-- MAIN DASHBOARD -->
-
-<section class="dashboard" id="home">
+<section class="dashboard" aria-label="मुख्य डॅशबोर्ड">
   <div class="dashboard-title">
     <h2>🤖 AI साथी — मुख्य डॅशबोर्ड</h2>
-    <p>खालील मुख्य विभाग निवडा आणि त्यातील सुविधा पाहा</p>
+    <p>मुख्य विभाग निवडा आणि त्यातील सुविधा पाहा</p>
   </div>
-
   <div class="dashboard-grid">
-    <a class="dashboard-card" href="#education" onclick="openCategory('education');return false;">
-      <div class="big-icon">🎓</div>
-      <h3>शिक्षण</h3>
-      <p>विद्यार्थी, शिक्षक व पालकांसाठी</p>
-      <div class="open-label">विभाग उघडा →</div>
+    <a class="dashboard-card" href="education.html">
+      <div class="big-icon">🎓</div><h3>शिक्षण</h3><p>विद्यार्थी, शिक्षक व पालकांसाठी</p><div class="open-label">विभाग उघडा →</div>
     </a>
-
-    <a class="dashboard-card" href="#citizen" onclick="openCategory('citizen');return false;">
-      <div class="big-icon">🏛️</div>
-      <h3>नागरिक सुविधा</h3>
-      <p>अर्ज, प्रमाणपत्रे व ऑनलाइन सेवा</p>
-      <div class="open-label">विभाग उघडा →</div>
+    <a class="dashboard-card" href="citizen.html">
+      <div class="big-icon">🏛️</div><h3>नागरिक सुविधा</h3><p>अर्ज, प्रमाणपत्रे व ऑनलाइन सेवा</p><div class="open-label">विभाग उघडा →</div>
     </a>
-
-    <a class="dashboard-card" href="#schemes" onclick="openCategory('schemes');return false;">
-      <div class="big-icon">📋</div>
-      <h3>शासकीय योजना</h3>
-      <p>केंद्र व राज्य शासनाच्या योजना</p>
-      <div class="open-label">विभाग उघडा →</div>
+    <a class="dashboard-card" href="schemes.html">
+      <div class="big-icon">📋</div><h3>शासकीय योजना</h3><p>केंद्र व राज्य शासनाच्या योजना</p><div class="open-label">विभाग उघडा →</div>
     </a>
-
-    <a class="dashboard-card" href="#ai" onclick="openCategory('ai');return false;">
-      <div class="big-icon">🤖</div>
-      <h3>AI Tools</h3>
-      <p>उपयुक्त AI साधने व मार्गदर्शन</p>
-      <div class="open-label">विभाग उघडा →</div>
+    <a class="dashboard-card" href="ai-tools.html">
+      <div class="big-icon">🤖</div><h3>AI Tools</h3><p>उपयुक्त AI साधने व मार्गदर्शन</p><div class="open-label">विभाग उघडा →</div>
     </a>
   </div>
 </section>
 
-<main class="container" id="contentArea">
-
-<!-- NOTICE -->
-
-<div class="notice">
-  📢 <strong>AI साथी:</strong>
-  शिक्षण, नागरिक सुविधा, शासकीय योजना आणि
-  AI तंत्रज्ञानाची उपयुक्त माहिती एका डिजिटल प्लॅटफॉर्मवर.
-</div>
-
-
-<!-- EDUCATION -->
-
-<section class="category-view" id="education">
-
-  <div class="category-head">
-    <div>
-      <h2>🎓 शैक्षणिक विभाग</h2>
-      <p>विद्यार्थी, शिक्षक आणि पालकांसाठी उपयुक्त माहिती</p>
-    </div>
-    <button class="back-btn" onclick="showDashboard()">← मुख्य डॅशबोर्ड</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card searchable">
-      <div class="icon">📚</div>
-      <h3>अभ्यासक्रम</h3>
-      <p>
-        इयत्ता 1 ते 8 साठी अभ्यासक्रम,
-        विषय आणि शैक्षणिक माहिती.
-      </p>
-      <a href="#education">माहिती पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📝</div>
-      <h3>प्रश्नपत्रिका</h3>
-      <p>
-        सराव प्रश्नपत्रिका, प्रश्नसंच
-        आणि मूल्यमापन साहित्य.
-      </p>
-      <a href="#education">पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">👨‍🏫</div>
-      <h3>शिक्षक सुविधा</h3>
-      <p>
-        शिक्षकांसाठी उपयुक्त साधने,
-        शैक्षणिक संसाधने आणि माहिती.
-      </p>
-      <a href="#education">पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🎒</div>
-      <h3>विद्यार्थी सुविधा</h3>
-      <p>
-        विद्यार्थ्यांसाठी अभ्यास,
-        शिष्यवृत्ती आणि उपयुक्त माहिती.
-      </p>
-      <a href="#education">पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📖</div>
-      <h3>पाठ्यपुस्तके</h3>
-      <p>
-        विविध वर्गांसाठी पाठ्यपुस्तके
-        आणि शैक्षणिक साहित्य.
-      </p>
-      <a href="#education">पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🏫</div>
-      <h3>शाळा सुविधा</h3>
-      <p>
-        शाळा व्यवस्थापन, उपक्रम,
-        योजना आणि शैक्षणिक माहिती.
-      </p>
-      <a href="#education">पहा →</a>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- CITIZEN -->
-
-<section class="category-view" id="citizen">
-
-  <div class="category-head">
-    <div>
-      <h2>🏛️ नागरिक सुविधा</h2>
-      <p>नागरिकांसाठी विविध अर्ज, प्रमाणपत्रे आणि ऑनलाइन सेवा</p>
-    </div>
-    <button class="back-btn" onclick="showDashboard()">← मुख्य डॅशबोर्ड</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card searchable" onclick="openCategory('aadhaar')" style="cursor:pointer">
-      <div class="icon">🪪</div>
-      <h3>Aadhaar Services</h3>
-      <p>आधार संबंधित दोन अधिकृत SOP विभाग आणि संपादनयोग्य नमुने.</p>
-      <a href="#aadhaar" onclick="openCategory('aadhaar');return false;">विभाग उघडा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📄</div>
-      <h3>विविध अर्ज</h3>
-      <p>सरकारी कार्यालयांमध्ये लागणारे विविध अर्ज व नमुने.</p>
-      <a href="#applications">अर्ज पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📜</div>
-      <h3>प्रमाणपत्रे</h3>
-      <p>उत्पन्न, रहिवासी, जात आणि इतर प्रमाणपत्रांची माहिती.</p>
-      <a href="#applications">माहिती पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">💻</div>
-      <h3>ऑनलाइन सेवा</h3>
-      <p>विविध अधिकृत ऑनलाइन सेवांची माहिती आणि मार्गदर्शन.</p>
-      <a href="#citizen">सेवा पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📥</div>
-      <h3>डाउनलोड सेंटर</h3>
-      <p>अर्ज, PDF, नमुने आणि आवश्यक कागदपत्रे.</p>
-      <a href="#downloads">डाउनलोड →</a>
-    </div>
-
-  </div>
-
-  <div class="subsection" id="citizenExtra">
-    <div class="section-title">
-      <h2>🔎 नागरिक सेवा माहिती</h2>
-      <p>खालील विभागांमधून आवश्यक सेवा निवडा.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- AADHAAR SERVICES -->
-<section class="category-view" id="aadhaar">
-  <div class="category-head">
-    <div>
-      <h2>🪪 Aadhaar Services</h2>
-      <p>आधार संबंधित उपलब्ध दोन SOP विभाग</p>
-    </div>
-    <button class="back-btn" onclick="openCategory('citizen')">← नागरिक सुविधा</button>
-  </div>
-
-  <div class="grid">
-    <div class="card searchable">
-      <div class="icon">📅</div>
-      <h3>जन्मतारीख सुधारणा SOP</h3>
-      <p>UIDAI DoB Update साठी उपलब्ध Annexure I, IA, II, IIA, III आणि IIIA नमुने.</p>
-      <details>
-        <summary>📋 Annexures पहा</summary>
-        <ul>
-          <li>Annexure I</li>
-          <li>Annexure IA</li>
-          <li>Annexure II</li>
-          <li>Annexure IIA</li>
-          <li>Annexure III</li>
-          <li>Annexure IIIA</li>
-        </ul>
-      </details>
-      <a href="/dob.html" target="_blank" rel="noopener noreferrer">📝 नमुना उघडा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">👤</div>
-      <h3>नाव सुधारणा SOP</h3>
-      <p>UIDAI Name Update साठी उपलब्ध Annexure B, C, D, E आणि F नमुने.</p>
-      <details>
-        <summary>📋 Annexures पहा</summary>
-        <ul>
-          <li>Annexure B</li>
-          <li>Annexure C</li>
-          <li>Annexure D</li>
-          <li>Annexure E</li>
-          <li>Annexure F</li>
-        </ul>
-      </details>
-      <a href="/aadhaar.html" target="_blank" rel="noopener noreferrer">📝 नमुना उघडा →</a>
-    </div>
-  </div>
-</section>
-
-<!-- APPLICATIONS -->
-
-<section class="subsection" id="applications">
-
-  <div class="section-title">
-    <h2>📄 विविध अर्ज व प्रमाणपत्रे</h2>
-    <p>नागरिकांसाठी आवश्यक अर्ज, कागदपत्रे आणि अर्ज प्रक्रियेची माहिती</p>
-  </div>
-
-  <div class="grid">
-    <!-- 1 Residence -->
-    <div class="card searchable">
-      <div class="icon">🏠</div>
-      <h3>रहिवासी प्रमाणपत्र अर्ज</h3>
-      <p>रहिवासी प्रमाणपत्रासाठी आवश्यक माहिती व अर्ज प्रक्रिया.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 आवश्यक कागदपत्रे</h4>
-        <ul>
-          <li>ओळखीचा पुरावा</li>
-          <li>पत्त्याचा पुरावा</li>
-          <li>रहिवासाचा पुरावा</li>
-          <li>आवश्यकतेनुसार स्वघोषणापत्र</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          Aaple Sarkar पोर्टलवर नोंदणी करून संबंधित सेवा निवडा,
-          आवश्यक माहिती भरा आणि कागदपत्रे अपलोड करा.
-        </p>
-
-        <h4>⏱️ सेवा कालमर्यादा</h4>
-        <p>ग्रामीण विकास विभागाच्या रहिवासी प्रमाणपत्र सेवेसाठी 5 दिवसांची मर्यादा दिली आहे.</p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 2 Income -->
-    <div class="card searchable">
-      <div class="icon">💰</div>
-      <h3>उत्पन्न प्रमाणपत्र अर्ज</h3>
-      <p>उत्पन्न प्रमाणपत्रासाठी आवश्यक कागदपत्रे व मार्गदर्शन.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 आवश्यक कागदपत्रे</h4>
-        <ul>
-          <li>ओळखीचा पुरावा</li>
-          <li>पत्त्याचा पुरावा</li>
-          <li>उत्पन्नाचा पुरावा</li>
-          <li>आवश्यकतेनुसार संबंधित कागदपत्रे</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          Aaple Sarkar वर नोंदणी करून महसूल विभागातील
-          Income Certificate सेवा निवडा.
-        </p>
-
-        <h4>⏱️ सेवा कालमर्यादा</h4>
-        <p>अधिकृत RTS माहितीनुसार 15 दिवस.</p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 3 Caste -->
-    <div class="card searchable">
-      <div class="icon">🪪</div>
-      <h3>जात प्रमाणपत्र अर्ज</h3>
-      <p>जात प्रमाणपत्रासाठी आवश्यक कागदपत्रे व प्रक्रिया.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 आवश्यक कागदपत्रे</h4>
-        <ul>
-          <li>ओळखीचा पुरावा</li>
-          <li>पत्त्याचा पुरावा</li>
-          <li>जात दर्शविणारे उपलब्ध पुरावे</li>
-          <li>कुटुंबातील संबंधित व्यक्तींचे जात प्रमाणपत्र असल्यास त्याची प्रत</li>
-          <li>आवश्यकतेनुसार इतर कागदपत्रे</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          संबंधित महसूल सेवा निवडून अर्जातील माहिती भरा
-          आणि आवश्यक कागदपत्रे सादर करा.
-        </p>
-
-        <h4>⏱️ सेवा कालमर्यादा</h4>
-        <p>अधिकृत RTS माहितीनुसार 21 दिवस.</p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 4 Birth -->
-    <div class="card searchable">
-      <div class="icon">👤</div>
-      <h3>जन्म प्रमाणपत्र अर्ज</h3>
-      <p>जन्म नोंदणी व जन्म प्रमाणपत्रासाठी आवश्यक माहिती.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 आवश्यक माहिती</h4>
-        <ul>
-          <li>जन्माची तारीख</li>
-          <li>जन्माचे ठिकाण</li>
-          <li>पालकांची माहिती</li>
-          <li>उपलब्ध जन्म नोंदणीचा पुरावा</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          संबंधित ग्रामपंचायत/स्थानिक प्राधिकरण किंवा
-          उपलब्ध ऑनलाइन सेवेमार्फत अर्ज करता येतो.
-        </p>
-
-        <h4>⏱️ सेवा कालमर्यादा</h4>
-        <p>ग्रामीण विकास विभागाच्या RTS माहितीनुसार 5 दिवस.</p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 5 Death -->
-    <div class="card searchable">
-      <div class="icon">⚰️</div>
-      <h3>मृत्यू प्रमाणपत्र अर्ज</h3>
-      <p>मृत्यू नोंदणी व प्रमाणपत्रासाठी आवश्यक माहिती.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 आवश्यक माहिती</h4>
-        <ul>
-          <li>मृत व्यक्तीचे नाव</li>
-          <li>मृत्यूची तारीख</li>
-          <li>मृत्यूचे ठिकाण</li>
-          <li>उपलब्ध मृत्यू नोंदणीचा पुरावा</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          संबंधित ग्रामपंचायत/स्थानिक प्राधिकरणाकडे
-          मृत्यू नोंदणी करून प्रमाणपत्रासाठी अर्ज करावा.
-        </p>
-
-        <h4>⏱️ सेवा कालमर्यादा</h4>
-        <p>ग्रामीण विकास विभागाच्या RTS माहितीनुसार 5 दिवस.</p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 6 Family -->
-    <div class="card searchable">
-      <div class="icon">👨‍👩‍👧</div>
-      <h3>कुटुंब प्रमाणपत्र अर्ज</h3>
-      <p>कुटुंबाशी संबंधित प्रमाणपत्र व अर्जांची माहिती.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📋 सामान्यतः आवश्यक माहिती</h4>
-        <ul>
-          <li>कुटुंब प्रमुखाची माहिती</li>
-          <li>कुटुंबातील सदस्यांची माहिती</li>
-          <li>ओळखीचा पुरावा</li>
-          <li>पत्त्याचा पुरावा</li>
-          <li>संबंधित कार्यालयाने मागितलेली कागदपत्रे</li>
-        </ul>
-
-        <h4>📝 अर्ज प्रक्रिया</h4>
-        <p>
-          प्रमाणपत्राचा प्रकार व स्थानिक कार्यालयानुसार
-          आवश्यक कागदपत्रे बदलू शकतात.
-        </p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 7 Gram Panchayat -->
-    <div class="card searchable">
-      <div class="icon">🏛️</div>
-      <h3>ग्रामपंचायत अर्ज</h3>
-      <p>ग्रामपंचायतीशी संबंधित विविध अर्ज व नमुने.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📄 उपलब्ध अर्जांचे प्रकार</h4>
-        <ul>
-          <li>विविध प्रमाणपत्रांसाठी अर्ज</li>
-          <li>ग्रामपंचायत नोंदीशी संबंधित अर्ज</li>
-          <li>निवासी/कुटुंब विषयक अर्ज</li>
-          <li>स्थानिक सेवांसाठी अर्ज</li>
-        </ul>
-
-        <h4>📝 सूचना</h4>
-        <p>
-          अर्जाचा नमुना व आवश्यक कागदपत्रे संबंधित
-          ग्रामपंचायतीकडून निश्चित केली जाऊ शकतात.
-        </p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-
-    <!-- 8 Other -->
-    <div class="card searchable">
-      <div class="icon">📋</div>
-      <h3>इतर शासकीय अर्ज</h3>
-      <p>विविध शासकीय विभागांशी संबंधित अर्ज व सेवा.</p>
-
-      <details>
-        <summary>सविस्तर माहिती →</summary>
-
-        <h4>📂 विभाग</h4>
-        <ul>
-          <li>महसूल विभाग</li>
-          <li>ग्रामविकास विभाग</li>
-          <li>पंचायत राज विभाग</li>
-          <li>सामाजिक न्याय विभाग</li>
-          <li>शिक्षण विभाग</li>
-          <li>इतर संबंधित विभाग</li>
-        </ul>
-
-        <h4>⚠️ महत्त्वाची सूचना</h4>
-        <p>
-          प्रत्येक अर्जासाठी आवश्यक कागदपत्रे व प्रक्रिया
-          संबंधित अधिकृत विभागाच्या नियमांनुसार तपासावी.
-        </p>
-
-        <a href="https://aaplesarkar.mahaonline.gov.in/mr/CommonForm/CitizenServices_RTS" target="_blank">
-  🌐 अधिकृत Aaple Sarkar पोर्टल →
-</a>
-      </details>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- OFFICIAL PORTAL -->
-
-<section class="subsection" id="official-portal">
-
-  <div class="notice">
-
-    <h3>🌐 अधिकृत सरकारी सेवा</h3>
-
-    <p>
-      महाराष्ट्र शासनाच्या Aaple Sarkar पोर्टलवर
-      विविध अधिसूचित नागरिक सेवा उपलब्ध आहेत.
-    </p>
-
-    <p style="margin-top:12px;">
-      अर्ज करण्यापूर्वी संबंधित सेवेची सध्याची
-      कागदपत्रे, शुल्क आणि प्रक्रिया अधिकृत पोर्टलवर तपासा.
-    </p>
-
-    <p style="margin-top:15px;">
-      👉 <strong>Aaple Sarkar – महाराष्ट्र शासन</strong>
-    </p>
-
-  </div>
-
-</section>
-<!-- SCHEMES -->
-
-<section class="category-view" id="schemes">
-
-  <div class="category-head">
-    <div>
-      <h2>📋 शासकीय योजना</h2>
-      <p>केंद्र व राज्य शासनाच्या विविध योजनांची माहिती</p>
-    </div>
-    <button class="back-btn" onclick="showDashboard()">← मुख्य डॅशबोर्ड</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card searchable">
-      <div class="icon">🌾</div>
-      <h3>शेतकरी योजना</h3>
-      <p>
-        शेतकरी, शेती, अनुदान आणि
-        कृषी योजनांची माहिती.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">👩</div>
-      <h3>महिला योजना</h3>
-      <p>
-        महिला व मुलींसाठी उपलब्ध
-        विविध योजनांची माहिती.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">👨‍👩‍👧</div>
-      <h3>नागरिक योजना</h3>
-      <p>
-        सर्वसामान्य नागरिकांसाठी
-        विविध सरकारी योजना.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🎓</div>
-      <h3>विद्यार्थी योजना</h3>
-      <p>
-        शिष्यवृत्ती, शिक्षण आणि
-        विद्यार्थ्यांसाठीच्या योजना.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">💼</div>
-      <h3>रोजगार योजना</h3>
-      <p>
-        रोजगार, कौशल्य विकास आणि
-        स्वयंरोजगाराशी संबंधित माहिती.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🏠</div>
-      <h3>घरकुल योजना</h3>
-      <p>
-        घरकुल व निवासाशी संबंधित
-        सरकारी योजनांची माहिती.
-      </p>
-      <a href="#schemes">योजना पहा →</a>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- AI TOOLS -->
-
-<section class="category-view" id="ai">
-
-  <div class="category-head">
-    <div>
-      <h2>🤖 AI Tools</h2>
-      <p>शिक्षण, लेखन, डिझाइन आणि दैनंदिन कामासाठी AI साधने</p>
-    </div>
-    <button class="back-btn" onclick="showDashboard()">← मुख्य डॅशबोर्ड</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card searchable">
-      <div class="icon">💬</div>
-      <h3>ChatGPT</h3>
-      <p>
-        लेखन, अभ्यास, प्रश्नोत्तरे,
-        कल्पना आणि माहिती.
-      </p>
-      <a href="https://chatgpt.com" target="_blank">
-        Open →
-      </a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">✨</div>
-      <h3>Gemini</h3>
-      <p>
-        Google चे AI साधन आणि
-        उत्पादकता सुविधा.
-      </p>
-      <a href="https://gemini.google.com" target="_blank">
-        Open →
-      </a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">📖</div>
-      <h3>NotebookLM</h3>
-      <p>
-        PDF व दस्तऐवजांवर आधारित
-        अभ्यास आणि विश्लेषण.
-      </p>
-      <a href="https://notebooklm.google.com" target="_blank">
-        Open →
-      </a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🎨</div>
-      <h3>Canva AI</h3>
-      <p>
-        पोस्टर, डिझाइन, प्रस्तुतीकरण
-        आणि AI निर्मिती.
-      </p>
-      <a href="https://www.canva.com" target="_blank">
-        Open →
-      </a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🧠</div>
-      <h3>Google AI Studio</h3>
-      <p>
-        AI प्रयोग, Gemini API आणि
-        AI आधारित applications.
-      </p>
-      <a href="https://aistudio.google.com" target="_blank">
-        Open →
-      </a>
-    </div>
-
-    <div class="card searchable">
-      <div class="icon">🎬</div>
-      <h3>AI Video Tools</h3>
-      <p>
-        AI च्या मदतीने व्हिडिओ,
-        आवाज आणि सामग्री निर्मिती.
-      </p>
-      <a href="#ai">लवकरच →</a>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- UPDATES -->
+<div class="notice">💡 <strong>AI साथी:</strong> शिक्षण, नागरिक सुविधा, शासकीय योजना आणि AI तंत्रज्ञानाची उपयुक्त माहिती एका डिजिटल प्लॅटफॉर्मवर.</div>
 
 <section class="section" id="updates">
-
-  <div class="section-title">
+  <div class="section-box">
     <h2>📰 ताज्या सूचना</h2>
-    <p>महत्त्वाच्या माहिती व अपडेट्स</p>
+    <p>महत्त्वाची माहिती व अपडेट्स</p>
+    <div class="update"><span>शिक्षण</span> शैक्षणिक विभागातील नवीन माहिती येथे प्रसिद्ध केली जाईल.</div>
+    <div class="update"><span>योजना</span> नवीन शासकीय योजनांची माहिती येथे उपलब्ध केली जाईल.</div>
+    <div class="update"><span>नागरिक</span> नागरिकांसाठी उपयुक्त सेवा व अर्जांची माहिती येथे दिली जाईल.</div>
+    <div class="update"><span>AI</span> नवीन AI Tools आणि त्यांच्या वापराचे मार्गदर्शन येथे मिळेल.</div>
   </div>
-
-  <div class="updates">
-
-    <div class="update">
-      <span>शिक्षण</span>
-      शैक्षणिक विभागातील नवीन माहिती येथे प्रसिद्ध केली जाईल.
-    </div>
-
-    <div class="update">
-      <span>योजना</span>
-      नवीन शासकीय योजनांची माहिती येथे उपलब्ध केली जाईल.
-    </div>
-
-    <div class="update">
-      <span>नागरिक</span>
-      नागरिकांसाठी उपयुक्त सेवा व अर्जांची माहिती येथे दिली जाईल.
-    </div>
-
-    <div class="update">
-      <span>AI</span>
-      नवीन AI Tools आणि त्यांच्या वापराचे मार्गदर्शन येथे मिळेल.
-    </div>
-
-  </div>
-
 </section>
-
-
-<!-- DOWNLOADS -->
-
-<section class="section" id="downloads">
-
-  <div class="section-title">
-    <h2>📥 डाउनलोड सेंटर</h2>
-    <p>उपयुक्त PDF, अर्ज आणि नमुने</p>
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <div class="icon">📄</div>
-      <h3>अर्ज व नमुने</h3>
-      <p>
-        विविध कार्यालयीन अर्ज आणि नमुने.
-      </p>
-      <a href="#downloads">लवकरच उपलब्ध →</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📚</div>
-      <h3>शैक्षणिक PDF</h3>
-      <p>
-        विद्यार्थ्यांसाठी आणि शिक्षकांसाठी
-        शैक्षणिक साहित्य.
-      </p>
-      <a href="#downloads">लवकरच उपलब्ध →</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📋</div>
-      <h3>सरकारी दस्तऐवज</h3>
-      <p>
-        उपयुक्त शासन निर्णय आणि
-        अधिकृत कागदपत्रे.
-      </p>
-      <a href="#downloads">लवकरच उपलब्ध →</a>
-    </div>
-
-  </div>
-
-</section>
-
-<div id="noResult" class="no-result">
-  🔎 शोधाशी संबंधित माहिती सापडली नाही.
-</div>
-
-</main>
-
-
-<!-- FOOTER -->
 
 <footer>
-
   <h3>🤖 AI साथी</h3>
-
-  <p>
-    शिक्षण • नागरिक सुविधा • शासकीय योजना • AI Tools
-  </p>
-
+  <p>ज्ञान • सुविधा • माहिती • तंत्रज्ञान</p>
   <div class="footer-links">
-    <a href="#home">मुख्यपृष्ठ</a>
-    <a href="#education">शिक्षण</a>
-    <a href="#citizen">नागरिक सुविधा</a>
-    <a href="#schemes">योजना</a>
-    <a href="#ai">AI Tools</a>
+    <a href="education.html">शिक्षण</a>
+    <a href="citizen.html">नागरिक सुविधा</a>
+    <a href="schemes.html">शासकीय योजना</a>
+    <a href="ai-tools.html">AI Tools</a>
   </div>
-
-  <p>
-    © 2026 AI साथी | Vilas Mulak
-  </p>
-
+  <p>© 2026 AI साथी | Vilas Mulak</p>
 </footer>
 
-
 <script>
-
-function showDashboard(){
-  document.querySelectorAll('.category-view').forEach(v=>v.classList.remove('active'));
-  window.scrollTo({top:document.getElementById('home').offsetTop-80,behavior:'smooth'});
-  history.replaceState(null,'','#home');
-}
-
-function openCategory(id){
-  document.querySelectorAll('.category-view').forEach(v=>v.classList.remove('active'));
-  const target=document.getElementById(id);
-  if(target){
-    target.classList.add('active');
-    target.scrollIntoView({behavior:'smooth',block:'start'});
-    history.replaceState(null,'','#'+id);
-  }
-}
-
-/* Keep direct navigation links functional */
-document.addEventListener('DOMContentLoaded',function(){
-  const hash=window.location.hash.replace('#','');
-  if(['education','citizen','aadhaar','schemes','ai'].includes(hash)){
-    openCategory(hash);
-  }
-});
-
 function searchPortal(){
-
-  const value =
-    document.getElementById("searchBox")
-    .value
-    .trim()
-    .toLowerCase();
-
-  const cards =
-    document.querySelectorAll(".searchable");
-
-  const noResult =
-    document.getElementById("noResult");
-
-  if(!value){
-
-    cards.forEach(card=>{
-      card.style.display="";
-    });
-
-    noResult.style.display="none";
-    return;
-  }
-
-  let found=0;
-
-  cards.forEach(card=>{
-
-    const text =
-      card.innerText.toLowerCase();
-
-    if(text.includes(value)){
-
-      card.style.display="";
-      found++;
-
-    }else{
-
-      card.style.display="none";
-
-    }
-
-  });
-
-  if(found===0){
-
-    noResult.style.display="block";
-
-  }else{
-
-    noResult.style.display="none";
-
-  }
+  const q=document.getElementById('searchBox').value.trim().toLowerCase();
+  if(!q)return;
+  const routes=[
+    {terms:['शिक्षण','अभ्यासक्रम','cce','hpc','पोषण','digital school'],url:'education.html'},
+    {terms:['आधार','aadhaar','अर्ज','प्रमाणपत्र','नागरिक'],url:'citizen.html'},
+    {terms:['योजना','शेतकरी','महिला','आरोग्य','घरकुल'],url:'schemes.html'},
+    {terms:['ai','chatgpt','gemini','notebooklm','canva'],url:'ai-tools.html'}
+  ];
+  const match=routes.find(r=>r.terms.some(t=>q.includes(t)));
+  if(match) window.location.href=match.url;
+  else alert('ही माहिती सध्या उपलब्ध नाही. कृपया मुख्य विभागांमधून शोधा.');
 }
-
+document.getElementById('searchBox').addEventListener('keydown',e=>{if(e.key==='Enter')searchPortal()});
 </script>
 
-</body>
-</html>
 
-  
+</body></html>
