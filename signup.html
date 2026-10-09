@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>शाळा नोंदणी | AI साथी</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#eef2ff;color:#1e293b}
+.card{max-width:650px;margin:20px auto;background:white;padding:26px;border-radius:18px;box-shadow:0 8px 30px #0001}
+h1{text-align:center;color:#3730a3;font-size:26px}
+p.intro{text-align:center;color:#64748b}
+label{display:block;font-weight:bold;margin:15px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:14px;margin-top:22px;border:0;border-radius:9px;background:#4338ca;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6}
+#message{line-height:1.7;overflow-wrap:anywhere}
+.back{display:block;text-align:center;margin-top:18px;color:#4338ca}
+.small{font-size:13px;color:#64748b;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎓 AI साथी — शाळा नोंदणी</h1>
+<p class="intro">नोंदणी करा आणि 7 दिवसांचा Demo सुरू करा</p>
+
+<form id="signupForm">
+<label for="teacher">शिक्षक / मुख्याध्यापकाचे पूर्ण नाव</label>
+<input id="teacher" required maxlength="100">
+
+<label for="email">ई-मेल</label>
+<input id="email" type="email" autocomplete="email" required>
+
+<label for="password">पासवर्ड (किमान 8 अक्षरे)</label>
+<input id="password" type="password" minlength="8" autocomplete="new-password" required>
+
+<label for="school">शाळेचे पूर्ण नाव</label>
+<input id="school" required maxlength="150">
+
+<label for="udise">11 अंकी UDISE क्रमांक</label>
+<input id="udise" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required>
+
+<label for="center">केंद्राचे नाव</label>
+<input id="center" required maxlength="100">
+
+<label for="taluka">तालुका</label>
+<input id="taluka" required maxlength="100">
+
+<label for="district">जिल्हा</label>
+<input id="district" required maxlength="100">
+
+<label for="mobile">संपर्क क्रमांक</label>
+<input id="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" minlength="10" maxlength="10" required>
+
+<label for="classes">शाळेचा वर्ग गट</label>
+<select id="classes" required>
+<option value="">वर्ग गट निवडा</option>
+<option value="1-5">इयत्ता 1 ते 5</option>
+<option value="6-8">इयत्ता 6 ते 8</option>
+<option value="1-8">इयत्ता 1 ते 8</option>
+</select>
+
+<p class="small">नोंदणी करून तुम्ही शाळेची माहिती योग्य असल्याची खात्री करता. Demo ची मुदत 7 दिवस आहे. प्रत्यक्ष खाते व Demo सक्रिय होण्यासाठी सर्व्हरवरील पडताळणी आवश्यक आहे.</p>
+
+<button id="submitBtn" type="submit">नोंदणी करा</button>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+<a class="back" href="login.html">आधीच खाते आहे? Login करा</a>
+<a class="back" href="education-dashboard.html">शिक्षण Dashboard वर जा</a>
+</div>
+
+<script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+// Firebase Console मधील तुमच्या Web App ची खरी Config येथे भरा.
+const firebaseConfig = {
+  apiKey: "YOUR_REAL_API_KEY",
+  authDomain: "YOUR_REAL_AUTH_DOMAIN",
+  projectId: "YOUR_REAL_PROJECT_ID",
+  storageBucket: "YOUR_REAL_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_REAL_MESSAGING_SENDER_ID",
+  appId: "YOUR_REAL_APP_ID"
+};
+
+const form = document.getElementById("signupForm");
+const button = document.getElementById("submitBtn");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
+    message.textContent =
+      "Firebase Configuration भरणे बाकी आहे. Firebase Console मधील खरी Config वापरा.";
+    return;
+  }
+
+  const udise = document.getElementById("udise").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+
+  if (!/^[0-9]{11}$/.test(udise)) {
+    message.textContent = "UDISE क्रमांक 11 अंकांचा असावा.";
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    message.textContent = "संपर्क क्रमांक 10 अंकांचा असावा.";
+    return;
+  }
+
+  button.disabled = true;
+  message.textContent = "नोंदणी तपासत आहोत...";
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const credential = await createUserWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value.trim(),
+      document.getElementById("password").value
+    );
+
+    await updateProfile(credential.user, {
+      displayName: document.getElementById("teacher").value.trim()
+    });
+
+    message.textContent =
+      "खाते तयार झाले आहे. शाळेची माहिती व 7 दिवसांचा Demo सक्रिय करण्यासाठी पुढील सुरक्षित पडताळणी आवश्यक आहे. कृपया Login करा.";
+
+    form.reset();
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 2500);
+
+  } catch (error) {
+    const errors = {
+      "auth/email-already-in-use": "हा ई-मेल आधीच नोंदणीकृत आहे. Login करा.",
+      "auth/invalid-email": "ई-मेल योग्य स्वरूपात भरा.",
+      "auth/weak-password": "कृपया अधिक मजबूत पासवर्ड वापरा.",
+      "auth/operation-not-allowed": "Firebase मध्ये Email/Password Login सुरू आहे का तपासा."
+    };
+
+    message.textContent =
+      errors[error.code] || "नोंदणी पूर्ण झाली नाही. Firebase सेटिंग तपासा.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
