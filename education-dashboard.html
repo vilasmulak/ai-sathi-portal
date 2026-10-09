@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शिक्षण Dashboard | AI साथी</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f1f5f9;color:#1e293b}
+header{background:linear-gradient(135deg,#075985,#2563eb);color:white;padding:24px 16px;text-align:center}
+header h1{margin:0 0 8px}
+header p{margin:0}
+main{max-width:1050px;margin:25px auto;padding:0 16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+a{ text-decoration:none }
+.btn{display:inline-block;padding:10px 15px;border-radius:9px;background:#2563eb;color:white;font-weight:bold}
+.btn-light{background:white;color:#1d4ed8;box-shadow:0 2px 8px #0001}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:23px;box-shadow:0 5px 16px #0000000b}
+.icon{font-size:34px}
+.card h2{font-size:20px;color:#1e40af;margin:12px 0 8px}
+.card p{color:#64748b;line-height:1.6}
+.card .btn{margin-top:8px}
+footer{text-align:center;padding:25px;color:#64748b}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎓 AI साथी — शिक्षण विभाग</h1>
+  <p>शाळा व्यवस्थापन व शैक्षणिक डिजिटल सेवा</p>
+</header>
+<main>
+  <div class="top">
+    <a class="btn btn-light" href="index.html">← मुख्य Dashboard</a>
+    <a class="btn" href="login.html">Login पेज</a>
+  </div>
+  <h2>शैक्षणिक सेवा</h2>
+  <div class="grid">
+    <section class="card">
+      <div class="icon">🏫</div>
+      <h2>शाळेची माहिती</h2>
+      <p>शाळेचा UDISE क्रमांक, नाव, केंद्र, तालुका, जिल्हा व मुख्याध्यापकाची माहिती.</p>
+      <a class="btn" href="login.html">प्रवेश करा</a>
+    </section>
+    <section class="card">
+      <div class="icon">🍱</div>
+      <h2>शालेय पोषण आहार व्यवस्थापन</h2>
+      <p>दैनंदिन हजेरी, आहार नोंद, साठा नोंदवही आणि अहवाल.</p>
+      <a class="btn" href="login.html">प्रवेश करा</a>
+    </section>
+    <section class="card">
+      <div class="icon">📊</div>
+      <h2>सातत्यपूर्ण सर्वंकष मूल्यमापन (CCE)</h2>
+      <p>विद्यार्थ्यांच्या सातत्यपूर्ण मूल्यमापनासाठी डिजिटल सेवा.</p>
+      <a class="btn" href="login.html">प्रवेश करा</a>
+    </section>
+    <section class="card">
+      <div class="icon">📋</div>
+      <h2>समग्र प्रगती पत्रक</h2>
+      <p>विद्यार्थ्यांच्या सर्वांगीण प्रगतीच्या नोंदींसाठी सेवा.</p>
+      <a class="btn" href="login.html">प्रवेश करा</a>
+    </section>
+    <section class="card">
+      <div class="icon">💻</div>
+      <h2>Digital School Management</h2>
+      <p>शाळेच्या प्रशासकीय व शैक्षणिक कामकाजाचे व्यवस्थापन.</p>
+      <a class="btn" href="login.html">प्रवेश करा</a>
+    </section>
+  </div>
+</main>
+<footer>© 2026 AI साथी | शैक्षणिक सेवा</footer>
+</body>
+</html>
