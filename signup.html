@@ -7,39 +7,78 @@
 <title>शाळा नोंदणी | AI साथी</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:20px;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#eef2ff;color:#1e293b}
-.card{max-width:650px;margin:20px auto;background:white;padding:26px;border-radius:18px;box-shadow:0 8px 30px #0001}
-h1{text-align:center;color:#3730a3;font-size:26px}
-p.intro{text-align:center;color:#64748b}
+body{
+ margin:0;padding:16px;font-family:Arial,"Noto Sans Devanagari",sans-serif;
+ background:linear-gradient(135deg,#eef2ff,#f0fdfa);color:#1e293b
+}
+.card{
+ max-width:520px;margin:20px auto;background:#fff;padding:25px;
+ border-radius:20px;box-shadow:0 10px 35px #00000012
+}
+h1{text-align:center;color:#3730a3;font-size:25px}
+.intro{text-align:center;color:#64748b;line-height:1.6}
+.progress{height:6px;background:#e2e8f0;border-radius:10px;margin:22px 0}
+.bar{height:6px;width:33.33%;background:#4f46e5;border-radius:10px;transition:.2s}
+.steps{display:flex;justify-content:space-between;font-size:13px;color:#64748b}
+.step{display:none}
+.step.active{display:block}
+h2{font-size:19px;margin-top:24px}
 label{display:block;font-weight:bold;margin:15px 0 6px}
-input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;background:white}
-button{width:100%;padding:14px;margin-top:22px;border:0;border-radius:9px;background:#4338ca;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+input,select{
+ width:100%;padding:12px;border:1px solid #cbd5e1;
+ border-radius:9px;font-size:16px;background:white
+}
+button{
+ padding:13px;border:0;border-radius:9px;background:#4338ca;
+ color:white;font-size:16px;font-weight:bold;cursor:pointer
+}
 button:disabled{opacity:.6}
+.actions{display:flex;gap:10px;margin-top:22px}
+.actions button{flex:1}
+.backbtn{background:#e2e8f0;color:#1e293b}
 #message{line-height:1.7;overflow-wrap:anywhere}
-.back{display:block;text-align:center;margin-top:18px;color:#4338ca}
-.small{font-size:13px;color:#64748b;line-height:1.6}
+.small{font-size:13px;color:#64748b;line-height:1.7}
+.review{background:#f8fafc;padding:12px;border-radius:10px;line-height:1.9;overflow-wrap:anywhere}
+a{color:#4338ca}
+@media(max-width:420px){.card{padding:18px}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div class="card">
-<h1>🎓 AI साथी — शाळा नोंदणी</h1>
-<p class="intro">नोंदणी करा आणि 7 दिवसांचा Demo सुरू करा</p>
+<h1>🎓 AI साथी</h1>
+<p class="intro">शाळेची नोंदणी करा<br>7 दिवसांच्या Demo साठी अर्ज करा</p>
+
+<div class="steps">
+<span>1. खाते</span><span>2. शाळा</span><span>3. तपासणी</span>
+</div>
+<div class="progress"><div class="bar" id="bar"></div></div>
 
 <form id="signupForm">
-<label for="teacher">शिक्षक / मुख्याध्यापकाचे पूर्ण नाव</label>
-<input id="teacher" required maxlength="100">
+<section class="step active">
+<h2>🔐 टप्पा 1 — खाते तयार करा</h2>
+<label for="teacher">शिक्षक / मुख्याध्यापकाचे नाव</label>
+<input id="teacher" required maxlength="100" autocomplete="name">
 
 <label for="email">ई-मेल</label>
-<input id="email" type="email" autocomplete="email" required>
+<input id="email" type="email" required autocomplete="email">
 
 <label for="password">पासवर्ड (किमान 8 अक्षरे)</label>
-<input id="password" type="password" minlength="8" autocomplete="new-password" required>
+<input id="password" type="password" minlength="8"
+required autocomplete="new-password">
 
+<div class="actions">
+<button type="button" onclick="nextStep(1)">पुढे जा →</button>
+</div>
+</section>
+
+<section class="step">
+<h2>🏫 टप्पा 2 — शाळेची माहिती</h2>
 <label for="school">शाळेचे पूर्ण नाव</label>
 <input id="school" required maxlength="150">
 
 <label for="udise">11 अंकी UDISE क्रमांक</label>
-<input id="udise" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required>
+<input id="udise" inputmode="numeric" pattern="[0-9]{11}"
+minlength="11" maxlength="11" required>
 
 <label for="center">केंद्राचे नाव</label>
 <input id="center" required maxlength="100">
@@ -51,7 +90,8 @@ button:disabled{opacity:.6}
 <input id="district" required maxlength="100">
 
 <label for="mobile">संपर्क क्रमांक</label>
-<input id="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" minlength="10" maxlength="10" required>
+<input id="mobile" type="tel" inputmode="numeric"
+pattern="[0-9]{10}" minlength="10" maxlength="10" required>
 
 <label for="classes">शाळेचा वर्ग गट</label>
 <select id="classes" required>
@@ -61,95 +101,171 @@ button:disabled{opacity:.6}
 <option value="1-8">इयत्ता 1 ते 8</option>
 </select>
 
-<p class="small">नोंदणी करून तुम्ही शाळेची माहिती योग्य असल्याची खात्री करता. Demo ची मुदत 7 दिवस आहे. प्रत्यक्ष खाते व Demo सक्रिय होण्यासाठी सर्व्हरवरील पडताळणी आवश्यक आहे.</p>
+<div class="actions">
+<button type="button" class="backbtn" onclick="prevStep(0)">← मागे</button>
+<button type="button" onclick="nextStep(2)">पुढे जा →</button>
+</div>
+</section>
 
+<section class="step">
+<h2>✅ टप्पा 3 — माहिती तपासा</h2>
+<p class="small">नोंदणी करण्यापूर्वी माहिती योग्य असल्याची खात्री करा.</p>
+<div class="review" id="review"></div>
+
+<p class="small">
+Demo कालावधी 7 दिवसांचा आहे. खाते तयार होणे म्हणजे
+शाळेची माहिती सेव्ह होणे किंवा Demo सक्रिय होणे नव्हे.
+त्यासाठी सुरक्षित सर्व्हर/Firebase जोडणी पूर्ण असणे आवश्यक आहे.
+</p>
+
+<div class="actions">
+<button type="button" class="backbtn" onclick="prevStep(1)">← मागे</button>
 <button id="submitBtn" type="submit">नोंदणी करा</button>
+</div>
+</section>
+
 <p id="message" role="status" aria-live="polite"></p>
 </form>
-<a class="back" href="login.html">आधीच खाते आहे? Login करा</a>
-<a class="back" href="education-dashboard.html">शिक्षण Dashboard वर जा</a>
+
+<hr style="border:0;border-top:1px solid #e2e8f0;margin-top:22px">
+<p class="small" style="text-align:center">
+आधीच खाते आहे? <a href="login.html">Login करा</a>
+</p>
+<p class="small" style="text-align:center">
+<a href="education-dashboard.html">शिक्षण Dashboard</a>
+</p>
 </div>
 
+<script>
+let currentStep = 0;
+const sections = document.querySelectorAll(".step");
+const bar = document.getElementById("bar");
+const form = document.getElementById("signupForm");
+const message = document.getElementById("message");
+const button = document.getElementById("submitBtn");
+
+function showStep(n) {
+ currentStep = n;
+ sections.forEach((s,i)=>s.classList.toggle("active",i===n));
+ bar.style.width = ((n+1)/3*100)+"%";
+ message.textContent = "";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function validateStep(n) {
+ const fields = sections[n].querySelectorAll("input,select");
+ for (const field of fields) {
+   if (!field.reportValidity()) return false;
+ }
+ return true;
+}
+
+function nextStep(n) {
+ if (!validateStep(currentStep)) return;
+
+ if (n === 2) {
+   const udise = document.getElementById("udise").value.trim();
+   const mobile = document.getElementById("mobile").value.trim();
+
+   if (!/^[0-9]{11}$/.test(udise)) {
+     alert("UDISE क्रमांक 11 अंकांचा असावा.");
+     return;
+   }
+   if (!/^[0-9]{10}$/.test(mobile)) {
+     alert("मोबाइल क्रमांक 10 अंकांचा असावा.");
+     return;
+   }
+
+   const labels = [
+     ["शिक्षकाचे नाव","teacher"],
+     ["ई-मेल","email"],
+     ["शाळेचे नाव","school"],
+     ["UDISE","udise"],
+     ["केंद्र","center"],
+     ["तालुका","taluka"],
+     ["जिल्हा","district"],
+     ["मोबाइल","mobile"],
+     ["वर्ग गट","classes"]
+   ];
+
+   document.getElementById("review").innerHTML =
+     labels.map(([label,id]) => {
+       const value = document.getElementById(id).value;
+       const safe = value.replace(/[&<>"']/g, c => ({
+         "&":"&amp;","<":"&lt;",">":"&gt;",
+         '"':"&quot;","'":"&#39;"
+       })[c]);
+       return "<strong>"+label+":</strong> "+safe;
+     }).join("<br>");
+ }
+ showStep(n);
+}
+
+function prevStep(n) {
+ showStep(n);
+}
+</script>
+
 <script type="module">
-import { initializeApp } from
+import { initializeApp, getApps } from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, updateProfile }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-// Firebase Console मधील तुमच्या Web App ची खरी Config येथे भरा.
+// येथे Firebase Console मधील खरी Web App Config भरा.
 const firebaseConfig = {
-  apiKey: "YOUR_REAL_API_KEY",
-  authDomain: "YOUR_REAL_AUTH_DOMAIN",
-  projectId: "YOUR_REAL_PROJECT_ID",
-  storageBucket: "YOUR_REAL_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_REAL_MESSAGING_SENDER_ID",
-  appId: "YOUR_REAL_APP_ID"
+ apiKey: "YOUR_REAL_API_KEY",
+ authDomain: "YOUR_REAL_AUTH_DOMAIN",
+ projectId: "YOUR_REAL_PROJECT_ID",
+ storageBucket: "YOUR_REAL_STORAGE_BUCKET",
+ messagingSenderId: "YOUR_REAL_MESSAGING_SENDER_ID",
+ appId: "YOUR_REAL_APP_ID"
 };
 
-const form = document.getElementById("signupForm");
-const button = document.getElementById("submitBtn");
-const message = document.getElementById("message");
-
 form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+ event.preventDefault();
+ if (!validateStep(2)) return;
 
-  if (firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
-    message.textContent =
-      "Firebase Configuration भरणे बाकी आहे. Firebase Console मधील खरी Config वापरा.";
-    return;
-  }
+ if (firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
+   message.textContent =
+    "Firebase Configuration बाकी आहे. खरी Firebase Config भरा.";
+   return;
+ }
 
-  const udise = document.getElementById("udise").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
+ button.disabled = true;
+ message.textContent = "खाते तयार करत आहोत...";
 
-  if (!/^[0-9]{11}$/.test(udise)) {
-    message.textContent = "UDISE क्रमांक 11 अंकांचा असावा.";
-    return;
-  }
+ try {
+   const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+   const auth = getAuth(app);
 
-  if (!/^[0-9]{10}$/.test(mobile)) {
-    message.textContent = "संपर्क क्रमांक 10 अंकांचा असावा.";
-    return;
-  }
+   const credential = await createUserWithEmailAndPassword(
+     auth,
+     document.getElementById("email").value.trim(),
+     document.getElementById("password").value
+   );
 
-  button.disabled = true;
-  message.textContent = "नोंदणी तपासत आहोत...";
+   await updateProfile(credential.user, {
+     displayName: document.getElementById("teacher").value.trim()
+   });
 
-  try {
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+   message.textContent =
+    "खाते तयार झाले. शाळेची माहिती सेव्ह करणे आणि Demo सक्रिय करण्यासाठी सुरक्षित Firebase जोडणी पुढे पूर्ण करावी लागेल.";
 
-    const credential = await createUserWithEmailAndPassword(
-      auth,
-      document.getElementById("email").value.trim(),
-      document.getElementById("password").value
-    );
+   button.disabled = true;
+   setTimeout(() => { window.location.href = "login.html"; }, 3500);
 
-    await updateProfile(credential.user, {
-      displayName: document.getElementById("teacher").value.trim()
-    });
-
-    message.textContent =
-      "खाते तयार झाले आहे. शाळेची माहिती व 7 दिवसांचा Demo सक्रिय करण्यासाठी पुढील सुरक्षित पडताळणी आवश्यक आहे. कृपया Login करा.";
-
-    form.reset();
-    setTimeout(() => {
-      window.location.href = "login.html";
-    }, 2500);
-
-  } catch (error) {
-    const errors = {
-      "auth/email-already-in-use": "हा ई-मेल आधीच नोंदणीकृत आहे. Login करा.",
-      "auth/invalid-email": "ई-मेल योग्य स्वरूपात भरा.",
-      "auth/weak-password": "कृपया अधिक मजबूत पासवर्ड वापरा.",
-      "auth/operation-not-allowed": "Firebase मध्ये Email/Password Login सुरू आहे का तपासा."
-    };
-
-    message.textContent =
-      errors[error.code] || "नोंदणी पूर्ण झाली नाही. Firebase सेटिंग तपासा.";
-  } finally {
-    button.disabled = false;
-  }
+ } catch (error) {
+   const errors = {
+    "auth/email-already-in-use":"हा ई-मेल आधीच नोंदणीकृत आहे. Login करा.",
+    "auth/invalid-email":"ई-मेल योग्य स्वरूपात भरा.",
+    "auth/weak-password":"कृपया अधिक मजबूत पासवर्ड वापरा.",
+    "auth/operation-not-allowed":"Firebase मध्ये Email/Password Login सुरू करा."
+   };
+   message.textContent =
+    errors[error.code] || "नोंदणी पूर्ण झाली नाही. Firebase सेटिंग तपासा.";
+   button.disabled = false;
+ }
 });
 </script>
 </body>
