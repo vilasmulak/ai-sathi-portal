@@ -1,0 +1,118 @@
+```html
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | AI साथी</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:linear-gradient(135deg,#e0f2fe,#eef2ff);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  color:#1e293b
+}
+.card{
+  width:100%;
+  max-width:430px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 35px #00000015
+}
+h1{text-align:center;color:#1d4ed8;margin:0 0 8px}
+.sub{text-align:center;color:#64748b;margin-bottom:25px}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+input{
+  width:100%;padding:13px;border:1px solid #cbd5e1;
+  border-radius:9px;font-size:16px
+}
+button{
+  width:100%;padding:13px;margin-top:18px;border:0;
+  border-radius:9px;background:#2563eb;color:white;
+  font-size:16px;font-weight:bold;cursor:pointer
+}
+button:disabled{opacity:.6;cursor:wait}
+#message{margin-top:15px;line-height:1.6;overflow-wrap:anywhere}
+.back{display:block;text-align:center;margin-top:20px;color:#2563eb}
+.note{font-size:13px;color:#64748b;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🤖 AI साथी</h1>
+  <p class="sub">शाळा व शिक्षक लॉगिन</p>
+
+  <form id="loginForm">
+    <label for="email">ई-मेल</label>
+    <input id="email" type="email" autocomplete="username"
+           required placeholder="तुमचा ई-मेल">
+
+    <label for="password">पासवर्ड</label>
+    <input id="password" type="password"
+           autocomplete="current-password" required
+           placeholder="पासवर्ड">
+
+    <button id="loginButton" type="submit">Login करा</button>
+  </form>
+
+  <p id="message" role="status" aria-live="polite"></p>
+  <p class="note">
+    नवीन शाळेच्या नोंदणीची व खाते-मंजुरीची सुविधा पुढील टप्प्यात जोडली जाईल.
+  </p>
+  <a class="back" href="index.html">← मुख्यपृष्ठावर परत जा</a>
+</div>
+
+<script type="module">
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAw202kspjUGbDFCkXugJxdPPH4LqeG8Fg",
+  authDomain: "ai-sathi-portal.firebaseapp.com",
+  projectId: "ai-sathi-portal",
+  storageBucket: "ai-sathi-portal.firebasestorage.app",
+  messagingSenderId: "87410372148",
+  appId: "1:87410372148:web:0063e6a3780f38f2f2e461",
+  measurementId: "G-7VPKK79ZLDF"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const form = document.getElementById("loginForm");
+const button = document.getElementById("loginButton");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  button.disabled = true;
+  message.textContent = "लॉगिन तपासत आहोत...";
+
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("email").value.trim(),
+      document.getElementById("password").value
+    );
+
+    message.textContent =
+      "लॉगिन यशस्वी! पुढील टप्प्यात शाळेच्या खात्याची परवानगी तपासली जाईल.";
+  } catch (error) {
+    message.textContent =
+      "लॉगिन झाले नाही. ई-मेल व पासवर्ड तपासा.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
+```
