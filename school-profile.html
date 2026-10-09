@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>शाळेची माहिती | AI साथी</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f1f5f9;color:#1e293b;font-family:Arial,"Noto Sans Devanagari",sans-serif}
+.card{max-width:700px;margin:20px auto;background:white;padding:26px;border-radius:18px;box-shadow:0 8px 28px #0001}
+h1{color:#1d4ed8;text-align:center;font-size:26px}
+.intro{text-align:center;color:#64748b;line-height:1.6}
+label{display:block;margin:15px 0 6px;font-weight:bold}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:white}
+button,.link{display:inline-block;padding:12px 17px;border:0;border-radius:9px;background:#2563eb;color:white;font-size:15px;font-weight:bold;text-decoration:none;cursor:pointer}
+button{width:100%;margin-top:22px}
+.link{margin-top:16px;background:#e0e7ff;color:#3730a3}
+#message{line-height:1.7;overflow-wrap:anywhere}
+.note{font-size:13px;color:#64748b;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="card">
+<h1>🏫 शाळेची माहिती</h1>
+<p class="intro">शाळेची माहिती एकदाच भरा. पुढे ती येथे पाहता व बदलता येईल.</p>
+
+<form id="schoolForm">
+<label for="schoolName">शाळेचे पूर्ण नाव</label>
+<input id="schoolName" maxlength="150" required>
+
+<label for="center">केंद्राचे नाव</label>
+<input id="center" maxlength="100" required>
+
+<label for="taluka">तालुका</label>
+<input id="taluka" maxlength="100" required>
+
+<label for="district">जिल्हा</label>
+<input id="district" maxlength="100" required>
+
+<label for="udise">UDISE क्रमांक (11 अंक)</label>
+<input id="udise" inputmode="numeric" pattern="[0-9]{11}" maxlength="11" required>
+
+<label for="headmaster">मुख्याध्यापकाचे नाव</label>
+<input id="headmaster" maxlength="100" required>
+
+<label for="mobile">संपर्क क्रमांक</label>
+<input id="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required>
+
+<label for="classes">वर्ग गट</label>
+<select id="classes" required>
+<option value="">वर्ग गट निवडा</option>
+<option value="1-5">इयत्ता 1 ते 5</option>
+<option value="6-8">इयत्ता 6 ते 8</option>
+<option value="1-8">इयत्ता 1 ते 8</option>
+</select>
+
+<p class="note">माहिती सेव्ह करण्यासाठी Login आवश्यक आहे. UDISE क्रमांक बदलण्यासाठी Admin मंजुरी लागू केली जाऊ शकते.</p>
+<button type="submit" id="saveBtn">माहिती सेव्ह करा</button>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+
+<a class="link" href="education-dashboard.html">← शिक्षण Dashboard</a>
+</main>
+
+<script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+// Firebase Console मधील खरी Config येथे भरा.
+const firebaseConfig = {
+  apiKey: "YOUR_REAL_API_KEY",
+  authDomain: "YOUR_REAL_AUTH_DOMAIN",
+  projectId: "YOUR_REAL_PROJECT_ID",
+  storageBucket: "YOUR_REAL_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_REAL_MESSAGING_SENDER_ID",
+  appId: "YOUR_REAL_APP_ID"
+};
+
+const form = document.getElementById("schoolForm");
+const message = document.getElementById("message");
+const button = document.getElementById("saveBtn");
+let auth, db, currentUser;
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!currentUser) {
+    message.textContent = "माहिती सेव्ह करण्यासाठी आधी Login करा.";
+    return;
+  }
+
+  if (firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
+    message.textContent = "Firebase Configuration भरणे बाकी आहे.";
+    return;
+  }
+
+  const udise = document.getElementById("udise").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+
+  if (!/^[0-9]{11}$/.test(udise) || !/^[0-9]{10}$/.test(mobile)) {
+    message.textContent = "UDISE क्रमांक 11 अंकांचा आणि मोबाईल क्रमांक 10 अंकांचा असावा.";
+    return;
+  }
+
+  button.disabled = true;
+  message.textContent = "माहिती सेव्ह होत आहे...";
+
+  try {
+    const ref = doc(db, "schools", currentUser.uid);
+    const previous = await getDoc(ref);
+    const oldData = previous.exists() ? previous.data() : {};
+
+    if (oldData.udise && oldData.udise !== udise) {
+      message.textContent = "UDISE बदलण्यासाठी Admin मंजुरी आवश्यक आहे.";
+      return;
+    }
+
+    const data = {
+      schoolName: document.getElementById("schoolName").value.trim(),
+      center: document.getElementById("center").value.trim(),
+      taluka: document.getElementById("taluka").value.trim(),
+      district: document.getElementById("district").value.trim(),
+      udise,
+      headmaster: document.getElementById("headmaster").value.trim(),
+      mobile,
+      classes: document.getElementById("classes").value,
+      updatedAt: serverTimestamp()
+    };
+
+    await setDoc(ref, {
+      ...data,
+      ...(previous.exists() ? {} : { createdAt: serverTimestamp() })
+    }, { merge: true });
+
+    message.textContent = "शाळेची माहिती सेव्ह झाली.";
+  } catch (error) {
+    message.textContent = "माहिती सेव्ह झाली नाही. Firebase सुरक्षा नियम तपासा.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+if (!firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+
+    if (!user) {
+      message.textContent = "कृपया आधी Login करा.";
+      form.querySelectorAll("input,select,button").forEach(el => el.disabled = true);
+      return;
+    }
+
+    try {
+      const snap = await getDoc(doc(db, "schools", user.uid));
+      if (snap.exists()) {
+        const d = snap.data();
+        for (const [field, value] of Object.entries({
+          schoolName:d.schoolName, center:d.center, taluka:d.taluka,
+          district:d.district, udise:d.udise, headmaster:d.headmaster,
+          mobile:d.mobile, classes:d.classes
+        })) {
+          if (value != null) document.getElementById(field).value = value;
+        }
+        message.textContent = "आधी सेव्ह केलेली माहिती लोड झाली.";
+      }
+    } catch {
+      message.textContent = "माहिती लोड झाली नाही. Firebase सेटिंग तपासा.";
+    }
+  });
+} else {
+  message.textContent = "Firebase Configuration भरल्यानंतरच माहिती सेव्ह करता येईल.";
+}
+</script>
+</body>
+</html>
