@@ -105,8 +105,11 @@ form.addEventListener("submit", async (event) => {
       document.getElementById("password").value
     );
 
-    message.textContent =
-      "लॉगिन यशस्वी! पुढील टप्प्यात शाळेच्या खात्याची परवानगी तपासली जाईल.";
+    message.textContent = "लॉगिन यशस्वी! Dashboard उघडत आहे...";
+
+setTimeout(() => {
+  window.location.href = "education-dashboard.html";
+}, 1000);
   } catch (error) {
     message.textContent =
       "लॉगिन झाले नाही. ई-मेल व पासवर्ड तपासा.";
