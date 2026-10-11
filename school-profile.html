@@ -270,8 +270,11 @@ if (!configIncomplete) {
     setFormDisabled(true);
   }
 } else {
-  setFormDisabled(true);
-  showMessage("Firebase Configuration भरणे बाकी आहे. माहिती सध्या सेव्ह होणार नाही.");
+  setFormDisabled(false);
+  saveBtn.disabled = false;
+  showMessage(
+    "फॉर्ममध्ये माहिती भरता येईल. Firebase जोडणी पूर्ण होईपर्यंत माहिती सेव्ह होणार नाही."
+  );
 }
 
 form.addEventListener("submit", async event => {
