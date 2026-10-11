@@ -3,315 +3,859 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>शालेय पोषण आहार व्यवस्थापन</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM POSHAN Smart Reporter</title>
 <style>
+:root {
+  --primary:#79502f;
+  --primary-dark:#57371e;
+  --bg:#f7f5f1;
+  --white:#fff;
+  --green:#287a43;
+  --blue:#1769aa;
+  --red:#b3261e;
+  --border:#ded8cf;
+  --text:#29251f;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#f3f7f6;color:#24343a;font-family:Arial,"Noto Sans Devanagari",sans-serif}
-header{background:#00695c;color:white;padding:22px 15px;text-align:center}
-header h1{font-size:23px;margin:0 0 8px}
-header p{margin:0}
-main{max-width:1200px;margin:auto;padding:14px}
-nav{display:flex;flex-wrap:wrap;gap:8px;background:white;padding:12px;border-radius:12px;margin-bottom:15px}
-button{cursor:pointer;border:0;border-radius:7px;padding:10px 14px;font-weight:bold;background:#00796b;color:white}
-nav button{background:#e1efeb;color:#075b50}
-nav button.active{background:#00695c;color:white}
-section{display:none;background:white;border-radius:12px;padding:17px;margin-bottom:15px;box-shadow:0 2px 8px #0000000a}
-section.active{display:block}
-h2{font-size:21px;color:#00695c;margin-top:0}
-h3{font-size:17px;color:#00695c}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.card{border:1px solid #dce8e5;border-radius:10px;padding:13px;margin-bottom:10px}
-label{display:block;font-size:14px;margin:0 0 5px}
-input,select,textarea{width:100%;padding:10px;border:1px solid #cbd7d3;border-radius:7px;background:white;font:inherit}
-.field{margin-bottom:12px}
-table{width:100%;border-collapse:collapse;min-width:700px}
-th,td{border:1px solid #d5e0dd;padding:8px;text-align:left;font-size:13px}
-th{background:#e6f1ee;color:#075b50}
-td input,td select{min-width:75px;padding:7px}
-.tablewrap{overflow:auto;margin:12px 0}
-.note{padding:12px;background:#fff8df;border-left:4px solid #d7a20a;border-radius:5px;font-size:13px;line-height:1.7}
-.secondary{background:#e1efeb;color:#075b50}
-.danger{background:#a72e2e}
-.small{font-size:13px;color:#647670}
-.status{font-weight:bold;color:#00695c;margin-top:10px}
-footer{text-align:center;padding:20px;color:#667b75;font-size:13px}
-@media(max-width:600px){header h1{font-size:19px}main{padding:8px}section{padding:12px}nav button{flex:1}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans Devanagari",sans-serif}
+header{background:var(--primary);color:white;padding:22px 16px;text-align:center}
+header h1{font-size:clamp(20px,4vw,30px);margin:0 0 8px}
+header p{margin:0;font-size:16px}
+.container{max-width:1250px;margin:auto;padding:16px}
+.notice{background:#fff5d7;border:1px solid #efd38a;padding:12px;border-radius:9px;margin-bottom:15px;font-size:14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.tabs button{border:1px solid var(--border);background:white;color:var(--text);padding:10px 13px;border-radius:8px;cursor:pointer}
+.tabs button.active{background:var(--primary);color:white;border-color:var(--primary)}
+.panel{display:none;background:white;padding:18px;border:1px solid var(--border);border-radius:12px;margin-bottom:18px}
+.panel.active{display:block}
+h2{font-size:21px;color:var(--primary-dark);margin:0 0 16px}
+h3{font-size:17px;margin:18px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:14px;font-weight:600}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cfc8be;border-radius:7px;background:white;font:inherit;min-height:40px}
+input[type=checkbox]{width:auto;min-height:auto}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+button.primary,button.secondary,button.danger{padding:10px 15px;border:0;border-radius:7px;color:white;font-weight:600;cursor:pointer}
+button.primary{background:var(--green)}
+button.secondary{background:var(--blue)}
+button.danger{background:var(--red)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.table-wrap{overflow:auto;width:100%;margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:middle}
+th{background:#f1e9df;white-space:nowrap}
+td input,td select{min-width:80px;padding:7px}
+.small{font-size:12px;color:#625c53}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:15px}
+.card strong{display:block;font-size:23px;color:var(--primary);margin-top:7px}
+.status{margin-top:10px;font-size:14px;color:var(--green)}
+hr{border:0;border-top:1px solid var(--border);margin:20px 0}
+footer{text-align:center;padding:20px;color:#665d52;font-size:13px}
+@media(max-width:600px){.container{padding:9px}.panel{padding:12px}header{padding:18px 10px}.tabs button{flex:1 1 45%}}
+@media print{.tabs,.actions,button,.notice{display:none!important}.panel{display:block!important;border:0}.container{max-width:none}header{background:white;color:black}}
 </style>
 </head>
 <body>
+
 <header>
-<h1>प्रधानमंत्री पोषण शक्ती निर्माण योजना</h1>
-<p>जालना | शैक्षणिक वर्ष २०२६–२०२७</p>
+  <h1>प्रधानमंत्री पोषण शक्ती निर्माण योजना</h1>
+  <p>शैक्षणिक वर्ष <strong id="headerAcademicYear">२०२६–२०२७</strong></p>
 </header>
-<main>
-<nav id="nav">
-<button class="active" data-tab="school">शाळेची माहिती</button>
-<button data-tab="menu">पाककृती व प्रमाण</button>
-<button data-tab="daily">दैनिक उपस्थिती</button>
-<button data-tab="monthly">मासिक नोंद</button>
-<button data-tab="stock">धान्य व माल साठा</button>
-<button data-tab="reports">मासिक व वार्षिक अहवाल</button>
-</nav>
 
-<section id="school" class="active">
-<h2>शाळेची माहिती</h2>
-<p class="small">शाळेचा तपशील भरा. या नमुन्यात माहिती कायमस्वरूपी जतन होत नाही.</p>
-<div class="grid">
-<div class="field"><label>शाळेचे नाव</label><input id="schoolName" placeholder="शाळेचे पूर्ण नाव"></div>
-<div class="field"><label>UDISE क्रमांक</label><input id="udise" placeholder="UDISE क्रमांक"></div>
-<div class="field"><label>केंद्र</label><input id="center" placeholder="केंद्राचे नाव"></div>
-<div class="field"><label>तालुका</label><input id="taluka" placeholder="तालुका"></div>
-<div class="field"><label>जिल्हा</label><input id="district" value="जालना"></div>
-<div class="field"><label>मुख्याध्यापकांचे नाव</label><input id="headmaster" placeholder="पूर्ण नाव"></div>
-<div class="field"><label>मोबाईल क्रमांक</label><input id="mobile" inputmode="numeric" placeholder="मोबाईल क्रमांक"></div>
-<div class="field"><label>शाळेचा इयत्ता गट</label>
-<select id="schoolGrades"><option>इयत्ता १ ते ८</option><option>इयत्ता १ ते ५</option><option>इयत्ता ६ ते ८</option></select></div>
-<div class="field"><label>माध्यम</label>
-<select id="medium"><option>मराठी</option><option>इंग्रजी</option><option>उर्दू</option><option>हिंदी</option><option>इतर</option></select></div>
-</div>
-<button onclick="showSchool()">शाळेची माहिती तपासा</button>
-<div id="schoolResult" class="status"></div>
-</section>
+<div class="container">
+  <div class="notice">
+    <strong>सूचना:</strong> माहिती या ब्राउझरमध्ये जतन होते. महत्त्वाच्या नोंदींसाठी वेळोवेळी बॅकअप डाउनलोड करा.
+  </div>
 
-<section id="menu">
-<h2>पाककृती व साहित्याचे प्रमाण</h2>
-<div class="field"><label>इयत्ता गट</label>
-<select id="grade" onchange="renderIngredients()"><option value="p">इयत्ता १ ते ५</option><option value="u">इयत्ता ६ ते ८</option></select></div>
-<h3>शैक्षणिक वर्ष २०२६–२०२७ : पाककृती नियोजन</h3>
-<div class="tablewrap"><table><thead><tr><th>क्र.</th><th>पाककृती</th><th>वार</th><th>आठवडा</th></tr></thead><tbody id="planRows"></tbody></table></div>
-<h3>पाककृतीनुसार साहित्याचे प्रमाण</h3>
-<div class="note">प्रमाणातील बदल, नवीन साहित्य व Lock करण्याची पूर्ण सुविधा पुढील डेटा साठवणूक टप्प्यात जोडायची आहे. खालील तक्ता तुम्ही दिलेल्या प्रमाणांवर आधारित आहे.</div>
-<div class="tablewrap"><table><thead id="ingredientHead"></thead><tbody id="ingredientRows"></tbody></table></div>
-</section>
+  <div class="tabs" id="tabs">
+    <button class="active" data-panel="school">शाळेची माहिती</button>
+    <button data-panel="attendance">दैनंदिन उपस्थिती</button>
+    <button data-panel="monthly">मासिक नोंद</button>
+    <button data-panel="menu">मेनू व पाककृती</button>
+    <button data-panel="stock">धान्य व साठा</button>
+    <button data-panel="reports">अहवाल</button>
+    <button data-panel="backup">बॅकअप</button>
+  </div>
 
-<section id="daily">
-<h2>विद्यार्थी दैनिक नोंद — उपस्थिती</h2>
-<div class="grid">
-<div class="field"><label>दिनांक</label><input type="date" id="date" onchange="autoRecipe()"></div>
-<div class="field"><label>शाळा सुरू होती का?</label><select id="open"><option value="yes">होय</option><option value="no">नाही</option></select></div>
-</div>
-<div class="field"><label>वेळापत्रकानुसार पाककृती</label><input id="scheduledRecipe" readonly placeholder="दिनांक निवडा"></div>
-<div class="field"><label>आज प्रत्यक्ष बनवलेली पाककृती</label>
-<select id="actualRecipe"></select>
-<p class="small">वेळापत्रकापेक्षा वेगळी पाककृती निवडल्यास ती फक्त या दिवसाच्या नोंदीसाठी राहील. मूळ वेळापत्रक बदलणार नाही.</p>
-</div>
-<div class="grid">
-<div class="card"><h3>इयत्ता १ ते ५</h3>
-<div class="field"><label>हजर विद्यार्थी</label><input type="number" id="pPresent" min="0" value="0"></div>
-<div class="field"><label>आहार घेतलेले विद्यार्थी</label><input type="number" id="pMeals" min="0" value="0"></div></div>
-<div class="card"><h3>इयत्ता ६ ते ८</h3>
-<div class="field"><label>हजर विद्यार्थी</label><input type="number" id="uPresent" min="0" value="0"></div>
-<div class="field"><label>आहार घेतलेले विद्यार्थी</label><input type="number" id="uMeals" min="0" value="0"></div></div>
-</div>
-<button onclick="checkDaily()">नोंदी तपासा</button>
-<div id="dailyResult" class="status"></div>
-</section>
+  <!-- शाळेची माहिती -->
+  <section class="panel active" id="school">
+    <h2>🏫 शाळेची माहिती</h2>
+    <form id="schoolForm">
+      <div class="grid">
+        <div class="field">
+          <label for="schoolName">शाळेचे संपूर्ण नाव *</label>
+          <input id="schoolName" required placeholder="शाळेचे नाव">
+        </div>
+        <div class="field">
+          <label for="udise">UDISE क्रमांक</label>
+          <input id="udise" inputmode="numeric" maxlength="11" placeholder="११ अंकी UDISE">
+        </div>
+        <div class="field">
+          <label for="center">केंद्राचे नाव</label>
+          <input id="center" placeholder="केंद्र">
+        </div>
+        <div class="field">
+          <label for="taluka">तालुका</label>
+          <input id="taluka" value="घनसावंगी">
+        </div>
+        <div class="field">
+          <label for="district">जिल्हा</label>
+          <input id="district" value="जालना">
+        </div>
+        <div class="field">
+          <label for="headmaster">मुख्याध्यापकाचे नाव</label>
+          <input id="headmaster" placeholder="मुख्याध्यापक">
+        </div>
+        <div class="field">
+          <label for="mobile">मोबाईल क्रमांक</label>
+          <input id="mobile" inputmode="numeric" maxlength="10" placeholder="१० अंकी क्रमांक">
+        </div>
+        <div class="field">
+          <label for="academicYear">शैक्षणिक वर्ष *</label>
+          <select id="academicYear" required>
+            <option value="२०२६–२०२७">२०२६–२०२७</option>
+            <option value="२०२७–२०२८">२०२७–२०२८</option>
+            <option value="२०२८–२०२९">२०२८–२०२९</option>
+            <option value="२०२९–२०३०">२०२९–२०३०</option>
+            <option value="२०३०–२०३१">२०३०–२०३१</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="medium">माध्यम</label>
+          <select id="medium">
+            <option>मराठी</option>
+            <option>इंग्रजी</option>
+            <option>उर्दू</option>
+            <option>हिंदी</option>
+            <option>इतर</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="classes">शाळेतील वर्ग</label>
+          <select id="classes">
+            <option value="1-5">इयत्ता १ ते ५</option>
+            <option value="6-8">इयत्ता ६ ते ८</option>
+            <option value="1-8" selected>इयत्ता १ ते ८</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="primary">शाळेची माहिती जतन करा</button>
+        <button type="button" class="secondary" onclick="loadSchool()">जतन केलेली माहिती पहा</button>
+      </div>
+      <div id="schoolStatus" class="status" role="status"></div>
+    </form>
+  </section>
 
-<section id="monthly">
-<h2>मासिक एकत्रित दिवस-निहाय नोंद</h2>
-<div class="grid">
-<div class="field"><label>महिना निवडा</label><input type="month" id="month"></div>
-<div class="field"><label>नोंदीचा प्रकार</label><select id="monthMode"><option>चालू महिन्याची नोंद</option><option>मागील महिन्याची नोंद</option></select></div>
-</div>
-<button onclick="buildMonth()">ऑटो-फिल — महिन्याचे दिवस तयार करा</button>
-<button class="secondary" onclick="window.print()">प्रिंट करा</button>
-<div class="tablewrap"><table><thead><tr><th>दिनांक</th><th>वार</th><th>शाळा सुरू?</th><th>वेळापत्रक पाककृती</th><th>प्रत्यक्ष पाककृती</th><th>इ.१–५ हजर</th><th>इ.१–५ आहार</th><th>इ.६–८ हजर</th><th>इ.६–८ आहार</th></tr></thead><tbody id="monthRows"></tbody></table></div>
-<p class="note">या नमुन्यात महिन्याच्या नोंदी तात्पुरत्या तयार होतात. सर्व दिवस एकत्र जतन करण्यासाठी सर्व्हरवरील साठवणूक सुविधा अद्याप जोडलेली नाही.</p>
-</section>
+  <!-- दैनंदिन उपस्थिती -->
+  <section class="panel" id="attendance">
+    <h2>📋 दैनंदिन उपस्थिती व पोषण आहार</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="dailyDate">दिनांक</label>
+        <input type="date" id="dailyDate">
+      </div>
+      <div class="field">
+        <label for="schoolOpen">शाळा सुरू होती का?</label>
+        <select id="schoolOpen">
+          <option value="yes">होय</option>
+          <option value="no">नाही</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dailyRecipe">त्या दिवसाची पाककृती</label>
+        <select id="dailyRecipe"></select>
+      </div>
+    </div>
+    <p class="small">तारखेनुसार पाककृती आपोआप निवडली जाते. प्रत्यक्षात वेगळी पाककृती बनवली असल्यास येथे बदल करा. वेळापत्रक बदलले जाणार नाही.</p>
+    <h3>इयत्ता १ ते ५</h3>
+    <div class="grid">
+      <div class="field"><label for="pTotal">पटसंख्या</label><input id="pTotal" type="number" min="0" value="0"></div>
+      <div class="field"><label for="pPresent">उपस्थित विद्यार्थी</label><input id="pPresent" type="number" min="0" value="0"></div>
+      <div class="field"><label for="pMeals">आहार घेतलेले विद्यार्थी</label><input id="pMeals" type="number" min="0" value="0"></div>
+    </div>
+    <h3>इयत्ता ६ ते ८</h3>
+    <div class="grid">
+      <div class="field"><label for="uTotal">पटसंख्या</label><input id="uTotal" type="number" min="0" value="0"></div>
+      <div class="field"><label for="uPresent">उपस्थित विद्यार्थी</label><input id="uPresent" type="number" min="0" value="0"></div>
+      <div class="field"><label for="uMeals">आहार घेतलेले विद्यार्थी</label><input id="uMeals" type="number" min="0" value="0"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label for="dailyNotes">शेरा</label>
+      <textarea id="dailyNotes" rows="2" placeholder="आवश्यक असल्यास शेरा"></textarea>
+    </div>
+    <div class="actions">
+      <button class="primary" id="saveDaily">दैनंदिन नोंद जतन करा</button>
+      <button class="secondary" id="clearDaily">नवीन नोंद</button>
+    </div>
+    <div id="dailyStatus" class="status" role="status"></div>
+    <h3>जतन केलेल्या दैनंदिन नोंदी</h3>
+    <div class="table-wrap"><table><thead><tr><th>दिनांक</th><th>शाळा सुरू?</th><th>पाककृती</th><th>१–५ आहार</th><th>६–८ आहार</th><th>कृती</th></tr></thead><tbody id="dailyRows"></tbody></table></div>
+  </section>
 
-<section id="stock">
-<h2>📦 धान्य व माल साठा नोंदवही</h2>
-<h3>धान्य / साहित्य यादी</h3>
-<div class="grid">
-<div class="field"><label>नवीन धान्य किंवा साहित्य</label><input id="newItem" placeholder="नाव लिहा"></div>
-<div class="field"><label>नोंदीची कृती</label><select id="itemAction"><option value="add">नवीन नोंद</option><option value="close">जुने साहित्य बंद करा</option></select></div>
-</div>
-<button onclick="manageItem()">यादीत बदल करा</button>
-<div id="itemResult" class="status"></div>
-<div class="tablewrap"><table><thead><tr><th>साहित्य</th><th>स्थिती</th></tr></thead><tbody id="itemRows"></tbody></table></div>
+  <!-- मासिक नोंद -->
+  <section class="panel" id="monthly">
+    <h2>🗓️ मासिक उपस्थिती नोंद</h2>
+    <div class="grid">
+      <div class="field"><label for="monthSelect">महिना</label><input type="month" id="monthSelect"></div>
+      <div class="field"><label for="monthPTotal">इयत्ता १–५ पटसंख्या</label><input type="number" min="0" id="monthPTotal" value="0"></div>
+      <div class="field"><label for="monthUTotal">इयत्ता ६–८ पटसंख्या</label><input type="number" min="0" id="monthUTotal" value="0"></div>
+    </div>
+    <div class="actions">
+      <button class="secondary" id="generateMonth">महिन्याचे दिवस तयार करा</button>
+      <button class="secondary" id="autofillMonth">वेळापत्रकानुसार मेनू भरा</button>
+      <button class="primary" id="saveMonth">मासिक नोंदी जतन करा</button>
+    </div>
+    <p class="small">उपस्थिती व आहार घेतलेल्या विद्यार्थ्यांची संख्या प्रत्येक दिवसासाठी भरा. रविवार किंवा शाळा बंद असल्यास योग्य पर्याय निवडा.</p>
+    <div class="table-wrap"><table><thead><tr>
+      <th>दिनांक</th><th>वार</th><th>शाळा सुरू</th><th>पाककृती</th>
+      <th>१–५ उपस्थित</th><th>१–५ आहार</th><th>६–८ उपस्थित</th><th>६–८ आहार</th>
+    </tr></thead><tbody id="monthRows"></tbody></table></div>
+    <div id="monthStatus" class="status" role="status"></div>
+  </section>
 
-<h3>१. सुरुवातीची शिल्लक</h3>
-<div class="grid">
-<div class="field"><label>महिना</label><input type="month" id="stockMonth"></div>
-<div class="field"><label>साहित्य</label><select id="openingItem"></select></div>
-<div class="field"><label>प्रमाण</label><input type="number" id="openingQty" min="0" step="0.001"></div>
-</div>
-<button onclick="addStock('सुरुवातीची शिल्लक')">शिल्लक नोंदवा</button>
+  <!-- मेनू -->
+  <section class="panel" id="menu">
+    <h2>🍲 पाककृती व मेनू वेळापत्रक</h2>
+    <p>सप्ताह अ: महिन्याचा १ला, ३रा व ५वा आठवडा. सप्ताह ब: २रा व ४था आठवडा.</p>
+    <div class="table-wrap"><table><thead><tr><th>क्र.</th><th>पाककृती</th><th>सप्ताह अ</th><th>सप्ताह ब</th></tr></thead><tbody id="recipeRows"></tbody></table></div>
+    <h3>प्रति विद्यार्थी साहित्याचे प्रमाण</h3>
+    <p class="small">कोरडे साहित्य ग्रॅममध्ये आणि तेल मिलीलीटरमध्ये. ही माहिती तुमच्या दिलेल्या प्रमाणानुसार दाखवली आहे. अधिकृत आदेशाशी पडताळणी करूनच वापरा.</p>
+    <div class="grid">
+      <div class="field"><label for="recipeGrade">वर्ग गट</label><select id="recipeGrade"><option value="p">इयत्ता १ ते ५</option><option value="u">इयत्ता ६ ते ८</option></select></div>
+      <div class="field"><label for="recipeNumber">पाककृती</label><select id="recipeNumber"></select></div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>प्रमाण</th><th>एकक</th></tr></thead><tbody id="ingredientRows"></tbody></table></div>
+  </section>
 
-<h3>२. धान्य प्राप्त</h3>
-<div class="grid">
-<div class="field"><label>प्राप्तीचा स्रोत</label><select id="source" onchange="receiptToggle()">
-<option>पुरवठादार</option><option>एकाच शाळेतील वर्ग १ ते ५ उसनवार</option><option>एकाच शाळेतील वर्ग ६ ते ८ उसनवार</option><option>लोकसहभाग</option><option>खुला बाजार</option></select></div>
-<div class="field"><label>प्राप्तीची तारीख</label><input type="date" id="receiveDate"></div>
-<div class="field" id="receiptBox"><label>पावती क्रमांक</label><input id="receipt" placeholder="पावती क्रमांक"></div>
-<div class="field"><label>साहित्य</label><select id="receiveItem"></select></div>
-<div class="field"><label>प्रमाण</label><input type="number" id="receiveQty" min="0" step="0.001"></div>
-</div>
-<button onclick="addStock('धान्य प्राप्त')">प्राप्ती नोंदवा</button>
+  <!-- साठा -->
+  <section class="panel" id="stock">
+    <h2>📦 धान्य व माल साठा नोंदवही</h2>
+    <div class="grid">
+      <div class="field"><label for="stockGrade">वर्ग गट</label><select id="stockGrade"><option value="p">इयत्ता १ ते ५</option><option value="u">इयत्ता ६ ते ८</option></select></div>
+      <div class="field"><label for="stockDate">दिनांक</label><input type="date" id="stockDate"></div>
+      <div class="field"><label for="stockType">नोंदीचा प्रकार</label><select id="stockType"><option value="opening">सुरुवातीची शिल्लक</option><option value="received">धान्य / साहित्य प्राप्त</option><option value="return">उसने परत / खराब</option><option value="consume">वापर / खर्च</option></select></div>
+      <div class="field"><label for="stockSource">प्राप्तीचा स्रोत</label><select id="stockSource"><option>पुरवठादार</option><option>वर्ग १ ते ५ उसनवार</option><option>वर्ग ६ ते ८ उसनवार</option><option>लोकसहभाग</option><option>खुला बाजार</option><option>इतर</option></select></div>
+      <div class="field"><label for="receiptNo">पावती क्रमांक (पुरवठादारासाठी)</label><input id="receiptNo" placeholder="पावती क्रमांक"></div>
+      <div class="field"><label for="stockNotes">शेरा</label><input id="stockNotes" placeholder="ऐच्छिक"></div>
+    </div>
+    <p class="small">सर्व साहित्याचे प्रमाण एकाच वेळी भरा. प्राप्ती व शिल्लक किलो / लिटरमध्ये, वापर ग्रॅम / मिलीलीटरमध्ये नोंदवता येतो. एकके आपोआप रूपांतरित करून एकत्र केली जात नाहीत.</p>
+    <div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>एकक</th><th>प्रमाण</th></tr></thead><tbody id="stockEntryRows"></tbody></table></div>
+    <div class="actions">
+      <button class="secondary" id="addMaterial">नवीन साहित्य जोडा</button>
+      <button class="primary" id="saveStock">साठा नोंद जतन करा</button>
+    </div>
+    <div id="stockStatus" class="status" role="status"></div>
+    <h3>साठा नोंदी</h3>
+    <div class="table-wrap"><table><thead><tr><th>दिनांक</th><th>वर्ग गट</th><th>प्रकार</th><th>साहित्य व प्रमाण</th><th>स्रोत</th><th>पावती</th></tr></thead><tbody id="stockRows"></tbody></table></div>
+  </section>
 
-<h3>३. उसनवार परत / खराब</h3>
-<div class="grid">
-<div class="field"><label>तारीख</label><input type="date" id="returnDate"></div>
-<div class="field"><label>प्रकार</label><select id="returnType"><option>उसनवार परत</option><option>खराब</option></select></div>
-<div class="field"><label>साहित्य</label><select id="returnItem"></select></div>
-<div class="field"><label>प्रमाण</label><input type="number" id="returnQty" min="0" step="0.001"></div>
-</div>
-<button onclick="addStock('return')">नोंदवा</button>
-<h3>या पानावरील साठा नोंदी</h3>
-<div class="tablewrap"><table><thead><tr><th>तारीख</th><th>प्रकार</th><th>स्रोत</th><th>पावती</th><th>साहित्य</th><th>प्रमाण</th></tr></thead><tbody id="stockRows"></tbody></table></div>
-<p class="note">नवीन साहित्य जोडणे व यादीतून बंद करणे या नमुन्यात चालते; बदल कायमस्वरूपी जतन होत नाहीत. जुनी नोंद पुसली जात नाही.</p>
-</section>
+  <!-- अहवाल -->
+  <section class="panel" id="reports">
+    <h2>📊 अहवाल व सारांश</h2>
+    <div class="grid">
+      <div class="field"><label for="reportMonth">अहवालाचा महिना</label><input type="month" id="reportMonth"></div>
+      <div class="field"><label for="reportGrade">वर्ग गट</label><select id="reportGrade"><option value="all">दोन्ही गट</option><option value="p">इयत्ता १ ते ५</option><option value="u">इयत्ता ६ ते ८</option></select></div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="makeReport">सारांश तयार करा</button>
+      <button class="secondary" onclick="window.print()">अहवाल प्रिंट करा / PDF</button>
+      <button class="secondary" id="exportCsv">CSV अहवाल डाउनलोड</button>
+    </div>
+    <div class="cards" id="reportCards"></div>
+    <div class="table-wrap"><table><thead><tr><th>दिनांक</th><th>पाककृती</th><th>१–५ आहार</th><th>६–८ आहार</th><th>शेरा</th></tr></thead><tbody id="reportRows"></tbody></table></div>
+    <p class="notice">हा सारांश उपलब्ध नोंदींवर आधारित आहे. अधिकृत प्रपत्र-ब, तांदूळ ताळमेळ, वार्षिक उपयोगिता प्रमाणपत्र किंवा विभागीय नमुन्यांशी पूर्ण जुळणारे प्रमाणित अहवाल तयार करण्यासाठी संबंधित अधिकृत नमुन्यांची स्वतंत्र पडताळणी आवश्यक आहे.</p>
+  </section>
 
-<section id="reports">
-<h2>मासिक व वार्षिक अहवाल</h2>
-<div class="grid">
-<div class="field"><label>इयत्ता गट</label><select id="reportGrade"><option>इयत्ता १ ते ५</option><option>इयत्ता ६ ते ८</option></select></div>
-<div class="field"><label>अहवालाचा कालावधी</label><select id="reportPeriod"><option>मासिक</option><option>वार्षिक</option></select></div>
-<div class="field"><label>महिना / वर्ष</label><input type="month" id="reportMonth"></div>
+  <!-- बॅकअप -->
+  <section class="panel" id="backup">
+    <h2>💾 बॅकअप व डेटा व्यवस्थापन</h2>
+    <p>सध्या जतन झालेली शाळेची माहिती, दैनंदिन नोंदी, मासिक नोंदी, पाककृती सेटिंग्ज आणि साठा नोंदी JSON फाईलमध्ये डाउनलोड करा.</p>
+    <div class="actions">
+      <button class="primary" id="downloadBackup">बॅकअप डाउनलोड करा</button>
+      <label class="secondary" style="display:inline-flex;align-items:center;cursor:pointer;border-radius:7px;padding:10px 15px;color:white;background:#1769aa">
+        बॅकअप पुनर्संचयित करा
+        <input type="file" id="restoreBackup" accept=".json,application/json" style="display:none">
+      </label>
+      <button class="danger" id="clearAll">सर्व स्थानिक डेटा हटवा</button>
+    </div>
+    <div id="backupStatus" class="status" role="status"></div>
+  </section>
 </div>
-<div class="cards">
-<div class="card"><strong>दैनिक खर्च नोंदवही भाग १</strong><p class="small">तांदळाचा हिशोब</p></div>
-<div class="card"><strong>दैनिक खर्च नोंदवही भाग २</strong><p class="small">धान्य व मालाचा हिशोब</p></div>
-<div class="card"><strong>प्रपत्र ब</strong><p class="small">मासिक अहवाल</p></div>
-<div class="card"><strong>तांदळाचा वार्षिक ताळमेळ</strong></div>
-<div class="card"><strong>वार्षिक उपयोगिता प्रमाणपत्र</strong></div>
-</div>
-<button onclick="reportCheck()">अहवालासाठी माहिती तपासा</button>
-<div id="reportResult" class="status"></div>
-<p class="note">हे अहवालांचे विभाग आहेत. तुमच्या PDF मधील नमुन्यांप्रमाणे संपूर्ण अहवाल व दैनिक नोंदींवरून स्वयंचलित गणना पुढील टप्प्यात जोडावी लागेल.</p>
-</section>
-</main>
-<footer>प्रधानमंत्री पोषण शक्ती निर्माण योजना | जालना</footer>
+
+<footer>PM POSHAN Smart Reporter | स्थानिक ब्राउझर आवृत्ती</footer>
 
 <script>
-const recipes=[
-{id:1,name:"व्हेजिटेबल पुलाव",day:1,group:"A"},
-{id:2,name:"मसाले भात",day:2,group:"A"},
-{id:3,name:"मुगडाळ खिचडी",day:3,group:"A"},
-{id:4,name:"चवळीची खिचडी",day:4,group:"A"},
-{id:5,name:"चणा पुलाव",day:5,group:"A"},
-{id:6,name:"मोड आलेल्या मटकीची उसळ व भात",day:6,group:"A"},
-{id:7,name:"मटार पुलाव",day:1,group:"B"},
-{id:8,name:"सोयाबीन पुलाव",day:2,group:"B"},
-{id:9,name:"मसुरी पुलाव",day:3,group:"B"},
-{id:10,name:"मूग शेवग्याचे वरण आणि भात",day:4,group:"B"},
-{id:11,name:"मुगडाळ खिचडी",day:5,group:"B"},
-{id:12,name:"मोड आलेल्या मटकीची उसळ व भात",day:6,group:"B"}
+"use strict";
+
+const STORE_KEY = "pmPoshanSmartReporter_v1";
+
+const recipes = [
+  {id:1,name:"व्हेजिटेबल पुलाव",day:1,week:"A"},
+  {id:2,name:"मसाले भात",day:2,week:"A"},
+  {id:3,name:"मुगडाळ खिचडी",day:3,week:"A"},
+  {id:4,name:"चवळीची खिचडी",day:4,week:"A"},
+  {id:5,name:"चणा पुलाव",day:5,week:"A"},
+  {id:6,name:"मोड आलेल्या मटकीची उसळ व भात",day:6,week:"A"},
+  {id:7,name:"मटार पुलाव",day:1,week:"B"},
+  {id:8,name:"सोयाबीन पुलाव",day:2,week:"B"},
+  {id:9,name:"मसुरी पुलाव",day:3,week:"B"},
+  {id:10,name:"मूग शेवग्याचे वरण आणि भात",day:4,week:"B"},
+  {id:11,name:"मुगडाळ खिचडी",day:5,week:"B"},
+  {id:12,name:"मोड आलेल्या मटकीची उसळ व भात",day:6,week:"B"}
 ];
-const ingredients=["तांदूळ","वाटाणा","मुगडाळ (सालासकट)","चवळी","हरभरा","मटकी","सोयाबीन वडी","मसूरडाळ","अख्खा मूग","तूरडाळ","मीठ","हळद","कांदा लसुन मसाला","मोहरी","सोयाबीन खाद्यतेल (5.43 M.L)","मिरची पावडर (अॅगमार्क)","जिरे"];
-const p=[
-[100,20,"","","","","","","","",2,.15,.90,.10,5,.20,.20],
-[100,20,"","","","","","","","",2,.15,.90,.10,5,.20,.20],
-[100,"",20,"","","","","","", "",2,.15,.90,.10,5,.20,.20],
-[100,"","",20,"","","","","","",2,.15,.90,.10,5,.20,.20],
-[100,"","","",20,"","","","","",2,.15,.90,.10,5,.20,.20],
-[100,"","","","",20,"","","","",2,.15,.90,.10,5,.20,.20],
-[100,20,"","","","","","","","",2,.15,.90,.10,5,.20,.20],
-[100,"","","","","",20,"","","",2,.15,.90,.10,5,.20,.20],
-[100,"","","","","","",20,"","",2,.15,.90,.10,5,.20,.20],
-[100,"","","","","","","",10,10,2,.15,.90,.10,5,.20,.20],
-[100,"",20,"","","","","","", "",2,.15,.90,.10,5,.20,.20],
-[100,"","","","",20,"","","","",2,.15,.90,.10,5,.20,.20]
+
+const ingredients = [
+  {key:"rice",name:"तांदूळ",unit:"ग्रॅम"},
+  {key:"peas",name:"वाटाणा",unit:"ग्रॅम"},
+  {key:"moongDal",name:"मुगडाळ (सालासकट)",unit:"ग्रॅम"},
+  {key:"chawli",name:"चवळी",unit:"ग्रॅम"},
+  {key:"chickpea",name:"हरभरा",unit:"ग्रॅम"},
+  {key:"matki",name:"मटकी",unit:"ग्रॅम"},
+  {key:"soyChunks",name:"सोयाबीन वडी",unit:"ग्रॅम"},
+  {key:"masoor",name:"मसूरडाळ",unit:"ग्रॅम"},
+  {key:"wholeMoong",name:"अख्खा मुग",unit:"ग्रॅम"},
+  {key:"turDal",name:"तूरडाळ",unit:"ग्रॅम"},
+  {key:"salt",name:"मीठ",unit:"ग्रॅम"},
+  {key:"turmeric",name:"हळद",unit:"ग्रॅम"},
+  {key:"masala",name:"कांदा लसूण मसाला",unit:"ग्रॅम"},
+  {key:"mustard",name:"मोहरी",unit:"ग्रॅम"},
+  {key:"oil",name:"सोयाबीन खाद्यतेल",unit:"मिलीलीटर"},
+  {key:"chilli",name:"मिरची पावडर (अॅगमार्क)",unit:"ग्रॅम"},
+  {key:"cumin",name:"जिरे",unit:"ग्रॅम"}
 ];
-const u=[
-[150,30,"","","","","","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,30,"","","","","","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"",30,"","","","","","", "",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","",30,"","","","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","",30,"","","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","","",30,"","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,30,"","","","","","","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","","","",30,"","","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","","","","",20,"","",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","","","","", "",15,15,3,.25,1.40,.15,7.5,.25,.25],
-[150,"",30,"","","","","","", "",3,.25,1.40,.15,7.5,.25,.25],
-[150,"","","","",30,"","","","",3,.25,1.40,.15,7.5,.25,.25]
-];
-let activeItems=ingredients.map(name=>({name,active:true}));
-let stockRecords=[];
-const days=["रविवार","सोमवार","मंगळवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"];
-function weekGroup(d){const w=Math.ceil(d.getDate()/7);return [1,3,5].includes(w)?"A":"B"}
-function recipeFor(d){if(d.getDay()===0)return null;return recipes.find(r=>r.day===d.getDay()&&r.group===weekGroup(d))||null}
-function optionsRecipes(){return recipes.map(r=>`<option value="${r.id}">${r.name}</option>`).join("")}
-function autoRecipe(){
- const val=document.getElementById("date").value;if(!val)return;
- const d=new Date(val+"T12:00:00"),r=recipeFor(d);
- document.getElementById("scheduledRecipe").value=r?r.name:"रविवार — पाककृती नियोजित नाही";
- document.getElementById("actualRecipe").value=r?String(r.id):"1";
+
+// पाककृतीनुसार अचूक १७ स्तंभांची मांडणी.
+// वापरकर्त्याने दिलेले प्रमाण: कोरडे साहित्य ग्रॅममध्ये; तेल मिलीलीटरमध्ये.
+function baseRecipe(rice, pulseKey, pulseQty, extras={}) {
+  const row = {};
+  ingredients.forEach(i => row[i.key] = "");
+  row.rice = rice;
+  if (pulseKey) row[pulseKey] = pulseQty;
+  Object.assign(row, {
+    salt: extras.salt ?? (rice === 100 ? 2 : 3),
+    turmeric: extras.turmeric ?? (rice === 100 ? 0.15 : 0.25),
+    masala: extras.masala ?? (rice === 100 ? 0.90 : 1.40),
+    mustard: extras.mustard ?? (rice === 100 ? 0.10 : 0.15),
+    oil: extras.oil ?? (rice === 100 ? 5.00 : 7.50),
+    chilli: extras.chilli ?? (rice === 100 ? 0.20 : 0.25),
+    cumin: extras.cumin ?? (rice === 100 ? 0.20 : 0.25)
+  });
+  return row;
 }
-function showSchool(){
- const name=document.getElementById("schoolName").value.trim();
- document.getElementById("schoolResult").textContent=name?"शाळेची माहिती या पानावर भरली आहे; ती कायमस्वरूपी जतन झालेली नाही.":"कृपया शाळेचे नाव भरा.";
+const recipeAmounts = {
+  p: {
+    1:baseRecipe(100,"peas",20),
+    2:baseRecipe(100,"peas",20),
+    3:baseRecipe(100,"moongDal",20),
+    4:baseRecipe(100,"chawli",20),
+    5:baseRecipe(100,"chickpea",20),
+    6:baseRecipe(100,"matki",20),
+    7:baseRecipe(100,"peas",20),
+    8:baseRecipe(100,"soyChunks",20),
+    9:baseRecipe(100,"masoor",20),
+    10:baseRecipe(100,"wholeMoong",10,null,{turDal:10}),
+    11:baseRecipe(100,"moongDal",20),
+    12:baseRecipe(100,"matki",20)
+  },
+  u: {
+    1:baseRecipe(150,"peas",30),
+    2:baseRecipe(150,"peas",30),
+    3:baseRecipe(150,"moongDal",30),
+    4:baseRecipe(150,"chawli",30),
+    5:baseRecipe(150,"chickpea",30),
+    6:baseRecipe(150,"matki",30),
+    7:baseRecipe(150,"peas",30),
+    8:baseRecipe(150,"soyChunks",30),
+    9:baseRecipe(150,"masoor",20),
+    10:baseRecipe(150,"wholeMoong",15,null,{turDal:15}),
+    11:baseRecipe(150,"moongDal",30),
+    12:baseRecipe(150,"matki",30)
+  }
+};
+
+// वरणाच्या पाककृतीत अख्खा मूग आणि तूरडाळ दोन्ही दाखवणे
+recipeAmounts.p[10] = baseRecipe(100, "wholeMoong", 10, {turDal:10});
+recipeAmounts.u[10] = baseRecipe(150, "wholeMoong", 15, {turDal:15});
+
+const defaultMaterials = ingredients.map(i => ({key:i.key,name:i.name,active:true}));
+
+function emptyData(){
+  return {
+    school:{},
+    daily:[],
+    monthly:{},
+    stock:[],
+    materials:defaultMaterials,
+    recipeAmounts:recipeAmounts
+  };
 }
-function checkDaily(){
- const pp=+document.getElementById("pPresent").value,pm=+document.getElementById("pMeals").value;
- const up=+document.getElementById("uPresent").value,um=+document.getElementById("uMeals").value;
- document.getElementById("dailyResult").textContent=(pm>pp||um>up)?"तपासा: आहार घेतलेल्यांची संख्या हजर विद्यार्थ्यांपेक्षा जास्त आहे.":"नोंदी तपासल्या. माहिती कायमस्वरूपी जतन झालेली नाही.";
+function readData(){
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return emptyData();
+    const d = JSON.parse(raw);
+    const defaults = emptyData();
+    return {
+      ...defaults, ...d,
+      school:d.school || {},
+      daily:Array.isArray(d.daily)?d.daily:[],
+      monthly:d.monthly || {},
+      stock:Array.isArray(d.stock)?d.stock:[],
+      materials:Array.isArray(d.materials)?d.materials:defaultMaterials,
+      recipeAmounts:d.recipeAmounts || recipeAmounts
+    };
+  } catch(e) {
+    console.error(e);
+    return emptyData();
+  }
 }
-function renderPlan(){
- document.getElementById("planRows").innerHTML=recipes.map(r=>`<tr><td>${r.id}</td><td>${r.name}</td><td>${days[r.day]}</td><td>${r.group==="A"?"१ला, ३रा व ५वा":"२रा व ४था"} आठवडा</td></tr>`).join("");
- document.getElementById("actualRecipe").innerHTML=optionsRecipes();
+let data = readData();
+
+function persist(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+    return true;
+  }catch(e){
+    alert("माहिती जतन झाली नाही. ब्राउझरमध्ये जागा उपलब्ध आहे का ते तपासा.");
+    return false;
+  }
+}
+function byId(id){return document.getElementById(id);}
+function todayISO(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function safe(s){
+  return String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function recipeById(id){return recipes.find(r=>r.id===Number(id));}
+function recipeName(id){return recipeById(id)?.name || "निवडलेले नाही";}
+function weekOfMonth(dateString){
+  const day = Number(dateString.slice(8,10));
+  return (Math.ceil(day/7)%2===1) ? "A" : "B";
+}
+function recipeForDate(dateString){
+  if(!dateString) return "";
+  const date = new Date(dateString+"T12:00:00");
+  const dow = date.getDay();
+  if(dow===0) return "";
+  const week = weekOfMonth(dateString);
+  return recipes.find(r=>r.day===dow && r.week===week)?.id || "";
+}
+function formatDate(d){return d || "";}
+function setStatus(id,msg){byId(id).textContent=msg;}
+function getMonthKey(date){return date.slice(0,7);}
+function num(id){return Math.max(0,Number(byId(id).value)||0);}
+
+function setupTabs(){
+  document.querySelectorAll("#tabs button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll("#tabs button").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      byId(btn.dataset.panel).classList.add("active");
+      if(btn.dataset.panel==="stock") renderStock();
+      if(btn.dataset.panel==="attendance") renderDaily();
+      if(btn.dataset.panel==="menu") renderRecipeTable();
+      if(btn.dataset.panel==="reports") renderReport();
+    });
+  });
+}
+
+function loadSchool(){
+  const s=data.school||{};
+  ["schoolName","udise","center","taluka","district","headmaster","mobile","academicYear","medium","classes"].forEach(k=>{
+    if(s[k]!==undefined) byId(k).value=s[k];
+  });
+  updateHeaderYear();
+  setStatus("schoolStatus",Object.keys(s).length?"जतन केलेली शाळेची माहिती दाखवली.":"अद्याप शाळेची माहिती जतन केलेली नाही.");
+}
+function updateHeaderYear(){byId("headerAcademicYear").textContent=byId("academicYear").value;}
+byId("academicYear").addEventListener("change",updateHeaderYear);
+
+byId("schoolForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  data.school={};
+  ["schoolName","udise","center","taluka","district","headmaster","mobile","academicYear","medium","classes"].forEach(k=>{
+    data.school[k]=byId(k).value.trim();
+  });
+  if(persist()){
+    updateHeaderYear();
+    setStatus("schoolStatus","शाळेची माहिती यशस्वीरीत्या जतन झाली.");
+  }
+});
+
+function populateRecipeSelect(select, includeBlank=false){
+  select.innerHTML = includeBlank ? '<option value="">पाककृती नाही / लागू नाही</option>' : "";
+  recipes.forEach(r=>{
+    const o=document.createElement("option");
+    o.value=r.id;
+    o.textContent=`${r.id}. ${r.name}`;
+    select.appendChild(o);
+  });
+}
+populateRecipeSelect(byId("dailyRecipe"),true);
+populateRecipeSelect(byId("recipeNumber"));
+byId("dailyDate").value=todayISO();
+byId("stockDate").value=todayISO();
+byId("monthSelect").value=todayISO().slice(0,7);
+byId("reportMonth").value=todayISO().slice(0,7);
+
+function syncDailyRecipe(){
+  const d=byId("dailyDate").value;
+  const scheduled=recipeForDate(d);
+  byId("dailyRecipe").value=scheduled;
+  const old=data.daily.find(x=>x.date===d);
+  if(old) fillDaily(old);
+}
+byId("dailyDate").addEventListener("change",syncDailyRecipe);
+byId("schoolOpen").addEventListener("change",()=>{
+  const closed=byId("schoolOpen").value==="no";
+  ["pPresent","pMeals","uPresent","uMeals"].forEach(id=>{if(closed)byId(id).value=0;});
+});
+
+function fillDaily(x){
+  byId("dailyDate").value=x.date;
+  byId("schoolOpen").value=x.open || "yes";
+  byId("dailyRecipe").value=x.recipe || "";
+  byId("pTotal").value=x.pTotal ?? 0;
+  byId("pPresent").value=x.pPresent ?? 0;
+  byId("pMeals").value=x.pMeals ?? 0;
+  byId("uTotal").value=x.uTotal ?? 0;
+  byId("uPresent").value=x.uPresent ?? 0;
+  byId("uMeals").value=x.uMeals ?? 0;
+  byId("dailyNotes").value=x.notes || "";
+}
+function dailyFormData(){
+  const date=byId("dailyDate").value;
+  return {
+    date,open:byId("schoolOpen").value,
+    recipe:byId("dailyRecipe").value,
+    pTotal:num("pTotal"),pPresent:num("pPresent"),pMeals:num("pMeals"),
+    uTotal:num("uTotal"),uPresent:num("uPresent"),uMeals:num("uMeals"),
+    notes:byId("dailyNotes").value.trim()
+  };
+}
+byId("saveDaily").addEventListener("click",()=>{
+  const x=dailyFormData();
+  if(!x.date){setStatus("dailyStatus","कृपया दिनांक निवडा.");return;}
+  if(x.pPresent>x.pTotal || x.pMeals>x.pPresent || x.uPresent>x.uTotal || x.uMeals>x.uPresent){
+    setStatus("dailyStatus","तपासा: उपस्थित संख्या पटसंख्येपेक्षा किंवा आहार संख्या उपस्थितीपेक्षा जास्त आहे.");return;
+  }
+  const i=data.daily.findIndex(d=>d.date===x.date);
+  if(i>=0)data.daily[i]=x;else data.daily.push(x);
+  data.daily.sort((a,b)=>a.date.localeCompare(b.date));
+  if(persist()){setStatus("dailyStatus","दैनंदिन नोंद जतन झाली.");renderDaily();renderReport();}
+});
+byId("clearDaily").addEventListener("click",()=>{
+  ["pTotal","pPresent","pMeals","uTotal","uPresent","uMeals"].forEach(id=>byId(id).value=0);
+  byId("dailyNotes").value="";
+  byId("dailyDate").value=todayISO();
+  byId("schoolOpen").value="yes";
+  syncDailyRecipe();
+  setStatus("dailyStatus","नवीन नोंदीसाठी फॉर्म तयार आहे.");
+});
+function renderDaily(){
+  const body=byId("dailyRows");
+  body.innerHTML="";
+  [...data.daily].sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${safe(x.date)}</td><td>${x.open==="yes"?"होय":"नाही"}</td><td>${safe(recipeName(x.recipe))}</td>
+      <td>${x.pMeals||0}</td><td>${x.uMeals||0}</td>
+      <td><button class="secondary" data-edit="${safe(x.date)}">उघडा</button></td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>{
+    const x=data.daily.find(d=>d.date===b.dataset.edit);
+    if(x){fillDaily(x);byId("dailyStatus").textContent="नोंद उघडली.";window.scrollTo({top:0,behavior:"smooth"});}
+  }));
+}
+syncDailyRecipe();
+
+function renderRecipeTable(){
+  const body=byId("recipeRows");
+  body.innerHTML="";
+  recipes.forEach(r=>{
+    const tr=document.createElement("tr");
+    const weekday=["","सोमवार","मंगळवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"][r.day];
+    tr.innerHTML=`<td>${r.id}</td><td>${safe(r.name)}</td><td>${r.week==="A"?weekday:"—"}</td><td>${r.week==="B"?weekday:"—"}</td>`;
+    body.appendChild(tr);
+  });
+  renderIngredients();
 }
 function renderIngredients(){
- const data=document.getElementById("grade").value==="p"?p:u;
- document.getElementById("ingredientHead").innerHTML="<tr><th>क्र.</th><th>पाककृती</th>"+ingredients.map(x=>`<th>${x}</th>`).join("")+"</tr>";
- document.getElementById("ingredientRows").innerHTML=data.map((row,i)=>`<tr><td>${i+1}</td><td>${recipes[i].name}</td>${row.map(v=>`<td>${v===""?"":v}</td>`).join("")}</tr>`).join("");
+  const grade=byId("recipeGrade").value;
+  const id=Number(byId("recipeNumber").value||1);
+  const amounts=data.recipeAmounts?.[grade]?.[id] || recipeAmounts[grade][id];
+  const body=byId("ingredientRows");
+  body.innerHTML="";
+  ingredients.forEach(i=>{
+    const v=amounts[i.key];
+    if(v==="" || v===undefined || v===null) return;
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${safe(i.name)}</td><td>${safe(v)}</td><td>${safe(i.unit)}</td>`;
+    body.appendChild(tr);
+  });
 }
-function buildMonth(){
- const val=document.getElementById("month").value;if(!val){alert("प्रथम महिना निवडा.");return}
- const [y,m]=val.split("-").map(Number),count=new Date(y,m,0).getDate();let html="";
- for(let day=1;day<=count;day++){
- const d=new Date(y,m-1,day,12),r=recipeFor(d),iso=`${y}-${String(m).padStart(2,"0")}-${String(day).padStart(2,"0")}`,sun=d.getDay()===0;
- html+=`<tr><td>${iso}</td><td>${days[d.getDay()]}</td><td><select><option>${sun?"नाही":"होय"}</option><option>${sun?"होय":"नाही"}</option></select></td><td>${r?r.name:"—"}</td><td><select>${recipes.map(x=>`<option ${r&&x.id===r.id?"selected":""}>${x.name}</option>`).join("")}</select></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td></tr>`;
- }
- document.getElementById("monthRows").innerHTML=html;
+byId("recipeGrade").addEventListener("change",renderIngredients);
+byId("recipeNumber").addEventListener("change",renderIngredients);
+renderRecipeTable();
+
+function monthDates(month){
+  if(!month)return [];
+  const [y,m]=month.split("-").map(Number);
+  const count=new Date(y,m,0).getDate();
+  const result=[];
+  for(let d=1;d<=count;d++)result.push(`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`);
+  return result;
 }
-function refreshItemSelects(){
- const active=activeItems.filter(x=>x.active);
- const opts=active.map(x=>`<option>${x.name}</option>`).join("");
- ["openingItem","receiveItem","returnItem"].forEach(id=>document.getElementById(id).innerHTML=opts);
- document.getElementById("itemRows").innerHTML=activeItems.map(x=>`<tr><td>${x.name}</td><td>${x.active?"चालू":"बंद"}</td></tr>`).join("");
+function renderMonth(){
+  const month=byId("monthSelect").value;
+  const body=byId("monthRows");
+  body.innerHTML="";
+  const saved=data.monthly[month]||{};
+  monthDates(month).forEach(date=>{
+    const old=saved[date] || data.daily.find(x=>x.date===date) || {};
+    const recipe=old.recipe!==undefined?old.recipe:recipeForDate(date);
+    const weekday=new Date(date+"T12:00:00").toLocaleDateString("mr-IN",{weekday:"long"});
+    const tr=document.createElement("tr");
+    tr.dataset.date=date;
+    tr.innerHTML=`
+      <td>${date}</td><td>${safe(weekday)}</td>
+      <td><select class="m-open"><option value="yes">होय</option><option value="no">नाही</option></select></td>
+      <td><select class="m-recipe"><option value="">पाककृती नाही</option>${recipes.map(r=>`<option value="${r.id}">${r.id}. ${safe(r.name)}</option>`).join("")}</select></td>
+      <td><input class="m-pp" type="number" min="0" value="${old.pPresent??0}"></td>
+      <td><input class="m-pm" type="number" min="0" value="${old.pMeals??0}"></td>
+      <td><input class="m-up" type="number" min="0" value="${old.uPresent??0}"></td>
+      <td><input class="m-um" type="number" min="0" value="${old.uMeals??0}"></td>`;
+    body.appendChild(tr);
+    tr.querySelector(".m-open").value=old.open||"yes";
+    tr.querySelector(".m-recipe").value=recipe||"";
+    tr.querySelector(".m-open").addEventListener("change",e=>{
+      if(e.target.value==="no"){
+        tr.querySelector(".m-pp").value=0;tr.querySelector(".m-pm").value=0;
+        tr.querySelector(".m-up").value=0;tr.querySelector(".m-um").value=0;
+        tr.querySelector(".m-recipe").value="";
+      }
+    });
+  });
 }
-function manageItem(){
- const name=document.getElementById("newItem").value.trim(),action=document.getElementById("itemAction").value;
- if(!name){alert("साहित्याचे नाव भरा.");return}
- const found=activeItems.find(x=>x.name===name);
- if(action==="add"){
- if(found&&found.active){alert("हे साहित्य आधीच चालू आहे.");return}
- if(found)found.active=true;else activeItems.push({name,active:true});
- }else{
- if(!found){alert("या नावाचे साहित्य यादीत नाही.");return}
- found.active=false;
- }
- refreshItemSelects();
- document.getElementById("itemResult").textContent="यादी बदलली. बदल या पानावर तात्पुरते आहेत.";
-}
-function receiptToggle(){document.getElementById("receiptBox").style.display=document.getElementById("source").value==="पुरवठादार"?"block":"none"}
-function addStock(type){
- let date,source,receipt,item,qty;
- if(type==="सुरुवातीची शिल्लक"){
- date=document.getElementById("stockMonth").value;source="—";receipt="—";item=document.getElementById("openingItem").value;qty=document.getElementById("openingQty").value;
- }else if(type==="धान्य प्राप्त"){
- date=document.getElementById("receiveDate").value;source=document.getElementById("source").value;receipt=source==="पुरवठादार"?document.getElementById("receipt").value:"—";item=document.getElementById("receiveItem").value;qty=document.getElementById("receiveQty").value;
- if(source==="पुरवठादार"&&!receipt.trim()){alert("पुरवठादाराची पावती क्रमांक भरा.");return}
- }else{
- date=document.getElementById("returnDate").value;source=document.getElementById("returnType").value;receipt="—";item=document.getElementById("returnItem").value;qty=document.getElementById("returnQty").value;type=source;
- }
- if(!date||qty===""||!Number.isFinite(+qty)||+qty<0){alert("तारीख आणि योग्य प्रमाण भरा.");return}
- stockRecords.push({date,type,source,receipt,item,qty});
- document.getElementById("stockRows").innerHTML=stockRecords.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${x.source}</td><td>${x.receipt}</td><td>${x.item}</td><td>${x.qty}</td></tr>`).join("");
-}
-function reportCheck(){
- document.getElementById("reportResult").textContent="निवड: "+document.getElementById("reportGrade").value+" गट, "+document.getElementById("reportPeriod").value+" अहवाल. पूर्ण स्वयंचलित अहवालासाठी जतन केलेल्या दैनिक व साठा नोंदींची जोडणी आवश्यक आहे.";
-}
-document.getElementById("nav").addEventListener("click",e=>{
- const b=e.target.closest("button[data-tab]");if(!b)return;
- document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
- document.querySelectorAll("main section").forEach(x=>x.classList.remove("active"));
- b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active");
+byId("generateMonth").addEventListener("click",()=>{
+  renderMonth();
+  setStatus("monthStatus","महिन्याचे दिवस तयार झाले. उपस्थितीची माहिती भरा.");
 });
-renderPlan();renderIngredients();refreshItemSelects();receiptToggle();
+byId("monthSelect").addEventListener("change",renderMonth);
+byId("autofillMonth").addEventListener("click",()=>{
+  document.querySelectorAll("#monthRows tr").forEach(tr=>{
+    const date=tr.dataset.date;
+    const open=tr.querySelector(".m-open");
+    const recipe=tr.querySelector(".m-recipe");
+    if(open.value==="yes") recipe.value=recipeForDate(date)||"";
+  });
+  setStatus("monthStatus","मेनू वेळापत्रकानुसार भरला. आवश्यक असल्यास दिवसापुरता बदल करा.");
+});
+byId("saveMonth").addEventListener("click",()=>{
+  const month=byId("monthSelect").value;
+  if(!month){setStatus("monthStatus","कृपया महिना निवडा.");return;}
+  const obj={};
+  let invalid=false;
+  document.querySelectorAll("#monthRows tr").forEach(tr=>{
+    const date=tr.dataset.date;
+    const x={
+      date,open:tr.querySelector(".m-open").value,
+      recipe:tr.querySelector(".m-recipe").value,
+      pTotal:num("monthPTotal"),pPresent:Number(tr.querySelector(".m-pp").value)||0,
+      pMeals:Number(tr.querySelector(".m-pm").value)||0,
+      uTotal:num("monthUTotal"),uPresent:Number(tr.querySelector(".m-up").value)||0,
+      uMeals:Number(tr.querySelector(".m-um").value)||0,
+      notes:""
+    };
+    if(x.pPresent>x.pTotal || x.pMeals>x.pPresent || x.uPresent>x.uTotal || x.uMeals>x.uPresent)invalid=true;
+    obj[date]=x;
+  });
+  if(invalid){setStatus("monthStatus","काही दिवसांची संख्या तपासा. उपस्थिती पटसंख्येपेक्षा किंवा आहार उपस्थितीपेक्षा जास्त नसावी.");return;}
+  data.monthly[month]=obj;
+  Object.values(obj).forEach(x=>{
+    const i=data.daily.findIndex(d=>d.date===x.date);
+    if(i>=0)data.daily[i]=x;else data.daily.push(x);
+  });
+  data.daily.sort((a,b)=>a.date.localeCompare(b.date));
+  if(persist()){setStatus("monthStatus","मासिक नोंदी जतन झाल्या.");renderDaily();renderReport();}
+});
+renderMonth();
+
+function renderStockEntry(){
+  const body=byId("stockEntryRows");
+  body.innerHTML="";
+  data.materials.filter(m=>m.active!==false).forEach(m=>{
+    const tr=document.createElement("tr");
+    tr.dataset.key=m.key;
+    tr.innerHTML=`<td>${safe(m.name)}</td>
+      <td><select class="s-unit"><option value="kg">किलो</option><option value="g">ग्रॅम</option><option value="L">लिटर</option><option value="ml">मिलीलीटर</option></select></td>
+      <td><input class="s-qty" type="number" min="0" step="0.001" placeholder="0"></td>`;
+    body.appendChild(tr);
+    const unit=tr.querySelector(".s-unit");
+    if(m.key==="oil")unit.value="L";
+    unit.addEventListener("change",()=>{});
+  });
+}
+byId("stockType").addEventListener("change",()=>{
+  const isReceived=byId("stockType").value==="received";
+  byId("receiptNo").disabled=!isReceived || byId("stockSource").value!=="पुरवठादार";
+});
+byId("stockSource").addEventListener("change",()=>{
+  byId("receiptNo").disabled=byId("stockType").value!=="received" || byId("stockSource").value!=="पुरवठादार";
+});
+byId("stockGrade").addEventListener("change",renderStockEntry);
+
+byId("addMaterial").addEventListener("click",()=>{
+  const name=prompt("नवीन साहित्याचे नाव लिहा:");
+  if(!name || !name.trim())return;
+  const clean=name.trim();
+  if(data.materials.some(m=>m.name.toLowerCase()===clean.toLowerCase())){
+    alert("हे साहित्य आधीच आहे.");return;
+  }
+  const key="custom_"+Date.now();
+  data.materials.push({key,name:clean,active:true});
+  if(persist()){renderStockEntry();setStatus("stockStatus","नवीन साहित्य जोडले.");}
+});
+
+byId("saveStock").addEventListener("click",()=>{
+  const date=byId("stockDate").value;
+  if(!date){setStatus("stockStatus","दिनांक निवडा.");return;}
+  const entries=[];
+  document.querySelectorAll("#stockEntryRows tr").forEach(tr=>{
+    const qty=Number(tr.querySelector(".s-qty").value)||0;
+    if(qty>0){
+      entries.push({key:tr.dataset.key,unit:tr.querySelector(".s-unit").value,qty});
+    }
+  });
+  if(!entries.length){setStatus("stockStatus","किमान एका साहित्याचे प्रमाण भरा.");return;}
+  const type=byId("stockType").value;
+  const source=byId("stockSource").value;
+  if(type==="received" && source==="पुरवठादार" && !byId("receiptNo").value.trim()){
+    setStatus("stockStatus","पुरवठादाराकडून प्राप्तीसाठी पावती क्रमांक भरा.");return;
+  }
+  data.stock.push({
+    id:Date.now(),date,grade:byId("stockGrade").value,type,source,
+    receipt:byId("receiptNo").value.trim(),notes:byId("stockNotes").value.trim(),entries
+  });
+  if(persist()){
+    setStatus("stockStatus","साठा नोंद जतन झाली.");
+    byId("receiptNo").value="";byId("stockNotes").value="";
+    document.querySelectorAll(".s-qty").forEach(x=>x.value="");
+    renderStock();
+  }
+});
+function stockTypeName(t){
+  return {opening:"सुरुवातीची शिल्लक",received:"धान्य / साहित्य प्राप्त",return:"उसने परत / खराब",consume:"वापर / खर्च"}[t]||t;
+}
+function renderStock(){
+  renderStockEntry();
+  const body=byId("stockRows");
+  body.innerHTML="";
+  [...data.stock].sort((a,b)=>b.date.localeCompare(a.date)).forEach(s=>{
+    const detail=s.entries.map(e=>{
+      const m=data.materials.find(x=>x.key===e.key);
+      return `${m?.name||e.key}: ${e.qty} ${e.unit}`;
+    }).join("、 ");
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${safe(s.date)}</td><td>${s.grade==="p"?"१–५":"६–८"}</td>
+      <td>${safe(stockTypeName(s.type))}</td><td>${safe(detail)}</td>
+      <td>${safe(s.source||"")}</td><td>${safe(s.receipt||"—")}</td>`;
+    body.appendChild(tr);
+  });
+}
+renderStockEntry();
+renderStock();
+
+function getMonthRecords(month){
+  const byDate=new Map();
+  data.daily.filter(x=>x.date.startsWith(month)).forEach(x=>byDate.set(x.date,x));
+  Object.values(data.monthly[month]||{}).forEach(x=>byDate.set(x.date,x));
+  return [...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
+}
+function renderReport(){
+  const month=byId("reportMonth").value||todayISO().slice(0,7);
+  const grade=byId("reportGrade").value;
+  const records=getMonthRecords(month);
+  const mealsP=records.reduce((s,x)=>s+(x.pMeals||0),0);
+  const mealsU=records.reduce((s,x)=>s+(x.uMeals||0),0);
+  const openDays=records.filter(x=>x.open==="yes").length;
+  byId("reportCards").innerHTML=`
+    <div class="card">नोंद असलेले दिवस<strong>${records.length}</strong></div>
+    <div class="card">शाळा सुरू असलेले दिवस<strong>${openDays}</strong></div>
+    <div class="card">१–५ आहार संख्या<strong>${mealsP}</strong></div>
+    <div class="card">६–८ आहार संख्या<strong>${mealsU}</strong></div>`;
+  const body=byId("reportRows");
+  body.innerHTML="";
+  records.forEach(x=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${safe(x.date)}</td><td>${safe(recipeName(x.recipe))}</td>
+      <td>${grade==="u"?"—":x.pMeals||0}</td><td>${grade==="p"?"—":x.uMeals||0}</td><td>${safe(x.notes||"")}</td>`;
+    body.appendChild(tr);
+  });
+}
+byId("makeReport").addEventListener("click",renderReport);
+byId("reportMonth").addEventListener("change",renderReport);
+byId("reportGrade").addEventListener("change",renderReport);
+
+byId("exportCsv").addEventListener("click",()=>{
+  const month=byId("reportMonth").value||todayISO().slice(0,7);
+  const records=getMonthRecords(month);
+  const rows=[["दिनांक","शाळा सुरू","पाककृती","१–५ उपस्थित","१–५ आहार","६–८ उपस्थित","६–८ आहार","शेरा"]];
+  records.forEach(x=>rows.push([x.date,x.open==="yes"?"होय":"नाही",recipeName(x.recipe),x.pPresent||0,x.pMeals||0,x.uPresent||0,x.uMeals||0,x.notes||""]));
+  const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  downloadBlob(csv,`PM_POSHAN_${month}.csv`,"text/csv;charset=utf-8");
+});
+function downloadBlob(content,name,type){
+  const blob=new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+}
+byId("downloadBackup").addEventListener("click",()=>{
+  downloadBlob(JSON.stringify(data,null,2),`PM_POSHAN_Backup_${todayISO()}.json`,"application/json");
+  setStatus("backupStatus","बॅकअप डाउनलोड सुरू केला.");
+});
+byId("restoreBackup").addEventListener("change",async e=>{
+  const file=e.target.files?.[0];
+  if(!file)return;
+  try{
+    const imported=JSON.parse(await file.text());
+    if(!imported || typeof imported!=="object" || !Array.isArray(imported.daily) || !Array.isArray(imported.stock)){
+      throw new Error("Invalid backup");
+    }
+    if(!confirm("सध्याचा स्थानिक डेटा आयात केलेल्या बॅकअपने बदलायचा आहे का?"))return;
+    data={...emptyData(),...imported};
+    if(persist()){
+      loadSchool();renderDaily();renderMonth();renderStock();renderRecipeTable();renderReport();
+      setStatus("backupStatus","बॅकअप यशस्वीरीत्या पुनर्संचयित केला.");
+    }
+  }catch(err){
+    setStatus("backupStatus","ही वैध बॅकअप फाईल नाही.");
+  }finally{e.target.value="";}
+});
+byId("clearAll").addEventListener("click",()=>{
+  if(!confirm("सर्व शाळेची माहिती, उपस्थिती आणि साठा नोंदी या ब्राउझरमधून हटवायच्या आहेत का? आधी बॅकअप घ्या."))return;
+  localStorage.removeItem(STORE_KEY);
+  data=emptyData();
+  loadSchool();renderDaily();renderMonth();renderStock();renderRecipeTable();renderReport();
+  setStatus("backupStatus","स्थानिक डेटा हटवला.");
+});
+
+loadSchool();
+renderDaily();
+renderMonth();
+renderStock();
+renderRecipeTable();
+renderReport();
+setupTabs();
 </script>
 </body>
 </html>
