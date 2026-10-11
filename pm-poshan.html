@@ -137,7 +137,7 @@ footer{padding:22px}
 .recipe-edit-actions .status{font-size:12px;margin-left:auto}
 .recipe-amount{padding:7px 9px!important}
 </style></head>
-<body><div style="position:fixed;z-index:99999;inset:0;background:#f4f7fb;display:grid;place-items:center;padding:24px;text-align:center"><div style="background:white;padding:28px;border-radius:18px;max-width:480px;box-shadow:0 10px 35px #0002"><h2>PM POSHAN Cloud Sync</h2><p>माहिती पाहण्यासाठी AI साथी खात्यात लॉगिन करा.</p><a href="login.html" style="display:inline-block;padding:12px 20px;background:#1457c5;color:white;border-radius:10px;text-decoration:none">लॉगिन करा</a></div></div>
+<body>
 <div class="app-shell">
 <aside class="sidebar">
  <div class="brand"><div class="brand-mark">🍲</div><div><h2>PM POSHAN</h2><p>शालेय पोषण आहार व्यवस्थापन</p></div></div>
@@ -632,8 +632,44 @@ function initializeUi(){
 const firebaseConfig={apiKey:"AIzaSyAw202kspjUGbDFKxugJxdPPH4lqeG8Fg",authDomain:"ai-sathi-portal.firebaseapp.com",projectId:"ai-sathi-portal",storageBucket:"ai-sathi-portal.firebasestorage.app",messagingSenderId:"87410372148",appId:"1:87410372148:web:0063e6a3780f38f2f2e461",measurementId:"G-7VPK79ZLDF"};
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(), firestore=firebase.firestore();
+let loginOverlayShown=false;
+function showPmLogin(){
+ if(loginOverlayShown)return;
+ loginOverlayShown=true;
+ const overlay=document.createElement("div");
+ overlay.id="pmLoginOverlay";
+ overlay.style.cssText="position:fixed;z-index:99999;inset:0;background:#f4f7fb;display:grid;place-items:center;padding:24px;text-align:center;font-family:Arial,sans-serif";
+ overlay.innerHTML=`<div style="background:white;padding:28px;border-radius:20px;width:min(100%,460px);box-shadow:0 10px 35px #0002;color:#183b5b">
+ <h2 style="margin:0 0 12px">PM POSHAN Cloud Sync</h2>
+ <p style="line-height:1.6">PM POSHAN वापरण्यासाठी आपल्या AI साथी खात्यात लॉगिन करा. लॉगिन याच पेजवर होईल.</p>
+ <form id="pmLoginForm" style="display:grid;gap:12px;text-align:left">
+ <label>ई-मेल<input id="pmLoginEmail" type="email" autocomplete="username" required style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ccd6e2;border-radius:9px;margin-top:5px"></label>
+ <label>पासवर्ड<input id="pmLoginPassword" type="password" autocomplete="current-password" required style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ccd6e2;border-radius:9px;margin-top:5px"></label>
+ <button id="pmLoginSubmit" type="submit" style="padding:13px;background:#1457c5;color:white;border:0;border-radius:10px;font-size:16px;cursor:pointer">लॉगिन करा</button>
+ <button id="pmResetPassword" type="button" style="padding:9px;background:white;color:#1457c5;border:0;cursor:pointer">पासवर्ड विसरलात?</button>
+ <p id="pmLoginMessage" role="status" style="margin:0;color:#9b1c1c;line-height:1.5"></p>
+ </form><p style="font-size:12px;color:#667085;margin-bottom:0">आपला डेटा आपल्या लॉगिन खात्याशी जोडला जाईल.</p></div>`;
+ document.body.appendChild(overlay);
+ document.getElementById("pmLoginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const email=document.getElementById("pmLoginEmail").value.trim();
+  const password=document.getElementById("pmLoginPassword").value;
+  const msg=document.getElementById("pmLoginMessage"),btn=document.getElementById("pmLoginSubmit");
+  btn.disabled=true;btn.textContent="लॉगिन होत आहे…";msg.textContent="";
+  try{await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);await auth.signInWithEmailAndPassword(email,password);msg.style.color="#137333";msg.textContent="लॉगिन यशस्वी. PM POSHAN उघडत आहे…";}
+  catch(err){console.error(err);msg.style.color="#9b1c1c";msg.textContent=err.code==="auth/invalid-credential"||err.code==="auth/wrong-password"?"ई-मेल किंवा पासवर्ड चुकीचा आहे.":err.code==="auth/too-many-requests"?"अनेक प्रयत्न झाले. थोड्या वेळाने पुन्हा प्रयत्न करा.":"लॉगिन झाले नाही. इंटरनेट आणि खाते तपासा.";btn.disabled=false;btn.textContent="लॉगिन करा";}
+ });
+ document.getElementById("pmResetPassword").addEventListener("click",async()=>{
+  const email=document.getElementById("pmLoginEmail").value.trim(),msg=document.getElementById("pmLoginMessage");
+  if(!email){msg.textContent="आधी ई-मेल भरा, मग पासवर्ड रीसेट करा.";return;}
+  try{await auth.sendPasswordResetEmail(email);msg.style.color="#137333";msg.textContent="पासवर्ड रीसेट करण्याची लिंक ई-मेलवर पाठवली आहे.";}
+  catch(err){msg.style.color="#9b1c1c";msg.textContent="रीसेट ई-मेल पाठवता आला नाही. ई-मेल तपासा.";}
+ });
+}
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
 auth.onAuthStateChanged(async user=>{
- if(!user){st("cloudStatus","लॉगिन आवश्यक आहे");document.body.insertAdjacentHTML("afterbegin",'<div style="position:fixed;z-index:99999;inset:0;background:#f4f7fb;display:grid;place-items:center;padding:24px;text-align:center"><div style="background:white;padding:28px;border-radius:18px;max-width:480px;box-shadow:0 10px 35px #0002"><h2>PM POSHAN Cloud Sync</h2><p>माहिती पाहण्यासाठी AI साथी खात्यात लॉगिन करा.</p><a href="login.html" style="display:inline-block;padding:12px 20px;background:#1457c5;color:white;border-radius:10px;text-decoration:none">लॉगिन करा</a></div></div>');return;}
+ if(!user){st("cloudStatus","लॉगिन आवश्यक आहे");showPmLogin();return;}
+ const overlay=document.getElementById("pmLoginOverlay");if(overlay)overlay.remove();loginOverlayShown=false;
  cloudUser=firestore.collection("users").doc(user.uid).collection("pmPoshan").doc("main");
  try{
    st("cloudStatus","☁ Cloud मधील डेटा तपासत आहे…");
@@ -647,4 +683,13 @@ auth.onAuthStateChanged(async user=>{
  }catch(err){console.error(err);st("cloudStatus","⚠ Cloud जोडणी अयशस्वी");alert("Cloud मधून माहिती लोड झाली नाही. इंटरनेट आणि Firestore Rules तपासा. स्थानिक माहिती हटवलेली नाही.");db=loadLocal();initializeUi();}
 });
 
-</script></body></html>
+</script><div id="pmLoginOverlay" style="position: fixed; z-index: 99999; inset: 0px; background: rgb(244, 247, 251); display: grid; place-items: center; padding: 24px; text-align: center; font-family: Arial, sans-serif;"><div style="background:white;padding:28px;border-radius:20px;width:min(100%,460px);box-shadow:0 10px 35px #0002;color:#183b5b">
+ <h2 style="margin:0 0 12px">PM POSHAN Cloud Sync</h2>
+ <p style="line-height:1.6">PM POSHAN वापरण्यासाठी आपल्या AI साथी खात्यात लॉगिन करा. लॉगिन याच पेजवर होईल.</p>
+ <form id="pmLoginForm" style="display:grid;gap:12px;text-align:left">
+ <label>ई-मेल<input id="pmLoginEmail" type="email" autocomplete="username" required="" style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ccd6e2;border-radius:9px;margin-top:5px"></label>
+ <label>पासवर्ड<input id="pmLoginPassword" type="password" autocomplete="current-password" required="" style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ccd6e2;border-radius:9px;margin-top:5px"></label>
+ <button id="pmLoginSubmit" type="submit" style="padding:13px;background:#1457c5;color:white;border:0;border-radius:10px;font-size:16px;cursor:pointer">लॉगिन करा</button>
+ <button id="pmResetPassword" type="button" style="padding:9px;background:white;color:#1457c5;border:0;cursor:pointer">पासवर्ड विसरलात?</button>
+ <p id="pmLoginMessage" role="status" style="margin:0;color:#9b1c1c;line-height:1.5"></p>
+ </form><p style="font-size:12px;color:#667085;margin-bottom:0">आपला डेटा आपल्या लॉगिन खात्याशी जोडला जाईल.</p></div></div></body></html>
