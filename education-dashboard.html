@@ -3,55 +3,98 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1d4ed8">
 <title>शिक्षण विभाग | AI साथी</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f1f5f9;color:#1e293b}
-header{background:linear-gradient(135deg,#075985,#2563eb);color:white;padding:22px 16px;text-align:center}
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:#f1f5f9;
+  color:#1e293b
+}
+header{
+  background:linear-gradient(135deg,#075985,#2563eb);
+  color:#fff;
+  text-align:center;
+  padding:22px 16px
+}
 header h1{margin:0 0 8px;font-size:25px}
 header p{margin:0;font-size:14px}
 main{max-width:1050px;margin:25px auto;padding:0 16px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;margin-bottom:22px
+}
 a{text-decoration:none}
-.btn{display:inline-block;padding:10px 15px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;font-size:14px}
-.btn-light{background:white;color:#1d4ed8;box-shadow:0 2px 8px #0001}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:white;border:1px solid #e2e8f0;border-radius:14px;padding:20px;box-shadow:0 5px 16px #0000000b;display:flex;flex-direction:column;align-items:flex-start;transition:.2s}
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 22px #00000012}
+.btn{
+  display:inline-block;border:0;border-radius:9px;
+  background:#2563eb;color:#fff;padding:11px 15px;
+  font-weight:bold;font-size:14px;cursor:pointer
+}
+.btn-light{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px #0001}
+.intro{color:#64748b;line-height:1.7}
+.grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;margin-top:18px
+}
+.card{
+  background:#fff;border:1px solid #dbe4f0;border-radius:14px;
+  padding:20px;box-shadow:0 5px 16px #0000000b;
+  display:flex;flex-direction:column;align-items:flex-start;
+  min-height:185px
+}
+.card:hover{box-shadow:0 8px 24px #00000012}
 .icon{font-size:30px}
 .card h2{font-size:18px;color:#1e40af;margin:10px 0 7px}
-.card p{color:#64748b;line-height:1.6;font-size:14px;margin:0}
-.card .btn{margin-top:16px}
-.card .btn{margin-top:auto}
-.card .open-btn{margin-top:16px}
-.tag{font-size:12px;background:#e0f2fe;color:#075985;padding:5px 9px;border-radius:20px;margin-top:12px}
-footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
-.modal{display:none;position:fixed;inset:0;background:#0f172acc;z-index:10;padding:18px;overflow-y:auto;align-items:center;justify-content:center}
+.card p{font-size:14px;color:#64748b;line-height:1.7;margin:0 0 12px}
+.tag{
+  font-size:12px;background:#e0f2fe;color:#075985;
+  padding:5px 9px;border-radius:20px;margin-top:auto;margin-bottom:12px
+}
+footer{text-align:center;padding:24px;color:#64748b;font-size:13px}
+.modal{
+  display:none;position:fixed;inset:0;z-index:10;
+  background:#0f172acc;padding:16px;overflow:auto;
+  align-items:center;justify-content:center
+}
 .modal.show{display:flex}
-.modal-box{background:white;border-radius:16px;max-width:680px;width:100%;padding:23px;position:relative;margin:auto}
-.close{position:absolute;right:14px;top:12px;border:0;background:#e2e8f0;border-radius:50%;width:34px;height:34px;font-size:20px;cursor:pointer}
-.demo-label{display:inline-block;background:#fef3c7;color:#92400e;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.demo-content{margin:18px 0}
+.modal-box{
+  background:white;border-radius:16px;padding:24px;
+  max-width:680px;width:100%;margin:auto;position:relative
+}
+.close{
+  position:absolute;right:12px;top:12px;border:0;
+  border-radius:50%;width:35px;height:35px;
+  background:#e2e8f0;font-size:21px;cursor:pointer
+}
+.demo-badge{
+  display:inline-block;background:#fef3c7;color:#92400e;
+  padding:6px 10px;border-radius:20px;font-size:12px
+}
+.demo-content{line-height:1.7;color:#475569;margin-top:15px}
 .demo-content h3{color:#1d4ed8}
-.demo-content p{line-height:1.7;color:#475569}
-.sample-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.sample{border:1px solid #e2e8f0;background:#f8fafc;border-radius:10px;padding:14px}
-.sample strong{display:block;font-size:20px;color:#1d4ed8;margin-bottom:6px}
-.sample small{color:#64748b}
-.demo-note{background:#eff6ff;border-left:4px solid #2563eb;padding:12px;margin:15px 0;font-size:13px;line-height:1.6}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.btn-outline{background:white;color:#1d4ed8;border:1px solid #2563eb}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:10px}
+.stat strong{display:block;font-size:19px;color:#1d4ed8;margin-bottom:5px}
+.stat small{color:#64748b}
+.notice{
+  background:#eff6ff;border-left:4px solid #2563eb;
+  padding:12px;font-size:13px;line-height:1.7;margin:16px 0
+}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn-outline{background:#fff;color:#1d4ed8;border:1px solid #2563eb}
 @media(max-width:650px){
- .grid{grid-template-columns:1fr}
- header h1{font-size:21px}
- .sample-grid{grid-template-columns:1fr 1fr}
- .modal-box{padding:19px}
+  .grid{grid-template-columns:1fr}
+  header h1{font-size:21px}
+  .modal-box{padding:20px 16px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
   <h1>🎓 AI साथी — शिक्षण विभाग</h1>
   <p>शाळा व्यवस्थापन व शैक्षणिक डिजिटल सेवा</p>
@@ -64,8 +107,8 @@ footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
   </div>
 
   <h2>शैक्षणिक सेवा</h2>
-  <p style="color:#64748b;line-height:1.7">
-    कोणतेही कार्ड उघडून डेमो पाहा. प्रत्यक्ष शाळेचे काम करण्यासाठी नोंदणी किंवा लॉगिन करा.
+  <p class="intro">
+    कार्ड निवडून संबंधित सेवा उघडा. प्रत्यक्ष शाळेचे काम करण्यासाठी नोंदणी किंवा लॉगिन करा.
   </p>
 
   <div class="grid" id="moduleGrid"></div>
@@ -73,23 +116,26 @@ footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
 
 <footer>© 2026 AI साथी | शैक्षणिक सेवा</footer>
 
-<div class="modal" id="demoModal" role="dialog" aria-modal="true"
-     aria-labelledby="demoTitle" onclick="outsideClose(event)">
+<div class="modal" id="demoModal" role="dialog"
+     aria-modal="true" aria-labelledby="demoTitle"
+     onclick="outsideClose(event)">
   <div class="modal-box">
-    <button class="close" onclick="closeDemo()" aria-label="बंद करा">×</button>
-    <span class="demo-label">🧪 नमुना डेमो</span>
+    <button class="close" type="button"
+            onclick="closeDemo()" aria-label="बंद करा">×</button>
+    <span class="demo-badge">🧪 नमुना डेमो</span>
     <h2 id="demoTitle"></h2>
     <div class="demo-content" id="demoContent"></div>
 
-    <div class="demo-note">
-      ही केवळ नमुना माहिती आहे. येथे केलेले बदल प्रत्यक्ष शाळेच्या नोंदींमध्ये सेव्ह होत नाहीत.
+    <div class="notice">
+      ही नमुना माहिती आहे. येथे दाखवलेले आकडे प्रत्यक्ष शाळेची माहिती नाहीत
+      आणि ते कोणत्याही सरकारी अहवालासाठी वापरू नयेत.
       पूर्ण सुविधा वापरण्यासाठी नोंदणी किंवा लॉगिन करा.
     </div>
 
-    <div class="actions">
+    <div class="modal-actions">
       <a class="btn" href="signup.html">नोंदणी करा</a>
-      <a class="btn btn-outline" href="login.html">आधीच नोंदणी केली आहे? Login करा</a>
-      <button class="btn btn-outline" onclick="closeDemo()">डेमो बंद करा</button>
+      <a class="btn btn-outline" href="login.html">Login करा</a>
+      <button class="btn btn-outline" type="button" onclick="closeDemo()">बंद करा</button>
     </div>
   </div>
 </div>
@@ -100,75 +146,62 @@ const modules = [
     id:"school",
     icon:"🏫",
     title:"शाळेची माहिती",
-    description:"शाळेचा UDISE क्रमांक, नाव, केंद्र, तालुका, जिल्हा व मुख्याध्यापकाची माहिती.",
-    content:`
-      <h3>शाळेचे नमुना प्रोफाइल</h3>
-      <div class="sample-grid">
-        <div class="sample"><strong>12345678901</strong><small>नमुना UDISE क्रमांक</small></div>
-        <div class="sample"><strong>AI साथी शाळा</strong><small>नमुना शाळेचे नाव</small></div>
-        <div class="sample"><strong>मुख्याध्यापक</strong><small>नमुना पद</small></div>
-        <div class="sample"><strong>महाराष्ट्र</strong><small>नमुना राज्य</small></div>
-      </div>`
+    description:"शाळेचे नाव, UDISE क्रमांक, केंद्रशाळा, तालुका, जिल्हा, मुख्याध्यापक व संपर्क माहिती.",
+    content:""
   },
   {
     id:"poshan",
     icon:"🍱",
     title:"शालेय पोषण आहार व्यवस्थापन",
-    description:"दैनंदिन हजेरी, आहार नोंद, साठा नोंदवही आणि अहवाल.",
+    description:"दैनिक नोंद, विद्यार्थी उपस्थिती, आहार नोंद, साठा आणि अहवाल.",
     content:`
       <h3>दैनिक पोषण आहार — नमुना</h3>
-      <div class="sample-grid">
-        <div class="sample"><strong>120</strong><small>नोंदणीकृत विद्यार्थी (नमुना)</small></div>
-        <div class="sample"><strong>105</strong><small>उपस्थित विद्यार्थी (नमुना)</small></div>
-        <div class="sample"><strong>105</strong><small>आहार घेतलेले (नमुना)</small></div>
-        <div class="sample"><strong>15</strong><small>अनुपस्थित (नमुना)</small></div>
+      <div class="stats">
+        <div class="stat"><strong>120</strong><small>नमुना विद्यार्थी संख्या</small></div>
+        <div class="stat"><strong>105</strong><small>नमुना उपस्थिती</small></div>
+        <div class="stat"><strong>दैनिक</strong><small>आहार नोंद</small></div>
+        <div class="stat"><strong>मासिक</strong><small>अहवाल</small></div>
       </div>
-      <p>दैनिक नोंद, धान्य साठा आणि मासिक अहवालाची नमुना रचना.</p>`
+      <p>हे केवळ डेमो आकडे आहेत. प्रत्यक्ष नोंदी सेव्ह होत नाहीत.</p>`
   },
   {
     id:"cce",
     icon:"📊",
     title:"सातत्यपूर्ण सर्वंकष मूल्यमापन (CCE)",
-    description:"विद्यार्थ्यांच्या सातत्यपूर्ण मूल्यमापनासाठी डिजिटल सेवा.",
+    description:"विद्यार्थ्यांचे अध्ययन निष्पत्ती, मूल्यमापन आणि प्रगती नोंदी.",
     content:`
       <h3>विद्यार्थी मूल्यमापन — नमुना</h3>
-      <div class="sample-grid">
-        <div class="sample"><strong>विद्यार्थी अ</strong><small>नमुना विद्यार्थी</small></div>
-        <div class="sample"><strong>85/100</strong><small>नमुना गुण</small></div>
-        <div class="sample"><strong>अभ्यास</strong><small>नमुना घटक</small></div>
-        <div class="sample"><strong>चांगली प्रगती</strong><small>नमुना निरीक्षण</small></div>
+      <div class="stats">
+        <div class="stat"><strong>विद्यार्थी अ</strong><small>नमुना नाव</small></div>
+        <div class="stat"><strong>85/100</strong><small>उदाहरणार्थ गुण</small></div>
       </div>
-      <p>विद्यार्थीनिहाय मूल्यमापन व प्रगती नोंदींसाठी नमुना डॅशबोर्ड.</p>`
+      <p>विषयनिहाय चाचण्या आणि निरीक्षण नोंदींसाठी नमुना डॅशबोर्ड.</p>`
   },
   {
     id:"hpc",
     icon:"📋",
     title:"समग्र प्रगती पत्रक",
-    description:"विद्यार्थ्यांच्या सर्वांगीण प्रगतीच्या नोंदींसाठी सेवा.",
+    description:"विद्यार्थ्यांच्या शैक्षणिक व सर्वांगीण विकासाच्या नोंदी.",
     content:`
-      <h3>समग्र प्रगती — नमुना</h3>
-      <div class="sample-grid">
-        <div class="sample"><strong>विद्यार्थी अ</strong><small>नमुना विद्यार्थी</small></div>
-        <div class="sample"><strong>चांगली</strong><small>नमुना शैक्षणिक प्रगती</small></div>
-        <div class="sample"><strong>उत्तम</strong><small>नमुना सहभाग</small></div>
-        <div class="sample"><strong>प्रगती सुरू</strong><small>नमुना कौशल्य नोंद</small></div>
+      <h3>समग्र प्रगती पत्रक — नमुना</h3>
+      <div class="stats">
+        <div class="stat"><strong>विद्यार्थी अ</strong><small>नमुना नाव</small></div>
+        <div class="stat"><strong>प्रगती नोंद</strong><small>नमुना घटक</small></div>
       </div>
-      <p>शैक्षणिक, सामाजिक, भावनिक व इतर विकासघटकांच्या नोंदींसाठी नमुना.</p>`
+      <p>प्रगती निरीक्षण व विद्यार्थी अहवालासाठी नमुना रचना.</p>`
   },
   {
     id:"dsm",
     icon:"💻",
     title:"Digital School Management",
-    description:"शाळेच्या प्रशासकीय व शैक्षणिक कामकाजाचे व्यवस्थापन.",
+    description:"शाळेचे वेळापत्रक, उपस्थिती, कर्मचारी आणि शैक्षणिक कामकाज.",
     content:`
       <h3>शाळा व्यवस्थापन — नमुना</h3>
-      <div class="sample-grid">
-        <div class="sample"><strong>8</strong><small>नमुना इयत्ता</small></div>
-        <div class="sample"><strong>12</strong><small>नमुना शिक्षक</small></div>
-        <div class="sample"><strong>120</strong><small>नमुना विद्यार्थी</small></div>
-        <div class="sample"><strong>2026–27</strong><small>नमुना शैक्षणिक वर्ष</small></div>
+      <div class="stats">
+        <div class="stat"><strong>1 ते 8</strong><small>नमुना वर्ग गट</small></div>
+        <div class="stat"><strong>2026–27</strong><small>नमुना शैक्षणिक वर्ष</small></div>
       </div>
-      <p>हजेरी, वेळापत्रक, विद्यार्थी नोंदी आणि शालेय कामकाजासाठी नमुना डॅशबोर्ड.</p>`
+      <p>हजेरी, वेळापत्रक आणि शाळेच्या नोंदींसाठी नमुना डॅशबोर्ड.</p>`
   }
 ];
 
@@ -190,13 +223,20 @@ modules.forEach(module => {
 
   const tag = document.createElement("span");
   tag.className = "tag";
-  tag.textContent = "डेमो उपलब्ध";
+  tag.textContent = module.id === "school" ? "शाळेचा फॉर्म" : "डेमो उपलब्ध";
 
   const button = document.createElement("button");
-  button.className = "btn open-btn";
   button.type = "button";
-  button.textContent = "डेमो पाहा";
-  button.addEventListener("click", () => openDemo(module.id));
+  button.className = "btn";
+  button.textContent = module.id === "school" ? "माहिती भरा" : "डेमो पाहा";
+
+  button.addEventListener("click", () => {
+    if (module.id === "school") {
+      window.location.href = "school-profile.html";
+    } else {
+      openDemo(module.id);
+    }
+  });
 
   card.append(icon, title, description, tag, button);
   grid.appendChild(card);
@@ -227,6 +267,5 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeDemo();
 });
 </script>
-
 </body>
 </html>
