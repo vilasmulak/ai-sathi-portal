@@ -231,12 +231,14 @@ modules.forEach(module => {
   button.textContent = module.id === "school" ? "माहिती भरा" : "डेमो पाहा";
 
   button.addEventListener("click", () => {
-    if (module.id === "school") {
-      window.location.href = "school-profile.html";
-    } else {
-      openDemo(module.id);
-    }
-  });
+  if (module.id === "school") {
+    window.location.href = "school-profile.html";
+  } else if (module.id === "poshan") {
+    window.location.href = "pm-poshan.html";
+  } else {
+    openDemo(module.id);
+  }
+});
 
   card.append(icon, title, description, tag, button);
   grid.appendChild(card);
