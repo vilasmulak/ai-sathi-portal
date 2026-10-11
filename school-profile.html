@@ -4,74 +4,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1d4ed8">
 <title>शाळेची माहिती | AI साथी</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:20px;background:#f1f5f9;color:#1e293b;font-family:Arial,"Noto Sans Devanagari",sans-serif}
-.card{max-width:700px;margin:20px auto;background:white;padding:26px;border-radius:18px;box-shadow:0 8px 28px #0001}
-h1{color:#1d4ed8;text-align:center;font-size:26px}
-.intro{text-align:center;color:#64748b;line-height:1.6}
-label{display:block;margin:15px 0 6px;font-weight:bold}
-input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:white}
-button,.link{display:inline-block;padding:12px 17px;border:0;border-radius:9px;background:#2563eb;color:white;font-size:15px;font-weight:bold;text-decoration:none;cursor:pointer}
+body{
+  margin:0;padding:16px;background:#f1f5f9;color:#1e293b;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif
+}
+.card{
+  max-width:760px;margin:20px auto;background:#fff;padding:26px;
+  border-radius:18px;box-shadow:0 8px 28px #0001
+}
+h1{color:#1d4ed8;text-align:center;font-size:25px;margin:8px 0 10px}
+.intro{text-align:center;color:#64748b;line-height:1.7;margin-bottom:24px}
+.section-title{
+  margin-top:24px;padding-bottom:8px;border-bottom:1px solid #e2e8f0;
+  color:#1e40af;font-size:17px
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.field{min-width:0}
+label{display:block;margin:15px 0 7px;font-weight:bold;font-size:14px}
+input,select{
+  width:100%;min-width:0;padding:12px;border:1px solid #cbd5e1;
+  border-radius:9px;font-size:16px;background:#fff;color:#1e293b
+}
+input:focus,select:focus{
+  outline:2px solid #93c5fd;border-color:#2563eb
+}
+button,.link{
+  display:inline-block;padding:12px 17px;border:0;border-radius:9px;
+  background:#2563eb;color:white;font-size:15px;font-weight:bold;
+  text-decoration:none;cursor:pointer;text-align:center
+}
 button{width:100%;margin-top:22px}
-.link{margin-top:16px;background:#e0e7ff;color:#3730a3}
-#message{line-height:1.7;overflow-wrap:anywhere}
-.note{font-size:13px;color:#64748b;line-height:1.6}
+button:disabled{opacity:.6;cursor:not-allowed}
+.link{margin-top:12px;background:#e0e7ff;color:#3730a3}
+.secondary{background:#475569}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#message{line-height:1.7;overflow-wrap:anywhere;font-size:14px}
+.note{
+  margin-top:18px;padding:12px;background:#eff6ff;border-radius:9px;
+  font-size:13px;color:#475569;line-height:1.7
+}
+.required{color:#dc2626}
+@media(max-width:560px){
+  .card{padding:19px 15px;margin:8px auto}
+  .grid,.actions{grid-template-columns:1fr}
+  h1{font-size:22px}
+}
 </style>
 </head>
+
 <body>
 <main class="card">
-<h1>🏫 शाळेची माहिती</h1>
-<p class="intro">शाळेची माहिती एकदाच भरा. पुढे ती येथे पाहता व बदलता येईल.</p>
+  <h1>🏫 शाळेची माहिती</h1>
+  <p class="intro">
+    आपल्या शाळेची माहिती एकदाच भरा. सेव्ह केल्यानंतर ती पाहता व बदलता येईल.
+  </p>
 
-<form id="schoolForm">
-<label for="schoolName">शाळेचे पूर्ण नाव</label>
-<input id="schoolName" maxlength="150" required>
+  <form id="schoolForm">
+    <h2 class="section-title">१. शाळेची ओळख</h2>
 
-<label for="center">केंद्राचे नाव</label>
-<input id="center" maxlength="100" required>
+    <div class="field">
+      <label for="schoolName">शाळेचे पूर्ण नाव <span class="required">*</span></label>
+      <input id="schoolName" maxlength="150" required
+        placeholder="शाळेचे संपूर्ण नाव">
+    </div>
 
-<label for="taluka">तालुका</label>
-<input id="taluka" maxlength="100" required>
+    <div class="field">
+      <label for="udise">UDISE क्रमांक (११ अंक) <span class="required">*</span></label>
+      <input id="udise" inputmode="numeric" pattern="[0-9]{11}"
+        maxlength="11" minlength="11" required
+        placeholder="११ अंकी UDISE क्रमांक">
+    </div>
 
-<label for="district">जिल्हा</label>
-<input id="district" maxlength="100" required>
+    <div class="field">
+      <label for="center">केंद्रशाळेचे नाव <span class="required">*</span></label>
+      <input id="center" maxlength="100" required placeholder="केंद्रशाळेचे नाव">
+    </div>
 
-<label for="udise">UDISE क्रमांक (11 अंक)</label>
-<input id="udise" inputmode="numeric" pattern="[0-9]{11}" maxlength="11" required>
+    <div class="grid">
+      <div class="field">
+        <label for="taluka">तालुका <span class="required">*</span></label>
+        <input id="taluka" maxlength="100" required placeholder="तालुका">
+      </div>
+      <div class="field">
+        <label for="district">जिल्हा <span class="required">*</span></label>
+        <input id="district" maxlength="100" required placeholder="जिल्हा">
+      </div>
+    </div>
 
-<label for="headmaster">मुख्याध्यापकाचे नाव</label>
-<input id="headmaster" maxlength="100" required>
+    <h2 class="section-title">२. मुख्याध्यापक व संपर्क</h2>
 
-<label for="mobile">संपर्क क्रमांक</label>
-<input id="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required>
+    <div class="field">
+      <label for="headmaster">मुख्याध्यापकांचे पूर्ण नाव <span class="required">*</span></label>
+      <input id="headmaster" maxlength="100" required placeholder="पूर्ण नाव">
+    </div>
 
-<label for="classes">वर्ग गट</label>
-<select id="classes" required>
-<option value="">वर्ग गट निवडा</option>
-<option value="1-5">इयत्ता 1 ते 5</option>
-<option value="6-8">इयत्ता 6 ते 8</option>
-<option value="1-8">इयत्ता 1 ते 8</option>
-</select>
+    <div class="field">
+      <label for="mobile">संपर्क क्रमांक <span class="required">*</span></label>
+      <input id="mobile" type="tel" inputmode="numeric"
+        pattern="[0-9]{10}" minlength="10" maxlength="10"
+        required placeholder="१० अंकी मोबाईल क्रमांक">
+    </div>
 
-<p class="note">माहिती सेव्ह करण्यासाठी Login आवश्यक आहे. UDISE क्रमांक बदलण्यासाठी Admin मंजुरी लागू केली जाऊ शकते.</p>
-<button type="submit" id="saveBtn">माहिती सेव्ह करा</button>
-<p id="message" role="status" aria-live="polite"></p>
-</form>
+    <h2 class="section-title">३. वर्गरचना व माध्यम</h2>
 
-<a class="link" href="education-dashboard.html">← शिक्षण Dashboard</a>
+    <div class="grid">
+      <div class="field">
+        <label for="classes">वर्ग गट <span class="required">*</span></label>
+        <select id="classes" required>
+          <option value="">वर्ग गट निवडा</option>
+          <option value="1-5">इयत्ता १ ते ५</option>
+          <option value="6-8">इयत्ता ६ ते ८</option>
+          <option value="1-8">इयत्ता १ ते ८</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="medium">शिक्षणाचे माध्यम <span class="required">*</span></label>
+        <select id="medium" required>
+          <option value="">माध्यम निवडा</option>
+          <option value="मराठी">मराठी</option>
+          <option value="इंग्रजी">इंग्रजी</option>
+          <option value="उर्दू">उर्दू</option>
+          <option value="हिंदी">हिंदी</option>
+          <option value="इतर">इतर</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>सूचना:</strong> UDISE क्रमांक अचूक भरा. नोंदणीकृत शाळेच्या
+      UDISE क्रमांकात बदल करण्यासाठी प्रशासकीय पडताळणी लागू केली पाहिजे.
+      माहिती सेव्ह करण्यासाठी लॉगिन आवश्यक आहे.
+    </div>
+
+    <button type="submit" id="saveBtn">माहिती सेव्ह करा</button>
+    <p id="message" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="actions">
+    <a class="link" href="education-dashboard.html">← शिक्षण Dashboard</a>
+    <a class="link secondary" href="login.html">Login पेज</a>
+  </div>
 </main>
 
 <script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { initializeApp, getApps } from
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-// Firebase Console मधील खरी Config येथे भरा.
+/*
+  Firebase Console मधील Web App ची खरी Config भरा.
+  खालील placeholders बदलल्याशिवाय Firebase जोडणी चालणार नाही.
+*/
 const firebaseConfig = {
   apiKey: "YOUR_REAL_API_KEY",
   authDomain: "YOUR_REAL_AUTH_DOMAIN",
@@ -83,102 +176,156 @@ const firebaseConfig = {
 
 const form = document.getElementById("schoolForm");
 const message = document.getElementById("message");
-const button = document.getElementById("saveBtn");
-let auth, db, currentUser;
+const saveBtn = document.getElementById("saveBtn");
 
-form.addEventListener("submit", async (event) => {
+const fields = [
+  "schoolName", "udise", "center", "taluka", "district",
+  "headmaster", "mobile", "classes", "medium"
+];
+
+let auth = null;
+let db = null;
+let currentUser = null;
+let firebaseReady = false;
+
+function showMessage(text) {
+  message.textContent = text;
+}
+
+function setFormDisabled(disabled) {
+  fields.forEach(id => {
+    document.getElementById(id).disabled = disabled;
+  });
+  saveBtn.disabled = disabled;
+}
+
+function readForm() {
+  return {
+    schoolName: document.getElementById("schoolName").value.trim(),
+    udise: document.getElementById("udise").value.trim(),
+    center: document.getElementById("center").value.trim(),
+    taluka: document.getElementById("taluka").value.trim(),
+    district: document.getElementById("district").value.trim(),
+    headmaster: document.getElementById("headmaster").value.trim(),
+    mobile: document.getElementById("mobile").value.trim(),
+    classes: document.getElementById("classes").value,
+    medium: document.getElementById("medium").value
+  };
+}
+
+function fillForm(data) {
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (data[id] !== undefined && data[id] !== null) {
+      el.value = data[id];
+    }
+  });
+}
+
+const configIncomplete = Object.values(firebaseConfig).some(value =>
+  typeof value !== "string" ||
+  !value ||
+  value.startsWith("YOUR_REAL_")
+);
+
+if (!configIncomplete) {
+  try {
+    const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    firebaseReady = true;
+
+    onAuthStateChanged(auth, async user => {
+      currentUser = user;
+
+      if (!user) {
+        setFormDisabled(true);
+        showMessage("माहिती सेव्ह करण्यासाठी आधी Login करा.");
+        return;
+      }
+
+      setFormDisabled(false);
+      showMessage("शाळेची माहिती तपासत आहोत...");
+
+      try {
+        const ref = doc(db, "schools", user.uid);
+        const snapshot = await getDoc(ref);
+
+        if (snapshot.exists()) {
+          fillForm(snapshot.data());
+          showMessage("आधी सेव्ह केलेली माहिती लोड झाली.");
+        } else {
+          showMessage("कृपया शाळेची माहिती भरा.");
+        }
+      } catch (error) {
+        console.error("School profile load failed:", error);
+        showMessage(
+          "माहिती लोड झाली नाही. सुरक्षित Firebase नियम किंवा बॅकएंड जोडणी तपासा."
+        );
+      }
+    });
+  } catch (error) {
+    console.error("Firebase initialization failed:", error);
+    showMessage("Firebase जोडणी सुरू झाली नाही. Configuration तपासा.");
+    setFormDisabled(true);
+  }
+} else {
+  setFormDisabled(true);
+  showMessage("Firebase Configuration भरणे बाकी आहे. माहिती सध्या सेव्ह होणार नाही.");
+}
+
+form.addEventListener("submit", async event => {
   event.preventDefault();
 
-  if (!currentUser) {
-    message.textContent = "माहिती सेव्ह करण्यासाठी आधी Login करा.";
+  if (!firebaseReady || !db || !currentUser) {
+    showMessage("माहिती सेव्ह करण्यासाठी Firebase जोडणी आणि Login आवश्यक आहे.");
     return;
   }
 
-  if (firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
-    message.textContent = "Firebase Configuration भरणे बाकी आहे.";
+  if (!form.reportValidity()) return;
+
+  const data = readForm();
+
+  if (!/^[0-9]{11}$/.test(data.udise)) {
+    showMessage("UDISE क्रमांक अचूक ११ अंकांचा असावा.");
     return;
   }
 
-  const udise = document.getElementById("udise").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-
-  if (!/^[0-9]{11}$/.test(udise) || !/^[0-9]{10}$/.test(mobile)) {
-    message.textContent = "UDISE क्रमांक 11 अंकांचा आणि मोबाईल क्रमांक 10 अंकांचा असावा.";
+  if (!/^[0-9]{10}$/.test(data.mobile)) {
+    showMessage("संपर्क क्रमांक अचूक १० अंकांचा असावा.");
     return;
   }
 
-  button.disabled = true;
-  message.textContent = "माहिती सेव्ह होत आहे...";
+  saveBtn.disabled = true;
+  showMessage("माहिती सेव्ह करण्याचा प्रयत्न सुरू आहे...");
 
   try {
     const ref = doc(db, "schools", currentUser.uid);
     const previous = await getDoc(ref);
     const oldData = previous.exists() ? previous.data() : {};
 
-    if (oldData.udise && oldData.udise !== udise) {
-      message.textContent = "UDISE बदलण्यासाठी Admin मंजुरी आवश्यक आहे.";
+    if (oldData.udise && oldData.udise !== data.udise) {
+      showMessage("UDISE क्रमांक बदलण्यासाठी प्रशासकीय मंजुरी आवश्यक आहे.");
       return;
     }
-
-    const data = {
-      schoolName: document.getElementById("schoolName").value.trim(),
-      center: document.getElementById("center").value.trim(),
-      taluka: document.getElementById("taluka").value.trim(),
-      district: document.getElementById("district").value.trim(),
-      udise,
-      headmaster: document.getElementById("headmaster").value.trim(),
-      mobile,
-      classes: document.getElementById("classes").value,
-      updatedAt: serverTimestamp()
-    };
 
     await setDoc(ref, {
       ...data,
-      ...(previous.exists() ? {} : { createdAt: serverTimestamp() })
+      uid: currentUser.uid,
+      ...(previous.exists() ? {} : { createdAt: serverTimestamp() }),
+      updatedAt: serverTimestamp()
     }, { merge: true });
 
-    message.textContent = "शाळेची माहिती सेव्ह झाली.";
+    showMessage("शाळेची माहिती सेव्ह झाली.");
   } catch (error) {
-    message.textContent = "माहिती सेव्ह झाली नाही. Firebase सुरक्षा नियम तपासा.";
+    console.error("School profile save failed:", error);
+    showMessage(
+      "माहिती सेव्ह झाली नाही. सध्याचे Firestore नियम थेट सेव्हिंगला परवानगी देत नाहीत; सुरक्षित बॅकएंड जोडणे आवश्यक आहे."
+    );
   } finally {
-    button.disabled = false;
+    saveBtn.disabled = false;
   }
 });
-
-if (!firebaseConfig.apiKey.startsWith("YOUR_REAL_")) {
-  const app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
-
-  onAuthStateChanged(auth, async (user) => {
-    currentUser = user;
-
-    if (!user) {
-      message.textContent = "कृपया आधी Login करा.";
-      form.querySelectorAll("input,select,button").forEach(el => el.disabled = true);
-      return;
-    }
-
-    try {
-      const snap = await getDoc(doc(db, "schools", user.uid));
-      if (snap.exists()) {
-        const d = snap.data();
-        for (const [field, value] of Object.entries({
-          schoolName:d.schoolName, center:d.center, taluka:d.taluka,
-          district:d.district, udise:d.udise, headmaster:d.headmaster,
-          mobile:d.mobile, classes:d.classes
-        })) {
-          if (value != null) document.getElementById(field).value = value;
-        }
-        message.textContent = "आधी सेव्ह केलेली माहिती लोड झाली.";
-      }
-    } catch {
-      message.textContent = "माहिती लोड झाली नाही. Firebase सेटिंग तपासा.";
-    }
-  });
-} else {
-  message.textContent = "Firebase Configuration भरल्यानंतरच माहिती सेव्ह करता येईल.";
-}
 </script>
 </body>
 </html>
