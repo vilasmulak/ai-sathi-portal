@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="mr">
-<head>
+<html lang="mr"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PM POSHAN Smart Reporter</title>
 <style>
@@ -139,7 +137,7 @@ footer{padding:22px}
 .recipe-edit-actions .status{font-size:12px;margin-left:auto}
 .recipe-amount{padding:7px 9px!important}
 </style></head>
-<body>
+<body><div style="position:fixed;z-index:99999;inset:0;background:#f4f7fb;display:grid;place-items:center;padding:24px;text-align:center"><div style="background:white;padding:28px;border-radius:18px;max-width:480px;box-shadow:0 10px 35px #0002"><h2>PM POSHAN Cloud Sync</h2><p>माहिती पाहण्यासाठी AI साथी खात्यात लॉगिन करा.</p><a href="login.html" style="display:inline-block;padding:12px 20px;background:#1457c5;color:white;border-radius:10px;text-decoration:none">लॉगिन करा</a></div></div>
 <div class="app-shell">
 <aside class="sidebar">
  <div class="brand"><div class="brand-mark">🍲</div><div><h2>PM POSHAN</h2><p>शालेय पोषण आहार व्यवस्थापन</p></div></div>
@@ -152,7 +150,7 @@ footer{padding:22px}
  <button type="button" data-panel="school"><span>⚙</span> शाळा व प्रणाली सेटिंग्ज</button>
  <button type="button" data-panel="backup"><span>⇩</span> बॅकअप / डेटा</button>
  </nav>
- <div class="sidebar-foot">स्थानिक डेटा • LocalStorage<br>PM POSHAN Smart Reporter</div>
+ <div class="sidebar-foot"><span id="cloudStatus">लॉगिन आवश्यक आहे</span><br>PM POSHAN Smart Reporter</div>
 </aside>
 <div class="main-area">
 <header class="topbar"><div><h1 id="headerSchoolName">शाळेचे नाव</h1><p>शालेय पोषण आहार व्यवस्थापन प्रणाली</p></div>
@@ -191,7 +189,7 @@ footer{padding:22px}
  </div>
 </section>
 <section class="panel" id="school"><h2>🏫 शाळेची माहिती</h2><form id="schoolForm"><div class="grid">
-<div class="field"><label for="schoolName">शाळेचे नाव *</label><input id="schoolName" required></div><div class="field"><label for="udise">UDISE क्रमांक</label><input id="udise" maxlength="11"></div><div class="field"><label for="center">केंद्र</label><input id="center"></div><div class="field"><label for="taluka">तालुका</label><input id="taluka"></div><div class="field"><label for="district">जिल्हा</label><input id="district"></div><div class="field"><label for="headmaster">मुख्याध्यापक</label><input id="headmaster"></div><div class="field"><label for="mobile">मोबाईल</label><input id="mobile" maxlength="10"></div><div class="field"><label for="academicYear">शैक्षणिक वर्ष</label><select id="academicYear"><option>२०२६–२०२७</option><option>२०२७–२०२८</option><option>२०२८–२०२९</option><option>२०२९–२०३०</option><option>२०३०–२०३१</option></select></div><div class="field"><label for="medium">माध्यम</label><select id="medium"><option>मराठी</option><option>इंग्रजी</option><option>उर्दू</option><option>हिंदी</option><option>इतर</option></select></div><div class="field"><label for="classes">वर्ग</label><select id="classes"><option value="1-5">१ ते ५</option><option value="6-8">६ ते ८</option><option value="1-8" selected>१ ते ८</option></select></div></div><div class="actions"><button class="btn green" type="submit">शाळेची माहिती जतन करा</button><button class="btn blue" type="button" id="reloadSchool">जतन केलेली माहिती पहा</button></div><div class="status" id="schoolStatus"></div></form></section>
+<div class="field"><label for="schoolName">शाळेचे नाव *</label><input id="schoolName" required=""></div><div class="field"><label for="udise">UDISE क्रमांक</label><input id="udise" maxlength="11"></div><div class="field"><label for="center">केंद्र</label><input id="center"></div><div class="field"><label for="taluka">तालुका</label><input id="taluka"></div><div class="field"><label for="district">जिल्हा</label><input id="district"></div><div class="field"><label for="headmaster">मुख्याध्यापक</label><input id="headmaster"></div><div class="field"><label for="mobile">मोबाईल</label><input id="mobile" maxlength="10"></div><div class="field"><label for="academicYear">शैक्षणिक वर्ष</label><select id="academicYear"><option>२०२६–२०२७</option><option>२०२७–२०२८</option><option>२०२८–२०२९</option><option>२०२९–२०३०</option><option>२०३०–२०३१</option></select></div><div class="field"><label for="medium">माध्यम</label><select id="medium"><option>मराठी</option><option>इंग्रजी</option><option>उर्दू</option><option>हिंदी</option><option>इतर</option></select></div><div class="field"><label for="classes">वर्ग</label><select id="classes"><option value="1-5">१ ते ५</option><option value="6-8">६ ते ८</option><option value="1-8" selected="">१ ते ८</option></select></div></div><div class="actions"><button class="btn green" type="submit">शाळेची माहिती जतन करा</button><button class="btn blue" type="button" id="reloadSchool">जतन केलेली माहिती पहा</button></div><div class="status" id="schoolStatus"></div></form></section>
 <section class="panel" id="attendance">
 <h2>📋 दैनंदिन उपस्थिती</h2>
 <div class="attendance-switch actions">
@@ -202,7 +200,7 @@ footer{padding:22px}
  <div class="grid">
   <div class="field"><label for="dailyDate">दिनांक</label><input type="date" id="dailyDate"></div>
   <div class="field"><label for="schoolOpen">शाळा सुरू होती?</label><select id="schoolOpen"><option value="yes">होय</option><option value="no">नाही</option></select></div>
-  <div class="field"><label for="dailyRecipe">पाककृती</label><select id="dailyRecipe"></select></div>
+  <div class="field"><label for="dailyRecipe">पाककृती</label><select id="dailyRecipe"><option value="">पाककृती नाही</option><option value="1">1. व्हेजिटेबल पुलाव</option><option value="2">2. मसाले भात</option><option value="3">3. मुगडाळ खिचडी</option><option value="4">4. चवळीची खिचडी</option><option value="5">5. चणा पुलाव</option><option value="6">6. मोड आलेल्या मटकीची उसळ व भात</option><option value="7">7. मटार पुलाव</option><option value="8">8. सोयाबीन पुलाव</option><option value="9">9. मसुरी पुलाव</option><option value="10">10. मूग शेवग्याचे वरण आणि भात</option><option value="11">11. मुगडाळ खिचडी</option><option value="12">12. मोड आलेल्या मटकीची उसळ व भात</option></select></div>
  </div>
  <p class="small">फक्त उपस्थित विद्यार्थी संख्या भरा. आहार घेतलेल्या विद्यार्थ्यांची संख्या आपोआप उपस्थितीइतकी नोंदवली जाईल.</p>
  <h3>इयत्ता १ ते ५</h3>
@@ -239,7 +237,7 @@ footer{padding:22px}
  <button type="button" class="btn red" id="lockRecipeAmounts">🔒 प्रमाण लॉक करा</button>
  <span class="status" id="recipeLockStatus">प्रमाण लॉक आहे</span>
 </div>
-<div class="grid"><div class="field"><label for="recipeGrade">वर्ग गट</label><select id="recipeGrade"><option value="p">१ ते ५</option><option value="u">६ ते ८</option></select></div><div class="field"><label for="recipeNumber">पाककृती</label><select id="recipeNumber"></select></div></div><div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>प्रमाण</th><th>एकक</th></tr></thead><tbody id="ingredientRows"></tbody></table></div></section>
+<div class="grid"><div class="field"><label for="recipeGrade">वर्ग गट</label><select id="recipeGrade"><option value="p">१ ते ५</option><option value="u">६ ते ८</option></select></div><div class="field"><label for="recipeNumber">पाककृती</label><select id="recipeNumber"><option value="1">1. व्हेजिटेबल पुलाव</option><option value="2">2. मसाले भात</option><option value="3">3. मुगडाळ खिचडी</option><option value="4">4. चवळीची खिचडी</option><option value="5">5. चणा पुलाव</option><option value="6">6. मोड आलेल्या मटकीची उसळ व भात</option><option value="7">7. मटार पुलाव</option><option value="8">8. सोयाबीन पुलाव</option><option value="9">9. मसुरी पुलाव</option><option value="10">10. मूग शेवग्याचे वरण आणि भात</option><option value="11">11. मुगडाळ खिचडी</option><option value="12">12. मोड आलेल्या मटकीची उसळ व भात</option></select></div></div><div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>प्रमाण</th><th>एकक</th></tr></thead><tbody id="ingredientRows"></tbody></table></div></section>
 <section class="panel" id="stock"><h2>📦 धान्य व माल साठा</h2>
 <div class="stock-mode-tabs actions">
 <button type="button" class="btn green" data-stock-mode="received">＋ धान्य प्राप्त</button>
@@ -248,7 +246,7 @@ footer{padding:22px}
 <button type="button" class="btn blue" data-stock-mode="all">▤ सर्व साठा नोंदी</button>
 </div>
 <p id="openingBalanceHelp" class="notice">मागील शिल्लक स्वतंत्रपणे नोंदवा. ३१ मार्चची वार्षिक शिल्लक किंवा मागील महिन्याच्या अखेरची प्रत्यक्ष शिल्लक येथे नोंदवता येईल. ही नोंद धान्य प्राप्तीमध्ये मिसळली जाणार नाही.</p><div class="grid"><div class="field"><label for="stockGrade">वर्ग गट</label><select id="stockGrade"><option value="p">१ ते ५</option><option value="u">६ ते ८</option></select></div><div class="field"><label for="stockDate">दिनांक</label><input type="date" id="stockDate"></div><div class="field"><label for="stockType">प्रकार</label><select id="stockType"><option value="opening">सुरुवातीची शिल्लक</option><option value="received">धान्य / साहित्य प्राप्त</option><option value="return">उसने परत / खराब</option><option value="consume">वापर / खर्च</option></select></div>
-<div class="field" id="openingBalanceRow"><label for="openingBalanceNote">सुरुवातीची शिल्लक — स्वतंत्र नोंद</label><input id="openingBalanceNote" placeholder="उदा. 01-04-2026 रोजीची शिल्लक नोंद"></div><div class="field"><label for="stockSource">स्रोत</label><select id="stockSource"><option>पुरवठादार</option><option>वर्ग १ ते ५ उसनवार</option><option>वर्ग ६ ते ८ उसनवार</option><option>लोकसहभाग</option><option>खुला बाजार</option><option>इतर</option></select></div><div class="field"><label for="receiptNo">पावती क्रमांक</label><input id="receiptNo"></div><div class="field"><label for="stockNotes">शेरा</label><input id="stockNotes"></div></div><p class="small">प्राप्ती/शिल्लक किलो किंवा लिटरमध्ये; वापर ग्रॅम किंवा मिलीलीटरमध्ये नोंदवा.</p><div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>एकक</th><th>प्रमाण</th></tr></thead><tbody id="stockEntryRows"></tbody></table></div><div class="actions"><button type="button" class="btn blue" id="addMaterial">नवीन साहित्य जोडा</button><button type="button" class="btn green" id="saveStock">साठा नोंद जतन करा</button></div><div class="status" id="stockStatus"></div><h3>साठा नोंदी</h3><div class="table-wrap"><table><thead><tr><th>दिनांक</th><th>वर्ग</th><th>प्रकार</th><th>साहित्य व प्रमाण</th><th>स्रोत</th><th>पावती</th><th>कृती</th></tr></thead><tbody id="stockRows"></tbody></table></div></section>
+<div class="field" id="openingBalanceRow"><label for="openingBalanceNote">सुरुवातीची शिल्लक — स्वतंत्र नोंद</label><input id="openingBalanceNote" placeholder="उदा. 01-04-2026 रोजीची शिल्लक नोंद"></div><div class="field"><label for="stockSource">स्रोत</label><select id="stockSource"><option>पुरवठादार</option><option>वर्ग १ ते ५ उसनवार</option><option>वर्ग ६ ते ८ उसनवार</option><option>लोकसहभाग</option><option>खुला बाजार</option><option>इतर</option></select></div><div class="field"><label for="receiptNo">பாவती क्रमांक</label><input id="receiptNo"></div><div class="field"><label for="stockNotes">शेरा</label><input id="stockNotes"></div></div><p class="small">प्राप्ती/शिल्लक किलो किंवा लिटरमध्ये; वापर ग्रॅम किंवा मिलीलीटरमध्ये नोंदवा.</p><div class="table-wrap"><table><thead><tr><th>साहित्य</th><th>एकक</th><th>प्रमाण</th></tr></thead><tbody id="stockEntryRows"></tbody></table></div><div class="actions"><button type="button" class="btn blue" id="addMaterial">नवीन साहित्य जोडा</button><button type="button" class="btn green" id="saveStock">साठा नोंद जतन करा</button></div><div class="status" id="stockStatus"></div><h3>साठा नोंदी</h3><div class="table-wrap"><table><thead><tr><th>दिनांक</th><th>वर्ग</th><th>प्रकार</th><th>साहित्य व प्रमाण</th><th>स्रोत</th><th>पावती</th><th>कृती</th></tr></thead><tbody id="stockRows"></tbody></table></div></section>
 <section class="panel" id="reports">
 <h2>📊 अधिकृत नमुन्यानुसार अहवाल</h2>
 <div class="grid">
@@ -271,6 +269,9 @@ footer{padding:22px}
 </section>
 <section class="panel" id="backup"><h2>💾 बॅकअप</h2><p>सध्याची माहिती JSON फाईलमध्ये डाउनलोड करा.</p><div class="actions"><button type="button" class="btn green" id="downloadBackup">बॅकअप डाउनलोड करा</button><label class="btn blue">बॅकअप पुनर्संचयित करा<input type="file" id="restoreBackup" accept=".json" style="display:none"></label><button type="button" class="btn red" id="clearAll">सर्व स्थानिक डेटा हटवा</button></div><div class="status" id="backupStatus"></div></section>
 </div><footer>PM POSHAN Smart Reporter | स्थानिक ब्राउझर आवृत्ती</footer></div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 "use strict";
 const KEY="pmPoshanReporterFixed_v1";
@@ -281,9 +282,16 @@ function amount(rice,key,q,tur){const o={};ing.forEach(i=>o[i[0]]="");o.rice=ric
 const amounts={p:{1:amount(100,"peas",20),2:amount(100,"peas",20),3:amount(100,"moongDal",20),4:amount(100,"chawli",20),5:amount(100,"chickpea",20),6:amount(100,"matki",20),7:amount(100,"peas",20),8:amount(100,"soyChunks",20),9:amount(100,"masoor",20),10:amount(100,"wholeMoong",10,10),11:amount(100,"moongDal",20),12:amount(100,"matki",20)},u:{1:amount(150,"peas",30),2:amount(150,"peas",30),3:amount(150,"moongDal",30),4:amount(150,"chawli",30),5:amount(150,"chickpea",30),6:amount(150,"matki",30),7:amount(150,"peas",30),8:amount(150,"soyChunks",30),9:amount(150,"masoor",20),10:amount(150,"wholeMoong",15,15),11:amount(150,"moongDal",30),12:amount(150,"matki",30)}};
 const defaultMaterials=ing.map(i=>({key:i[0],name:i[1],active:true}));
 function fresh(){return {school:{},roster:{pTotal:0,uTotal:0},daily:[],monthly:{},stock:[],materials:defaultMaterials,amounts};}
-function load(){try{let x=JSON.parse(localStorage.getItem(KEY)||"null");return x?{...fresh(),...x}:fresh()}catch(e){return fresh()}}
-let db=load();db.roster=db.roster||{pTotal:0,uTotal:0};const $=id=>document.getElementById(id);const st=(id,s)=>$(id).textContent=s;const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const n=id=>Math.max(0,Number($(id).value)||0);
-function save(){try{localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){alert("ब्राउझरमध्ये जागा नसल्यामुळे जतन झाले नाही.");return false}}
+function loadLocal(){try{let x=JSON.parse(localStorage.getItem(KEY)||"null");return x?{...fresh(),...x}:fresh()}catch(e){return fresh()}}
+let db=fresh();db.roster=db.roster||{pTotal:0,uTotal:0};const $=id=>document.getElementById(id);const st=(id,s)=>$(id).textContent=s;const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const n=id=>Math.max(0,Number($(id).value)||0);
+let cloudUser=null, cloudReady=false, cloudSaveTimer=null, cloudSaveChain=Promise.resolve();
+function save(){
+ try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){alert("ब्राउझरमध्ये स्थानिक बॅकअप जतन झाला नाही.");}
+ if(cloudReady && cloudUser){clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>{
+   const payload=JSON.stringify(db);if(new Blob([payload]).size>850000){st("cloudStatus","⚠ डेटा मोठा आहे; Cloud Save थांबवले.");alert("डेटा आकार मोठा असल्यामुळे Cloud Sync थांबवले. बॅकअप डाउनलोड करा.");return;}
+   cloudSaveChain=cloudSaveChain.then(()=>cloudUser.set({data:db,updatedAt:firebase.firestore.FieldValue.serverTimestamp()})).then(()=>st("cloudStatus","☁ Cloud Sync जतन झाले")).catch(err=>{console.error(err);st("cloudStatus","⚠ Cloud Sync अयशस्वी");});
+ },500);}return true;
+}
 function today(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function rname(id){return recipes.find(r=>r.id===Number(id))?.name||"निवडलेले नाही"}
 function recipeName(id){return rname(id)}
@@ -618,6 +626,25 @@ function renderDashboard(){
  records.slice(-5).reverse().forEach(v=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${esc(v.date.slice(8,10)+"-"+v.date.slice(5,7))}</td><td>${esc(recipeName(v.recipe))}</td>`;menuBody.appendChild(tr)});
  if(!records.length)menuBody.innerHTML='<tr><td colspan="2">या महिन्याच्या नोंदी नाहीत.</td></tr>';
 }
-$("receiptNo").disabled=true;initTopFilters();schoolLoad();dailyLoad();renderDaily();renderMonth();renderRecipes();updateRecipeLockUi();renderStock();setStockMode("received");report();tabs();renderDashboard();
+function initializeUi(){
+ $("receiptNo").disabled=true;initTopFilters();schoolLoad();dailyLoad();renderDaily();renderMonth();renderRecipes();updateRecipeLockUi();renderStock();setStockMode("received");report();tabs();renderDashboard();
+}
+const firebaseConfig={apiKey:"AIzaSyAw202kspjUGbDFKxugJxdPPH4lqeG8Fg",authDomain:"ai-sathi-portal.firebaseapp.com",projectId:"ai-sathi-portal",storageBucket:"ai-sathi-portal.firebasestorage.app",messagingSenderId:"87410372148",appId:"1:87410372148:web:0063e6a3780f38f2f2e461",measurementId:"G-7VPK79ZLDF"};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), firestore=firebase.firestore();
+auth.onAuthStateChanged(async user=>{
+ if(!user){st("cloudStatus","लॉगिन आवश्यक आहे");document.body.insertAdjacentHTML("afterbegin",'<div style="position:fixed;z-index:99999;inset:0;background:#f4f7fb;display:grid;place-items:center;padding:24px;text-align:center"><div style="background:white;padding:28px;border-radius:18px;max-width:480px;box-shadow:0 10px 35px #0002"><h2>PM POSHAN Cloud Sync</h2><p>माहिती पाहण्यासाठी AI साथी खात्यात लॉगिन करा.</p><a href="login.html" style="display:inline-block;padding:12px 20px;background:#1457c5;color:white;border-radius:10px;text-decoration:none">लॉगिन करा</a></div></div>');return;}
+ cloudUser=firestore.collection("users").doc(user.uid).collection("pmPoshan").doc("main");
+ try{
+   st("cloudStatus","☁ Cloud मधील डेटा तपासत आहे…");
+   const snap=await cloudUser.get();
+   if(snap.exists && snap.data() && snap.data().data){db={...fresh(),...snap.data().data};st("cloudStatus","☁ Cloud डेटा लोड झाला");}
+   else {db=loadLocal();db.roster=db.roster||{pTotal:0,uTotal:0};st("cloudStatus","☁ जुना स्थानिक डेटा Cloud वर जतन होत आहे…");}
+   cloudReady=true;
+   try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}
+   initializeUi();
+   if(!snap.exists)save();
+ }catch(err){console.error(err);st("cloudStatus","⚠ Cloud जोडणी अयशस्वी");alert("Cloud मधून माहिती लोड झाली नाही. इंटरनेट आणि Firestore Rules तपासा. स्थानिक माहिती हटवलेली नाही.");db=loadLocal();initializeUi();}
+});
 
 </script></body></html>
