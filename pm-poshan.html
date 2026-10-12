@@ -159,7 +159,7 @@ footer{padding:22px}
  <div class="field"><label for="topMonth">महिना</label><select id="topMonth"></select></div>
 </div></header>
 <div class="container">
-<div class="notice"><b>सूचना:</b> माहिती आपल्या AI साथी लॉगिन खात्यानुसार Cloud मध्ये जतन होते. नियमित बॅकअप डाउनलोड करा.</div>
+<div class="notice"><b>सूचना:</b> माहिती या ब्राउझरमध्ये जतन होते. नियमित बॅकअप डाउनलोड करा.</div>
 <section class="panel active" id="dashboard">
  <div class="dashboard-head"><div><h2>डॅशबोर्ड</h2><p>आजच्या पोषण आहाराची संक्षिप्त स्थिती</p></div><button class="btn green" type="button" data-goto="attendance">＋ दैनंदिन नोंद करा</button></div>
  <div class="dashboard-grid">
@@ -632,12 +632,11 @@ function initializeUi(){
 const firebaseConfig={apiKey:"AIzaSyAw202kspjUGbDFKxugJxdPPH4lqeG8Fg",authDomain:"ai-sathi-portal.firebaseapp.com",projectId:"ai-sathi-portal",storageBucket:"ai-sathi-portal.firebasestorage.app",messagingSenderId:"87410372148",appId:"1:87410372148:web:0063e6a3780f38f2f2e461",measurementId:"G-7VPK79ZLDF"};
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(), firestore=firebase.firestore();
-// AI साथीचे shared Firebase login वापरा. येथे स्वतंत्र PM POSHAN login नाही.
+// Shared AI साथी login: या मॉड्यूलमध्ये स्वतंत्र login popup नाही.
 auth.onAuthStateChanged(async user=>{
  if(!user){
    st("cloudStatus","AI साथी लॉगिनकडे पाठवत आहे…");
-   // शिक्षण विभागाचे तेच login वापरण्यासाठी मुख्य login पेज उघडा.
-   window.location.replace("login.html");
+   window.location.replace("login.html?next=pm-poshan.html");
    return;
  }
  cloudUser=firestore.collection("users").doc(user.uid).collection("pmPoshan").doc("main");
@@ -648,8 +647,7 @@ auth.onAuthStateChanged(async user=>{
      db={...fresh(),...snap.data().data};
      st("cloudStatus","☁ Cloud डेटा लोड झाला");
    } else {
-     // नवीन खात्यासाठी रिकामा डेटा सुरू करा. दुसऱ्या शाळेचा जुना localStorage डेटा
-     // आपोआप आयात करू नका; त्यामुळे शाळांमधील डेटा मिसळणार नाही.
+     // प्रत्येक UID साठी नवीन रिकामा डेटा; इतर शाळेचा localStorage डेटा आयात करू नका.
      db=fresh();
      db.roster=db.roster||{pTotal:0,uTotal:0};
      st("cloudStatus","☁ नवीन शाळेचा Cloud डेटा तयार होत आहे…");
@@ -657,13 +655,17 @@ auth.onAuthStateChanged(async user=>{
    cloudReady=true;
    try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}
    initializeUi();
-   if(!snap.exists) await cloudUser.set({data:db,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+   if(!snap.exists){
+     await cloudUser.set({data:db,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+     st("cloudStatus","☁ Cloud डेटा तयार झाला");
+   }
  }catch(err){
    console.error("PM POSHAN Cloud error:",err);
    cloudReady=false;
-   st("cloudStatus","⚠ Cloud जोडणी अयशस्वी — पुन्हा लॉगिन तपासा");
-   alert("PM POSHAN चा Cloud डेटा लोड झाला नाही. इंटरनेट, Firebase login आणि Firestore Rules तपासा. या खात्याचा Cloud डेटा बदललेला नाही.");
-   db=fresh();
+   st("cloudStatus","⚠ Cloud जोडणी अयशस्वी");
+   alert("PM POSHAN चा Cloud डेटा लोड झाला नाही. इंटरनेट, Firebase login आणि Firestore Rules तपासा. Cloud मधील जुना डेटा हटवलेला नाही.");
+   // Cloud failure झाल्यास फक्त या ब्राउझरचा उपलब्ध डेटा दाखवा.
+   db=loadLocal();
    initializeUi();
  }
 });
