@@ -124,9 +124,21 @@ form.addEventListener("submit", async (event) => {
 
     message.textContent = "लॉगिन यशस्वी! Dashboard उघडत आहे...";
 
-    window.setTimeout(() => {
-      window.location.href = "education-dashboard.html";
-    }, 800);
+    
+message.textContent = "लॉगिन यशस्वी! पेज उघडत आहे...";
+
+window.setTimeout(() => {
+  const nextPage = new URLSearchParams(
+    window.location.search
+  ).get("next");
+
+  if (nextPage === "pm-poshan.html") {
+    window.location.replace("pm-poshan.html");
+  } else {
+    window.location.replace("education-dashboard.html");
+  }
+}, 800);
+
 
   } catch (error) {
     const messages = {
