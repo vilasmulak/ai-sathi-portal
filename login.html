@@ -115,51 +115,50 @@ form.addEventListener("submit", async (event) => {
   forgotLink.style.pointerEvents = "none";
   message.textContent = "लॉगिन तपासत आहोत...";
 
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      emailInput.value.trim(),
-      passwordInput.value
-    );
+  
+try {
+  await signInWithEmailAndPassword(
+    auth,
+    emailInput.value.trim(),
+    passwordInput.value
+  );
 
-    message.textContent = "लॉगिन यशस्वी! Dashboard उघडत आहे...";
+  message.textContent = "लॉगिन यशस्वी! पेज उघडत आहे...";
 
-    
-message.textContent = "लॉगिन यशस्वी! पेज उघडत आहे...";
-
-window.setTimeout(() => {
   const nextPage = new URLSearchParams(
     window.location.search
   ).get("next");
 
-  if (nextPage === "pm-poshan.html") {
-    window.location.replace("pm-poshan.html");
-  } else {
-    window.location.replace("education-dashboard.html");
-  }
-}, 800);
+  window.setTimeout(() => {
+    if (nextPage === "pm-poshan.html") {
+      window.location.replace("pm-poshan.html");
+    } else {
+      window.location.replace("education-dashboard.html");
+    }
+  }, 800);
 
+} catch (error) {
+  const messages = {
+    "auth/invalid-credential":
+      "ई-मेल किंवा पासवर्ड चुकीचा आहे.",
+    "auth/invalid-email":
+      "कृपया योग्य ई-मेल भरा.",
+    "auth/too-many-requests":
+      "अनेक प्रयत्न झाले आहेत. थोड्या वेळाने पुन्हा प्रयत्न करा.",
+    "auth/network-request-failed":
+      "इंटरनेट कनेक्शन तपासा.",
+    "auth/operation-not-allowed":
+      "Firebase मध्ये Email/Password Login सुरू करा."
+  };
 
-  } catch (error) {
-    const messages = {
-      "auth/invalid-credential":
-        "ई-मेल किंवा पासवर्ड चुकीचा आहे.",
-      "auth/invalid-email":
-        "कृपया योग्य ई-मेल भरा.",
-      "auth/too-many-requests":
-        "अनेक प्रयत्न झाले आहेत. थोड्या वेळाने पुन्हा प्रयत्न करा.",
-      "auth/network-request-failed":
-        "इंटरनेट कनेक्शन तपासा.",
-      "auth/operation-not-allowed":
-        "Firebase मध्ये Email/Password Login सुरू करा."
-    };
+  message.textContent =
+    messages[error.code] ||
+    "लॉगिन झाले नाही. कृपया पुन्हा प्रयत्न करा.";
 
-    message.textContent =
-      messages[error.code] || "लॉगिन झाले नाही. कृपया पुन्हा प्रयत्न करा.";
+  loginButton.disabled = false;
+  forgotLink.style.pointerEvents = "auto";
+}
 
-    loginButton.disabled = false;
-    forgotLink.style.pointerEvents = "auto";
-  }
 });
 
 forgotLink.addEventListener("click", async (event) => {
