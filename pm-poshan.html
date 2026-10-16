@@ -632,8 +632,9 @@ function initializeUi(){
 const firebaseConfig={apiKey:"AIzaSyAw202kspjUGbDFKxugJxdPPH4lqeG8Fg",authDomain:"ai-sathi-portal.firebaseapp.com",projectId:"ai-sathi-portal",storageBucket:"ai-sathi-portal.firebasestorage.app",messagingSenderId:"87410372148",appId:"1:87410372148:web:0063e6a3780f38f2f2e461",measurementId:"G-7VPK79ZLDF"};
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(), firestore=firebase.firestore();
-// Shared AI साथी login: या मॉड्यूलमध्ये स्वतंत्र login popup नाही.
-auth.onAuthStateChanged(async user=>{
+// AI साथीचे एकच Firebase login; लॉगिन स्थिती ब्राउझरमध्ये टिकवा.
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+.then(() => auth.onAuthStateChanged(async user=>{
  if(!user){
    st("cloudStatus","AI साथी लॉगिनकडे पाठवत आहे…");
    window.location.replace("login.html?next=pm-poshan.html");
@@ -668,6 +669,11 @@ auth.onAuthStateChanged(async user=>{
    db=loadLocal();
    initializeUi();
  }
+}))
+.catch(err=>{
+  console.error("Firebase Auth persistence error:",err);
+  st("cloudStatus","⚠ लॉगिन स्थिती सुरू करता आली नाही");
+  alert("Firebase login persistence सुरू झाले नाही. कृपया पेज पुन्हा उघडा आणि इंटरनेट तपासा.");
 });
 
 </script></body></html>
