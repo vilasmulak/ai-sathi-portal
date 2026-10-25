@@ -1,211 +1,314 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="mr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI साथी | लॉगिन आणि नोंदणी</title>
-<style>
-:root{font-family:system-ui,-apple-system,"Noto Sans Devanagari",Arial,sans-serif;color:#172033;background:#f3f6fb}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px}
-.card{width:min(100%,480px);background:#fff;border:1px solid #e2e8f0;border-radius:22px;padding:26px;box-shadow:0 18px 50px #1d355710}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}.logo{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#e8f0ff;font-size:27px}
-h1{font-size:25px;margin:0 0 4px}.sub{color:#64748b;margin:0;font-size:14px;line-height:1.6}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;background:#f1f5f9;border-radius:13px;margin:22px 0 18px}
-.tab{border:0;border-radius:10px;background:transparent;color:#475569;padding:11px;font:inherit;font-weight:700;cursor:pointer;margin:0}
-.tab.active{background:#fff;color:#1d4ed8;box-shadow:0 1px 5px #0f172a12}
-label{display:block;font-weight:650;margin:14px 0 6px;font-size:14px}
-input{width:100%;border:1px solid #cbd5e1;border-radius:11px;padding:12px 13px;font:inherit;outline:none}
-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb18}
-.primary{width:100%;border:0;border-radius:11px;padding:13px 16px;background:#1d4ed8;color:#fff;font:inherit;font-weight:700;cursor:pointer;margin-top:20px}
-.primary:disabled{opacity:.65;cursor:wait}
-.links{display:flex;justify-content:space-between;gap:12px;margin-top:15px;font-size:14px;flex-wrap:wrap}
-a{color:#1d4ed8;text-decoration:none}.msg{min-height:25px;margin-top:13px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
-.note{font-size:12px;color:#64748b;margin-top:18px;line-height:1.6}.hidden{display:none!important}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI साथी | लॉगिन</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: Arial, "Noto Sans Devanagari", sans-serif;
+      background: linear-gradient(135deg, #e8f0ff, #e8fff5);
+      color: #1f2937;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 26px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 48px;
+    }
+
+    h1 {
+      margin: 8px 0;
+      text-align: center;
+      color: #1557b0;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin-bottom: 28px;
+      text-align: center;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #1557b0;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      margin-top: 10px;
+      background: #edf4ff;
+      color: #1557b0;
+    }
+
+    #message {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      display: none;
+    }
+
+    .error {
+      display: block !important;
+      color: #991b1b;
+      background: #fee2e2;
+    }
+
+    .success {
+      display: block !important;
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .footer {
+      margin-top: 22px;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
 </head>
+
 <body>
-<main class="card">
-  <div class="brand"><div class="logo">🤖</div><div><h1>AI साथी</h1><p class="sub">मराठी डिजिटल पोर्टल · शिक्षण विभाग</p></div></div>
-  <p class="sub">एकच खाते वापरून शिक्षण विभाग आणि PM POSHAN मॉड्यूल उघडा.</p>
+  <main class="login-card">
+    <div class="logo">🤖</div>
+    <h1>AI साथी</h1>
+    <p class="subtitle">
+      शिक्षण विभाग आणि PM POSHAN<br>
+      आपल्या खात्याद्वारे लॉगिन करा
+    </p>
 
-  <div class="tabs" role="tablist">
-    <button class="tab active" id="loginTab" type="button">लॉगिन</button>
-    <button class="tab" id="registerTab" type="button">नवीन नोंदणी</button>
-  </div>
+    <form id="loginForm">
+      <label for="email">ई-मेल पत्ता</label>
+      <input
+        type="email"
+        id="email"
+        autocomplete="username"
+        placeholder="आपला ई-मेल टाका"
+        required
+      >
 
-  <form id="loginForm">
-    <label for="loginEmail">ई-मेल</label>
-    <input id="loginEmail" type="email" autocomplete="username" required placeholder="तुमचा ई-मेल">
-    <label for="loginPassword">पासवर्ड</label>
-    <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="पासवर्ड">
-    <button class="primary" id="loginButton" type="submit">लॉगिन करा</button>
-    <div class="links"><a href="#" id="forgotLink">पासवर्ड विसरलात?</a><a href="index.html">मुख्य पृष्ठ</a></div>
-  </form>
+      <label for="password">पासवर्ड</label>
+      <input
+        type="password"
+        id="password"
+        autocomplete="current-password"
+        placeholder="आपला पासवर्ड टाका"
+        required
+      >
 
-  <form id="registerForm" class="hidden">
-    <label for="fullName">पूर्ण नाव</label>
-    <input id="fullName" type="text" autocomplete="name" required maxlength="100" placeholder="उदा. विलास मुलक">
-    <label for="schoolName">शाळेचे नाव</label>
-    <input id="schoolName" type="text" maxlength="150" placeholder="शाळेचे नाव">
-    <label for="udise">UDISE क्रमांक (ऐच्छिक)</label>
-    <input id="udise" type="text" inputmode="numeric" maxlength="11" pattern="[0-9]{0,11}" placeholder="शाळेचा 11 अंकी UDISE क्रमांक">
-    <label for="registerEmail">ई-मेल</label>
-    <input id="registerEmail" type="email" autocomplete="email" required placeholder="तुमचा ई-मेल">
-    <label for="registerPassword">पासवर्ड (किमान 6 अक्षरे)</label>
-    <input id="registerPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="नवीन पासवर्ड">
-    <label for="confirmPassword">पासवर्ड पुन्हा लिहा</label>
-    <input id="confirmPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="पासवर्डची खात्री करा">
-    <button class="primary" id="registerButton" type="submit">खाते तयार करा</button>
-  </form>
+      <button type="submit" id="loginButton">
+        लॉगिन करा
+      </button>
 
-  <div id="message" class="msg" role="status" aria-live="polite"></div>
-  <p class="note">नोंदणी केल्यावर तुमचे खाते Firebase मध्ये तयार होईल. शाळेची माहिती नंतर बदलण्याची सुविधा डॅशबोर्डमध्ये उपलब्ध असल्यास तिथून बदलता येईल. पासवर्ड कोणाशीही शेअर करू नका.</p>
-</main>
+      <button type="button" class="secondary" id="resetButton">
+        पासवर्ड विसरलात?
+      </button>
+    </form>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-"use strict";
-const firebaseConfig = {
-  apiKey: "AIzaSyAw202kspjUGbDFcKxugJxdPP4H4lqeG8Fg",
-  authDomain: "ai-sathi-portal.firebaseapp.com",
-  projectId: "ai-sathi-portal",
-  storageBucket: "ai-sathi-portal.firebasestorage.app",
-  messagingSenderId: "87410372148",
-  appId: "1:87410372148:web:0063e6a3780f38f2f2e461",
-  measurementId: "G-7VPK79ZLDF"
-};
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+    <div id="message" role="status" aria-live="polite"></div>
 
-const loginTab = document.getElementById("loginTab");
-const registerTab = document.getElementById("registerTab");
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-const message = document.getElementById("message");
-const loginButton = document.getElementById("loginButton");
-const registerButton = document.getElementById("registerButton");
+    <div class="footer">
+      AI साथी | मराठी डिजिटल पोर्टल
+    </div>
+  </main>
 
-function showMessage(text, good=false) {
-  message.style.color = good ? "#166534" : "#b91c1c";
-  message.textContent = text;
-}
-function switchMode(mode) {
-  const registering = mode === "register";
-  loginForm.classList.toggle("hidden", registering);
-  registerForm.classList.toggle("hidden", !registering);
-  loginTab.classList.toggle("active", !registering);
-  registerTab.classList.toggle("active", registering);
-  message.textContent = "";
-}
-loginTab.addEventListener("click", () => switchMode("login"));
-registerTab.addEventListener("click", () => switchMode("register"));
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
-function safeNextPage() {
-  const next = new URLSearchParams(window.location.search).get("next");
-  return next === "pm-poshan.html" ? "pm-poshan.html" : "education-dashboard.html";
-}
-function errorMessage(error) {
-  const map = {
-    "auth/invalid-credential": "ई-मेल किंवा पासवर्ड चुकीचा आहे.",
-    "auth/wrong-password": "पासवर्ड चुकीचा आहे.",
-    "auth/user-not-found": "या ई-मेलसाठी खाते सापडले नाही. नवीन नोंदणी करा.",
-    "auth/email-already-in-use": "या ई-मेलवर आधीच खाते आहे. लॉगिन करा.",
-    "auth/weak-password": "पासवर्ड किमान 6 अक्षरांचा असावा.",
-    "auth/invalid-email": "कृपया योग्य ई-मेल भरा.",
-    "auth/too-many-requests": "अनेक प्रयत्न झाले आहेत. थोड्या वेळाने पुन्हा प्रयत्न करा.",
-    "auth/network-request-failed": "इंटरनेट कनेक्शन तपासा.",
-    "auth/operation-not-allowed": "Firebase Console मध्ये Email/Password Login सुरू करा.",
-    "permission-denied": "Firestore Rules मध्ये users/{uid} साठी create परवानगी तपासा."
-  };
-  return map[error.code] || ("प्रक्रिया पूर्ण झाली नाही. " + (error.message || "पुन्हा प्रयत्न करा."));
-}
+  <script>
+    "use strict";
 
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  loginButton.disabled = true;
-  loginButton.textContent = "लॉगिन होत आहे...";
-  try {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    await auth.signInWithEmailAndPassword(
-      document.getElementById("loginEmail").value.trim(),
-      document.getElementById("loginPassword").value
+    // तुमच्या विद्यमान Firebase प्रोजेक्टची माहिती
+    const firebaseConfig = {
+      apiKey: "AIzaSyAw202kspjUGbDFcKxugJxdPP4H4lqeG8Fg",
+      authDomain: "ai-sathi-portal.firebaseapp.com",
+      projectId: "ai-sathi-portal",
+      storageBucket: "ai-sathi-portal.firebasestorage.app",
+      messagingSenderId: "87410372148",
+      appId: "1:87410372148:web:0063e6a3780f38f2f2e461",
+      measurementId: "G-7VPK79ZLDF"
+    };
+
+    const messageBox = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
+    const resetButton = document.getElementById("resetButton");
+
+    function showMessage(message, success = false) {
+      messageBox.textContent = message;
+      messageBox.className = success ? "success" : "error";
+    }
+
+    function getFriendlyError(error) {
+      const code = error && error.code ? error.code : "";
+
+      const messages = {
+        "auth/invalid-email": "ई-मेल पत्ता योग्य नाही.",
+        "auth/user-not-found": "या ई-मेलसाठी खाते सापडले नाही.",
+        "auth/wrong-password": "पासवर्ड चुकीचा आहे.",
+        "auth/invalid-credential": "ई-मेल किंवा पासवर्ड चुकीचा आहे.",
+        "auth/too-many-requests": "अनेक प्रयत्न झाले. थोड्या वेळाने पुन्हा प्रयत्न करा.",
+        "auth/network-request-failed": "इंटरनेट कनेक्शन तपासा.",
+        "auth/api-key-not-valid": "Firebase API key वैध नाही. Firebase कॉन्फिगरेशन तपासणे आवश्यक आहे.",
+        "auth/operation-not-allowed": "Firebase मध्ये ही लॉगिन पद्धत उपलब्ध नाही.",
+        "auth/unauthorized-domain": "ही वेबसाइट Firebase Authentication साठी अधिकृत केलेली नाही."
+      };
+
+      return messages[code] ||
+        "लॉगिन अयशस्वी झाले. कृपया त्रुटीचा कोड तपासा: " +
+        (code || "unknown-error");
+    }
+
+    let auth = null;
+    let firebaseReady = false;
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+
+      auth = firebase.auth();
+      firebaseReady = true;
+
+      auth.setPersistence(
+        firebase.auth.Auth.Persistence.LOCAL
+      ).catch(function(error) {
+        console.error("Persistence error:", error);
+      });
+
+    } catch (error) {
+      console.error("Firebase initialization error:", error);
+      showMessage(
+        "Firebase सुरू झाले नाही. पेजचा कोड आणि Firebase कॉन्फिगरेशन तपासा."
+      );
+    }
+
+    function getNextPage() {
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+
+      if (next === "pm-poshan.html") {
+        return "pm-poshan.html";
+      }
+
+      return "education-dashboard.html";
+    }
+
+    document.getElementById("loginForm").addEventListener(
+      "submit",
+      async function(event) {
+        event.preventDefault();
+
+        if (!firebaseReady || !auth) {
+          showMessage("Firebase सुरू झालेले नाही. कॉन्फिगरेशनची दुरुस्ती आवश्यक आहे.");
+          return;
+        }
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        loginButton.disabled = true;
+        loginButton.textContent = "लॉगिन होत आहे...";
+
+        try {
+          await auth.signInWithEmailAndPassword(email, password);
+
+          showMessage("लॉगिन यशस्वी! पेज उघडत आहे...", true);
+
+          window.location.replace(getNextPage());
+
+        } catch (error) {
+          console.error("Firebase login error:", error);
+          showMessage(getFriendlyError(error));
+
+          loginButton.disabled = false;
+          loginButton.textContent = "लॉगिन करा";
+        }
+      }
     );
-    showMessage("लॉगिन यशस्वी! पेज उघडत आहे...", true);
-    window.setTimeout(() => window.location.replace(safeNextPage()), 500);
-  } catch (error) {
-    console.error("Login error:", error);
-    showMessage(errorMessage(error));
-    loginButton.disabled = false;
-    loginButton.textContent = "लॉगिन करा";
-  }
-});
 
-registerForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const fullName = document.getElementById("fullName").value.trim();
-  const schoolName = document.getElementById("schoolName").value.trim();
-  const udise = document.getElementById("udise").value.trim();
-  const email = document.getElementById("registerEmail").value.trim();
-  const password = document.getElementById("registerPassword").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+    resetButton.addEventListener("click", async function() {
+      if (!firebaseReady || !auth) {
+        showMessage("Firebase कॉन्फिगरेशनची दुरुस्ती आवश्यक आहे.");
+        return;
+      }
 
-  if (password !== confirmPassword) {
-    showMessage("दोन्ही पासवर्ड सारखे नाहीत.");
-    return;
-  }
-  if (udise && !/^[0-9]{11}$/.test(udise)) {
-    showMessage("UDISE क्रमांक भरल्यास तो 11 अंकी असावा.");
-    return;
-  }
+      const email = document.getElementById("email").value.trim();
 
-  registerButton.disabled = true;
-  registerButton.textContent = "खाते तयार होत आहे...";
-  try {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    const credential = await auth.createUserWithEmailAndPassword(email, password);
-    const user = credential.user;
-    await user.updateProfile({ displayName: fullName });
+      if (!email) {
+        showMessage("आधी ई-मेल पत्ता टाका.");
+        document.getElementById("email").focus();
+        return;
+      }
 
-    // Create only this authenticated user's profile. Never overwrite an existing profile.
-    const userRef = firestore.collection("users").doc(user.uid);
-    await userRef.set({
-      uid: user.uid,
-      fullName: fullName,
-      email: email,
-      schoolName: schoolName,
-      udise: udise,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+      resetButton.disabled = true;
 
-    showMessage("नोंदणी यशस्वी! डॅशबोर्ड उघडत आहे...", true);
-    window.setTimeout(() => window.location.replace(safeNextPage()), 700);
-  } catch (error) {
-    console.error("Registration error:", error);
-    showMessage(errorMessage(error));
-    registerButton.disabled = false;
-    registerButton.textContent = "खाते तयार करा";
-  }
-});
-
-document.getElementById("forgotLink").addEventListener("click", async (event) => {
-  event.preventDefault();
-  const email = document.getElementById("loginEmail").value.trim();
-  if (!email) {
-    showMessage("पासवर्ड रीसेट करण्यासाठी आधी लॉगिनमधील ई-मेल भरा.");
-    document.getElementById("loginEmail").focus();
-    return;
-  }
-  try {
-    await auth.sendPasswordResetEmail(email);
-    showMessage("पासवर्ड रीसेट करण्याची लिंक ई-मेलवर पाठवली आहे.", true);
-  } catch (error) {
-    console.error("Password reset error:", error);
-    showMessage(errorMessage(error));
-  }
-});
-</script>
+      try {
+        await auth.sendPasswordResetEmail(email);
+        showMessage("पासवर्ड बदलण्यासाठीची लिंक ई-मेलवर पाठवली आहे.", true);
+      } catch (error) {
+        console.error("Password reset error:", error);
+        showMessage(getFriendlyError(error));
+      } finally {
+        resetButton.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
