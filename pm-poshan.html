@@ -189,7 +189,19 @@ footer{padding:22px}
  </div>
 </section>
 <section class="panel" id="school"><h2>🏫 शाळेची माहिती</h2><form id="schoolForm"><div class="grid">
-<div class="field"><label for="schoolName">शाळेचे नाव *</label><input id="schoolName" required=""></div><div class="field"><label for="udise">UDISE क्रमांक</label><input id="udise" maxlength="11"></div><div class="field"><label for="center">केंद्र</label><input id="center"></div><div class="field"><label for="taluka">तालुका</label><input id="taluka"></div><div class="field"><label for="district">जिल्हा</label><input id="district"></div><div class="field"><label for="headmaster">मुख्याध्यापक</label><input id="headmaster"></div><div class="field"><label for="mobile">मोबाईल</label><input id="mobile" maxlength="10"></div><div class="field"><label for="academicYear">शैक्षणिक वर्ष</label><select id="academicYear"><option>२०२६–२०२७</option><option>२०२७–२०२८</option><option>२०२८–२०२९</option><option>२०२९–२०३०</option><option>२०३०–२०३१</option></select></div><div class="field"><label for="medium">माध्यम</label><select id="medium"><option>मराठी</option><option>इंग्रजी</option><option>उर्दू</option><option>हिंदी</option><option>इतर</option></select></div><div class="field"><label for="classes">वर्ग</label><select id="classes"><option value="1-5">१ ते ५</option><option value="6-8">६ ते ८</option><option value="1-8" selected="">१ ते ८</option></select></div></div><div class="actions"><button class="btn green" type="submit">शाळेची माहिती जतन करा</button><button class="btn blue" type="button" id="reloadSchool">जतन केलेली माहिती पहा</button></div><div class="status" id="schoolStatus"></div></form></section>
+<div class="field"><label for="schoolName">शाळेचे नाव *</label><input id="schoolName" required=""></div><div class="field"><label for="udise">UDISE क्रमांक</label><input id="udise" maxlength="11"></div><div class="field"><label for="center">केंद्र</label><input id="center"></div><div class="field"><label for="taluka">तालुका</label><input id="taluka"></div><div class="field"><label for="district">जिल्हा</label><input id="district"></div><div class="field"><label for="headmaster">मुख्याध्यापक</label><input id="headmaster"></div><div class="field"><label for="mobile">मोबाईल</label><input id="mobile" maxlength="10"></div><div class="field"><label for="academicYear">शैक्षणिक वर्ष</label><select id="academicYear"><option>२०२६–२०२७</option><option>२०२७–२०२८</option><option>२०२८–२०२९</option><option>२०२९–२०३०</option><option>२०३०–२०३१</option></select></div><div class="field"><label for="medium">माध्यम</label><select id="medium"><option>मराठी</option><option>इंग्रजी</option><option>उर्दू</option><option>हिंदी</option><option>इतर</option></select></div><div class="field"><label for="classes">वर्ग</label><select id="classes"><option value="1-5">१ ते ५</option><option value="6-8">६ ते ८</option><option value="1-8" selected="">१ ते ८</option></select></div></div><div class="actions"><button class="btn green" type="submit">शाळेची माहिती जतन करा</button><button class="btn blue" type="button" id="reloadSchool">जतन केलेली माहिती पहा</button></div><div class="status" id="schoolStatus"></div></form>
+<h3>👥 पटसंख्या सेटिंग्ज — दिनांकानुसार बदल</h3>
+<p class="small">येथे पटसंख्या आणि ती लागू होण्याचा दिनांक नोंदवा. त्या दिनांकापासून पुढील दिवसांच्या नवीन नोंदींमध्ये ही पटसंख्या वापरली जाईल. आधीच्या जतन केलेल्या दैनंदिन नोंदी बदलल्या जाणार नाहीत.</p>
+<div class="grid">
+ <div class="field"><label for="rosterEffectiveDate">पटसंख्या लागू दिनांक *</label><input type="date" id="rosterEffectiveDate"></div>
+ <div class="field"><label for="rosterPTotal">इयत्ता १ ते ५ पटसंख्या</label><input type="number" id="rosterPTotal" min="0" value="0"></div>
+ <div class="field"><label for="rosterUTotal">इयत्ता ६ ते ८ पटसंख्या</label><input type="number" id="rosterUTotal" min="0" value="0"></div>
+</div>
+<div class="actions"><button type="button" class="btn green" id="saveRosterChange">पटसंख्या बदल जतन करा</button><button type="button" class="btn blue" id="resetRosterForm">नवीन बदलासाठी रिकामे करा</button></div>
+<div class="status" id="rosterStatus"></div>
+<h3>जतन केलेले पटसंख्या बदल</h3>
+<div class="table-wrap"><table><thead><tr><th>लागू दिनांक</th><th>इयत्ता १–५</th><th>इयत्ता ६–८</th><th>कृती</th></tr></thead><tbody id="rosterHistoryRows"></tbody></table></div>
+</section>
 <section class="panel" id="attendance">
 <h2>📋 दैनंदिन उपस्थिती</h2>
 <div class="attendance-switch actions">
@@ -281,9 +293,9 @@ const ing=[["rice","तांदूळ","ग्रॅम"],["peas","वाटा
 function amount(rice,key,q,tur){const o={};ing.forEach(i=>o[i[0]]="");o.rice=rice;if(key)o[key]=q;if(tur!==undefined)o.turDal=tur;Object.assign(o,{salt:rice===100?2:3,turmeric:rice===100?.15:.25,masala:rice===100?.9:1.4,mustard:rice===100?.1:.15,oil:rice===100?5:7.5,chilli:rice===100?.2:.25,cumin:rice===100?.2:.25});return o}
 const amounts={p:{1:amount(100,"peas",20),2:amount(100,"peas",20),3:amount(100,"moongDal",20),4:amount(100,"chawli",20),5:amount(100,"chickpea",20),6:amount(100,"matki",20),7:amount(100,"peas",20),8:amount(100,"soyChunks",20),9:amount(100,"masoor",20),10:amount(100,"wholeMoong",10,10),11:amount(100,"moongDal",20),12:amount(100,"matki",20)},u:{1:amount(150,"peas",30),2:amount(150,"peas",30),3:amount(150,"moongDal",30),4:amount(150,"chawli",30),5:amount(150,"chickpea",30),6:amount(150,"matki",30),7:amount(150,"peas",30),8:amount(150,"soyChunks",30),9:amount(150,"masoor",20),10:amount(150,"wholeMoong",15,15),11:amount(150,"moongDal",30),12:amount(150,"matki",30)}};
 const defaultMaterials=ing.map(i=>({key:i[0],name:i[1],active:true}));
-function fresh(){return {school:{},roster:{pTotal:0,uTotal:0},daily:[],monthly:{},stock:[],materials:defaultMaterials,amounts};}
+function fresh(){return {school:{},roster:{pTotal:0,uTotal:0},rosterHistory:[],daily:[],monthly:{},stock:[],materials:defaultMaterials,amounts};}
 function loadLocal(){try{let x=JSON.parse(localStorage.getItem(KEY)||"null");return x?{...fresh(),...x}:fresh()}catch(e){return fresh()}}
-let db=fresh();db.roster=db.roster||{pTotal:0,uTotal:0};const $=id=>document.getElementById(id);const st=(id,s)=>$(id).textContent=s;const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const n=id=>Math.max(0,Number($(id).value)||0);
+let db=fresh();db.roster=db.roster||{pTotal:0,uTotal:0};db.rosterHistory=Array.isArray(db.rosterHistory)?db.rosterHistory:[];const $=id=>document.getElementById(id);const st=(id,s)=>$(id).textContent=s;const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const n=id=>Math.max(0,Number($(id).value)||0);
 let cloudUser=null, cloudReady=false, cloudSaveTimer=null, cloudSaveChain=Promise.resolve();
 function save(){
  try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){alert("ब्राउझरमध्ये स्थानिक बॅकअप जतन झाला नाही.");}
@@ -325,10 +337,48 @@ $("reloadSchool").addEventListener("click",schoolLoad);
 function fillSelect(el,blank){el.innerHTML=blank?'<option value="">पाककृती नाही</option>':"";recipes.forEach(r=>el.add(new Option(r.id+". "+r.name,r.id)))}
 fillSelect($("dailyRecipe"),true);fillSelect($("recipeNumber"),false);
 $("dailyDate").value=today();$("stockDate").value=today();$("monthSelect").value=today().slice(0,7);$("reportMonth").value=today().slice(0,7);
+function rosterForDate(date){
+ const history=(db.rosterHistory||[]).filter(r=>r&&r.date&&r.date<=date).sort((a,b)=>a.date.localeCompare(b.date));
+ const latest=history[history.length-1];
+ return latest?{pTotal:Number(latest.pTotal)||0,uTotal:Number(latest.uTotal)||0}:{pTotal:Number(db.roster?.pTotal)||0,uTotal:Number(db.roster?.uTotal)||0};
+}
+function renderRosterHistory(){
+ const body=$("rosterHistoryRows");if(!body)return;body.innerHTML="";
+ const rows=[...(db.rosterHistory||[])].sort((a,b)=>b.date.localeCompare(a.date));
+ if(!rows.length){body.innerHTML='<tr><td colspan="4">अद्याप पटसंख्या बदल जतन केलेले नाहीत.</td></tr>';return;}
+ rows.forEach(r=>{
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>${esc(r.date)}</td><td>${Number(r.pTotal)||0}</td><td>${Number(r.uTotal)||0}</td><td><div class="actions"><button type="button" class="btn blue" data-roster-edit="${esc(r.date)}">बदल</button><button type="button" class="btn red" data-roster-delete="${esc(r.date)}">हटवा</button></div></td>`;
+  body.appendChild(tr);
+ });
+ body.querySelectorAll("[data-roster-edit]").forEach(btn=>btn.addEventListener("click",()=>{
+  const r=(db.rosterHistory||[]).find(v=>v.date===btn.dataset.rosterEdit);if(!r)return;
+  $("rosterEffectiveDate").value=r.date;$("rosterPTotal").value=r.pTotal;$("rosterUTotal").value=r.uTotal;
+  st("rosterStatus","बदलासाठी नोंद उघडली. दुरुस्ती करून जतन करा.");
+ }));
+ body.querySelectorAll("[data-roster-delete]").forEach(btn=>btn.addEventListener("click",()=>{
+  const date=btn.dataset.rosterDelete;
+  if(!confirm(date+" पासूनचा पटसंख्या बदल हटवायचा आहे का?"))return;
+  db.rosterHistory=db.rosterHistory.filter(v=>v.date!==date);save();renderRosterHistory();dailyLoad();renderMonth();renderDashboard();st("rosterStatus","पटसंख्या बदल हटवला.");
+ }));
+}
+$("rosterEffectiveDate").value=today();
+$("saveRosterChange").addEventListener("click",()=>{
+ const date=$("rosterEffectiveDate").value,pTotal=n("rosterPTotal"),uTotal=n("rosterUTotal");
+ if(!date)return st("rosterStatus","पटसंख्या लागू होण्याचा दिनांक निवडा.");
+ const item={date,pTotal,uTotal};
+ const idx=db.rosterHistory.findIndex(r=>r.date===date);
+ if(idx>=0)db.rosterHistory[idx]=item;else db.rosterHistory.push(item);
+ db.rosterHistory.sort((a,b)=>a.date.localeCompare(b.date));
+ if(save()){renderRosterHistory();dailyLoad();renderMonth();renderDashboard();st("rosterStatus",date+" पासूनची पटसंख्या जतन झाली.");}
+});
+$("resetRosterForm").addEventListener("click",()=>{
+ $("rosterEffectiveDate").value=today();$("rosterPTotal").value=rosterForDate(today()).pTotal;$("rosterUTotal").value=rosterForDate(today()).uTotal;st("rosterStatus","नवीन पटसंख्या बदलासाठी तयार.");
+});
 function dailyLoad(){
- let date=$("dailyDate").value,x=db.daily.find(v=>v.date===date);
+ let date=$("dailyDate").value,x=db.daily.find(v=>v.date===date),roster=rosterForDate(date);
  $("dailyRecipe").value=x?x.recipe:schedule(date);$("schoolOpen").value=x?.open||"yes";
- $("pTotal").value=x?.pTotal??db.roster.pTotal??0;$("uTotal").value=x?.uTotal??db.roster.uTotal??0;
+ $("pTotal").value=x?.pTotal??roster.pTotal;$("uTotal").value=x?.uTotal??roster.uTotal;
  $("pPresent").value=x?.pPresent??0;$("uPresent").value=x?.uPresent??0;
  $("dailyNotes").value=x?.notes||"";
 }
@@ -631,7 +681,7 @@ function renderDashboard(){
  if(!records.length)menuBody.innerHTML='<tr><td colspan="2">या महिन्याच्या नोंदी नाहीत.</td></tr>';
 }
 function initializeUi(){
- $("receiptNo").disabled=true;initTopFilters();schoolLoad();dailyLoad();renderDaily();renderMonth();renderRecipes();updateRecipeLockUi();renderStock();setStockMode("received");report();tabs();renderDashboard();
+ $("receiptNo").disabled=true;initTopFilters();schoolLoad();renderRosterHistory();dailyLoad();renderDaily();renderMonth();renderRecipes();updateRecipeLockUi();renderStock();setStockMode("received");report();tabs();renderDashboard();
 }
 const firebaseConfig = {
   apiKey: "AIzaSyAUh6tmbyQ3qvPHcCAvAVQSZGF-_k3cwDc",
