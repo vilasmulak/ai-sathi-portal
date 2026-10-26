@@ -267,8 +267,11 @@
         loginButton.textContent = "लॉगिन होत आहे...";
 
         try {
-          await auth.signInWithEmailAndPassword(email, password);
+          await auth.setPersistence(
+  firebase.auth.Auth.Persistence.LOCAL
+);
 
+await auth.signInWithEmailAndPassword(email, password);
           showMessage("लॉगिन यशस्वी! पेज उघडत आहे...", true);
 
           window.location.replace(getNextPage());
