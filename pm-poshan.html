@@ -565,7 +565,7 @@ function allAttendanceRecords(){
 function recipeConsumption(grade, startDate, endDate, key) {
  let total=0;
  const amountsByGrade=db.amounts||amounts;
- allAttendanceRecords().filter(x=>x.date>=startDate&&x.date<=endDate&&x.open==="yes").forEach(x=>{
+ allAttendanceRecords().filter(x=>x.date>=startDate&&x.date<=endDate&&x.open==="yes"&&String(x.recipe||"")!=="").forEach(x=>{
   const meals=grade==="p"?(Number(x.pMeals)||0):(Number(x.uMeals)||0);
   const recipeId=Number(x.recipe);
   const a=amountsByGrade[grade]?.[recipeId];
@@ -636,7 +636,7 @@ function selectedReportRows(){
 function report(){
  const dataR=selectedReportRows(), typeName=$("reportType").selectedOptions[0].textContent;
  $("reportHeading").innerHTML=`<h3>${esc(typeName)}</h3><p>${dataR.schoolLine.map(esc).join(" | ")}<br>महिना: ${esc(dataR.month)} | शैक्षणिक वर्ष: ${esc($("reportYear").value)}</p>`;
- $("reportCards").innerHTML=`<div class="card">या महिन्यातील नोंदी<strong>${dataR.records.length}</strong></div><div class="card">शाळा सुरू दिवस<strong>${dataR.records.filter(x=>x.open==="yes").length}</strong></div><div class="card">१–५ आहार संख्या<strong>${dataR.records.reduce((s,x)=>s+(x.pMeals||0),0)}</strong></div><div class="card">६–८ आहार संख्या<strong>${dataR.records.reduce((s,x)=>s+(x.uMeals||0),0)}</strong></div>`;
+ $("reportCards").innerHTML=`<div class="card">या महिन्यातील नोंदी<strong>${dataR.records.length}</strong></div><div class="card">शाळा सुरू दिवस<strong>${dataR.records.filter(x=>x.open==="yes").length}</strong></div><div class="card">आहार शिजवलेले दिवस<strong>${dataR.records.filter(x=>x.open==="yes"&&String(x.recipe||"")!==""&&((Number(x.pMeals)||0)+(Number(x.uMeals)||0)>0)).length}</strong></div><div class="card">१–५ आहार संख्या<strong>${dataR.records.reduce((s,x)=>s+(x.pMeals||0),0)}</strong></div><div class="card">६–८ आहार संख्या<strong>${dataR.records.reduce((s,x)=>s+(x.uMeals||0),0)}</strong></div>`;
  $("reportHead").innerHTML="";dataR.headers.forEach(row=>{let tr=document.createElement("tr");row.forEach(v=>{let th=document.createElement("th");th.textContent=v;tr.appendChild(th)});$("reportHead").appendChild(tr)});
  $("reportRows").innerHTML="";dataR.rows.forEach(row=>{let tr=document.createElement("tr");row.forEach(v=>{let td=document.createElement("td");td.textContent=v??"";tr.appendChild(td)});$("reportRows").appendChild(tr)});
 }
