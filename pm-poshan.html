@@ -217,12 +217,10 @@ footer{padding:22px}
  <p class="small">फक्त उपस्थित विद्यार्थी संख्या भरा. आहार घेतलेल्या विद्यार्थ्यांची संख्या आपोआप उपस्थितीइतकी नोंदवली जाईल.</p>
  <h3>इयत्ता १ ते ५</h3>
  <div class="grid">
-  <div class="field"><label for="pTotal">पटसंख्या (एकदा भरा; बदलल्यास अपडेट करा)</label><input id="pTotal" type="number" min="0" value="0"></div>
   <div class="field"><label for="pPresent">आज उपस्थित विद्यार्थी</label><input id="pPresent" type="number" min="0" value="0"></div>
  </div>
  <h3>इयत्ता ६ ते ८</h3>
  <div class="grid">
-  <div class="field"><label for="uTotal">पटसंख्या (एकदा भरा; बदलल्यास अपडेट करा)</label><input id="uTotal" type="number" min="0" value="0"></div>
   <div class="field"><label for="uPresent">आज उपस्थित विद्यार्थी</label><input id="uPresent" type="number" min="0" value="0"></div>
  </div>
  <div class="field"><label for="dailyNotes">शेरा</label><textarea id="dailyNotes"></textarea></div>
@@ -375,25 +373,35 @@ $("saveRosterChange").addEventListener("click",()=>{
 $("resetRosterForm").addEventListener("click",()=>{
  $("rosterEffectiveDate").value=today();$("rosterPTotal").value=rosterForDate(today()).pTotal;$("rosterUTotal").value=rosterForDate(today()).uTotal;st("rosterStatus","नवीन पटसंख्या बदलासाठी तयार.");
 });
+function isSunday(date){return !!date && new Date(date+"T12:00:00").getDay()===0;}
+function applySundayRule(tr,date){
+ const sunday=isSunday(date);
+ const open=tr.querySelector(".open"),recipe=tr.querySelector(".recipe"),pp=tr.querySelector(".pp"),up=tr.querySelector(".up");
+ if(sunday){open.value="no";open.disabled=true;recipe.value="";recipe.disabled=true;pp.value=0;pp.disabled=true;up.value=0;up.disabled=true;}
+ else {open.disabled=false;recipe.disabled=false;pp.disabled=false;up.disabled=false;}
+}
 function dailyLoad(){
- let date=$("dailyDate").value,x=db.daily.find(v=>v.date===date),roster=rosterForDate(date);
- $("dailyRecipe").value=x?x.recipe:schedule(date);$("schoolOpen").value=x?.open||"yes";
- $("pTotal").value=x?.pTotal??roster.pTotal;$("uTotal").value=x?.uTotal??roster.uTotal;
- $("pPresent").value=x?.pPresent??0;$("uPresent").value=x?.uPresent??0;
+ let date=$("dailyDate").value,x=db.daily.find(v=>v.date===date),sunday=isSunday(date);
+ $("dailyRecipe").value=sunday?"":(x?x.recipe:schedule(date));
+ $("schoolOpen").value=sunday?"no":(x?.open||"yes");$("schoolOpen").disabled=sunday;
+ $("pPresent").value=sunday?0:(x?.pPresent??0);$("uPresent").value=sunday?0:(x?.uPresent??0);
+ $("pPresent").disabled=sunday;$("uPresent").disabled=sunday;$("dailyRecipe").disabled=sunday;
  $("dailyNotes").value=x?.notes||"";
+ if(sunday)st("dailyStatus","रविवारची साप्ताहिक सुट्टी — शाळा बंद म्हणून आपोआप नोंदवले आहे.");
 }
 $("dailyDate").addEventListener("change",dailyLoad);
 $("clearDaily").addEventListener("click",()=>{$("dailyDate").value=today();dailyLoad();st("dailyStatus","नवीन नोंदीसाठी तयार.")});
 $("schoolOpen").addEventListener("change",()=>{if($("schoolOpen").value==="no")["pPresent","uPresent"].forEach(k=>$(k).value=0)});
 $("saveDaily").addEventListener("click",()=>{
- let pTotal=n("pTotal"),uTotal=n("uTotal"),pPresent=n("pPresent"),uPresent=n("uPresent");
- let x={date:$("dailyDate").value,open:$("schoolOpen").value,recipe:$("dailyRecipe").value,pTotal,pPresent,pMeals:pPresent,uTotal,uPresent,uMeals:uPresent,notes:$("dailyNotes").value.trim()};
+ let date=$("dailyDate").value,roster=rosterForDate(date),sunday=isSunday(date);
+ let pPresent=sunday?0:n("pPresent"),uPresent=sunday?0:n("uPresent");
+ let pTotal=roster.pTotal,uTotal=roster.uTotal;
+ let x={date,open:sunday?"no":$("schoolOpen").value,recipe:sunday?"":$("dailyRecipe").value,pTotal,pPresent,pMeals:pPresent,uTotal,uPresent,uMeals:uPresent,notes:$("dailyNotes").value.trim()};
  if(!x.date)return st("dailyStatus","दिनांक निवडा.");
- if(pPresent>pTotal||uPresent>uTotal)return st("dailyStatus","उपस्थित विद्यार्थी संख्या पटसंख्येपेक्षा जास्त असू शकत नाही.");
- db.roster={pTotal,uTotal};
+ if(pPresent>pTotal||uPresent>uTotal)return st("dailyStatus","उपस्थित विद्यार्थी संख्या सेटिंग्जमधील पटसंख्येपेक्षा जास्त असू शकत नाही.");
  let i=db.daily.findIndex(v=>v.date===x.date);if(i<0)db.daily.push(x);else db.daily[i]=x;
  db.daily.sort((a,b)=>a.date.localeCompare(b.date));
- if(save()){st("dailyStatus","उपस्थिती व पटसंख्या जतन झाली. पुढील दिवसासाठी पटसंख्या आपोआप येईल.");renderDaily();report();renderDashboard()}
+ if(save()){st("dailyStatus","दैनिक उपस्थिती जतन झाली.");renderDaily();report();renderDashboard()}
 });
 function renderDaily(){let b=$("dailyRows");b.innerHTML="";[...db.daily].sort((a,c)=>c.date.localeCompare(a.date)).forEach(x=>{let tr=document.createElement("tr");tr.innerHTML=`<td>${esc(x.date)}</td><td>${x.open==="yes"?"होय":"नाही"}</td><td>${esc(rname(x.recipe))}</td><td>${x.pMeals||0}</td><td>${x.uMeals||0}</td><td><button type="button" class="btn blue" data-date="${esc(x.date)}">उघडा</button></td>`;b.appendChild(tr)});b.querySelectorAll("[data-date]").forEach(btn=>btn.addEventListener("click",()=>{$("dailyDate").value=btn.dataset.date;dailyLoad();st("dailyStatus","नोंद उघडली.")}))}
 function dates(month){if(!month)return[];let [y,m]=month.split("-").map(Number),len=new Date(y,m,0).getDate();return Array.from({length:len},(_,i)=>`${y}-${String(m).padStart(2,"0")}-${String(i+1).padStart(2,"0")}`)}
@@ -415,6 +423,7 @@ let tr = document.createElement("tr");
 tr.dataset.date = date;
     tr.innerHTML=`<td>${date}</td><td>${esc(new Date(date+"T12:00:00").toLocaleDateString("mr-IN",{weekday:"long"}))}</td><td><select class="open"><option value="yes">होय</option><option value="no">नाही</option></select></td><td><select class="recipe"><option value="">नाही</option>${recipes.map(r=>`<option value="${r.id}">${r.id}. ${esc(r.name)}</option>`).join("")}</select></td><td><input class="pp" type="number" min="0" value="${x.pPresent??0}"></td><td><input class="up" type="number" min="0" value="${x.uPresent??0}"></td>`;
   b.appendChild(tr);tr.querySelector(".open").value=x.open||"yes";tr.querySelector(".recipe").value=x.recipe!==undefined?x.recipe:schedule(date);
+  applySundayRule(tr,date);
   tr.querySelector(".open").addEventListener("change",e=>{if(e.target.value==="no"){tr.querySelector(".recipe").value="";tr.querySelector(".pp").value=0;tr.querySelector(".up").value=0}});
  });
 }
@@ -422,13 +431,13 @@ $("generateMonth").addEventListener("click",()=>{renderMonth();st("monthStatus",
 $("monthSelect").addEventListener("change",renderMonth);
 $("autofillMonth").addEventListener("click",()=>{document.querySelectorAll("#monthRows tr").forEach(tr=>{if(tr.querySelector(".open").value==="yes")tr.querySelector(".recipe").value=schedule(tr.dataset.date)});st("monthStatus","वेळापत्रकानुसार मेनू भरला.")});
 $("saveMonth").addEventListener("click",()=>{
- let month=$("monthSelect").value,obj={},bad=false,pTotal=Number(db.roster.pTotal)||0,uTotal=Number(db.roster.uTotal)||0;
+ let month=$("monthSelect").value,obj={},bad=false;
  document.querySelectorAll("#monthRows tr").forEach(tr=>{
-  let pPresent=Number(tr.querySelector(".pp").value)||0,uPresent=Number(tr.querySelector(".up").value)||0;
-  let x={date:tr.dataset.date,open:tr.querySelector(".open").value,recipe:tr.querySelector(".recipe").value,pTotal,pPresent,pMeals:pPresent,uTotal,uPresent,uMeals:uPresent,notes:""};
-  if(pPresent>pTotal||uPresent>uTotal)bad=true;obj[x.date]=x;
+  let sunday=isSunday(tr.dataset.date),pPresent=sunday?0:(Number(tr.querySelector(".pp").value)||0),uPresent=sunday?0:(Number(tr.querySelector(".up").value)||0),roster=rosterForDate(tr.dataset.date);
+  let x={date:tr.dataset.date,open:sunday?"no":tr.querySelector(".open").value,recipe:sunday?"":tr.querySelector(".recipe").value,pTotal:roster.pTotal,pPresent,pMeals:pPresent,uTotal:roster.uTotal,uPresent,uMeals:uPresent,notes:""};
+  if(pPresent>roster.pTotal||uPresent>roster.uTotal)bad=true;obj[x.date]=x;
  });
- if(bad)return st("monthStatus","किमान एका दिवसाची उपस्थिती पटसंख्येपेक्षा जास्त आहे. दैनंदिन उपस्थितीमध्ये पटसंख्या अपडेट करा.");
+ if(bad)return st("monthStatus","किमान एका दिवसाची उपस्थिती त्या दिनांकाच्या सेटिंग्जमधील पटसंख्येपेक्षा जास्त आहे.");
  db.monthly[month]=obj;
  Object.values(obj).forEach(x=>{let i=db.daily.findIndex(y=>y.date===x.date);if(i<0)db.daily.push(x);else db.daily[i]=x});
  if(save()){st("monthStatus","मासिक उपस्थिती जतन झाली. आहार संख्या उपस्थितीप्रमाणे नोंदली आहे.");renderDaily();report();renderDashboard()}
