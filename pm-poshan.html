@@ -363,12 +363,7 @@ const monthlyRecord = saved[date];
 let x = monthlyRecord || dailyRecord || {};
 let tr = document.createElement("tr");
 tr.dataset.date = date;
-  const dailyRecord = db.daily.find(v => v.date === date);
-const monthlyRecord = saved[date];
-
-let x = monthlyRecord || dailyRecord || {};
-let tr = document.createElement("tr");
-  tr.innerHTML=`<td>${date}</td><td>${esc(new Date(date+"T12:00:00").toLocaleDateString("mr-IN",{weekday:"long"}))}</td><td><select class="open"><option value="yes">होय</option><option value="no">नाही</option></select></td><td><select class="recipe"><option value="">नाही</option>${recipes.map(r=>`<option value="${r.id}">${r.id}. ${esc(r.name)}</option>`).join("")}</select></td><td><input class="pp" type="number" min="0" value="${x.pPresent??0}"></td><td><input class="up" type="number" min="0" value="${x.uPresent??0}"></td>`;
+    tr.innerHTML=`<td>${date}</td><td>${esc(new Date(date+"T12:00:00").toLocaleDateString("mr-IN",{weekday:"long"}))}</td><td><select class="open"><option value="yes">होय</option><option value="no">नाही</option></select></td><td><select class="recipe"><option value="">नाही</option>${recipes.map(r=>`<option value="${r.id}">${r.id}. ${esc(r.name)}</option>`).join("")}</select></td><td><input class="pp" type="number" min="0" value="${x.pPresent??0}"></td><td><input class="up" type="number" min="0" value="${x.uPresent??0}"></td>`;
   b.appendChild(tr);tr.querySelector(".open").value=x.open||"yes";tr.querySelector(".recipe").value=x.recipe!==undefined?x.recipe:schedule(date);
   tr.querySelector(".open").addEventListener("change",e=>{if(e.target.value==="no"){tr.querySelector(".recipe").value="";tr.querySelector(".pp").value=0;tr.querySelector(".up").value=0}});
  });
