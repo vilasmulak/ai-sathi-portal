@@ -629,8 +629,15 @@ function renderDashboard(){
 function initializeUi(){
  $("receiptNo").disabled=true;initTopFilters();schoolLoad();dailyLoad();renderDaily();renderMonth();renderRecipes();updateRecipeLockUi();renderStock();setStockMode("received");report();tabs();renderDashboard();
 }
-const firebaseConfig={apiKey: "AIzaSyAw202kspjUGbDFcKxugJxdPPH4lqeG8Fg",authDomain:"ai-sathi-portal.firebaseapp.com",projectId:"ai-sathi-portal",storageBucket:"ai-sathi-portal.firebasestorage.app",messagingSenderId:"87410372148",appId:"1:87410372148:web:0063e6a3780f38f2f2e461",measurementId:"G-7VPK79ZLDF"};
-if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+  apiKey: "AIzaSyAUh6tmbyQ3qvPHcCAvAVQSZGF-_k3cwDc",
+  authDomain: "ai-sathi-portal.firebaseapp.com",
+  projectId: "ai-sathi-portal",
+  storageBucket: "ai-sathi-portal.firebasestorage.app",
+  messagingSenderId: "87410372148",
+  appId: "1:87410372148:web:0063e6a3780f38f2f2e461",
+  measurementId: "G-7VPK79ZLDF"
+};
 const auth=firebase.auth(), firestore=firebase.firestore();
 
 // 15 मिनिटे कोणतीही हालचाल नसल्यास सुरक्षितपणे लॉगआउट करा.
