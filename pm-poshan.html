@@ -638,6 +638,10 @@ const firebaseConfig = {
   appId: "1:87410372148:web:0063e6a3780f38f2f2e461",
   measurementId: "G-7VPK79ZLDF"
 };
+ // Initialize Firebase only once
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const auth=firebase.auth(), firestore=firebase.firestore();
 
 // 15 मिनिटे कोणतीही हालचाल नसल्यास सुरक्षितपणे लॉगआउट करा.
