@@ -358,7 +358,11 @@ function renderMonth(){
  let month=$("monthSelect").value,b=$("monthRows");b.innerHTML="";
  let saved=db.monthly[month]||{};
  dates(month).forEach(date=>{
-  let x=saved[date]||db.daily.find(v=>v.date===date)||{},tr=document.createElement("tr");tr.dataset.date=date;
+  const dailyRecord = db.daily.find(v => v.date === date);
+const monthlyRecord = saved[date];
+let x = monthlyRecord || dailyRecord || {};
+let tr = document.createElement("tr");
+tr.dataset.date = date;
   const dailyRecord = db.daily.find(v => v.date === date);
 const monthlyRecord = saved[date];
 
