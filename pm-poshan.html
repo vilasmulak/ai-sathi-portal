@@ -310,12 +310,17 @@ function menuWeekNumber(date){
  const d=new Date(date+"T12:00:00");
  const year=d.getFullYear(), month=d.getMonth(), day=d.getDate();
  const first=new Date(year,month,1,12,0,0);
- // Week 1 begins on the 1st of the month, regardless of weekday.
- // Every Monday after the 1st begins the next menu week.
+ // कस्टम MDM नियम: महिन्याची 1 तारीख पहिल्या आठवड्यात.
+ // 1 तारीख रविवार असल्यास पुढील सोमवार-रविवारही पहिलाच आठवडा.
+ const firstDayIsSunday=first.getDay()===0;
  const firstMondayOffset=(8-first.getDay())%7 || 7;
  const firstMondayDay=1+firstMondayOffset;
+ if(firstDayIsSunday && day<=8)return 1;
  if(day<firstMondayDay)return 1;
- return 2+Math.floor((day-firstMondayDay)/7);
+ const mondayBlock=Math.floor((day-firstMondayDay)/7);
+ // रविवारपासून सुरू होणाऱ्या महिन्यात पहिला सोमवारही आठवडा 1;
+ // अन्य महिन्यांत पहिला सोमवार आठवडा 2. प्रत्येक 4 आठवड्यांनी पुनरावृत्ती.
+ return ((mondayBlock+(firstDayIsSunday?0:1))%4)+1;
 }
 function schedule(date){
  if(!date)return "";
@@ -387,7 +392,23 @@ function dailyLoad(){
  $("pPresent").value=sunday?0:(x?.pPresent??0);$("uPresent").value=sunday?0:(x?.uPresent??0);
  $("pPresent").disabled=sunday;$("uPresent").disabled=sunday;$("dailyRecipe").disabled=sunday;
  $("dailyNotes").value=x?.notes||"";
- if(sunday)st("dailyStatus","रविवारची साप्ताहिक सुट्टी — शाळा बंद म्हणून आपोआप नोंदवले आहे.");
+ if(sunday){
+  // रविवारची नोंद उघडताच आपोआप तयार/जतन करा; शाळा बंद व लाभार्थी शून्य.
+  const roster=rosterForDate(date);
+  const sundayRecord={date,open:"no",recipe:"",pTotal:roster.pTotal,pPresent:0,pMeals:0,uTotal:roster.uTotal,uPresent:0,uMeals:0,notes:"रविवार - साप्ताहिक सुट्टी"};
+  const oldIndex=db.daily.findIndex(v=>v.date===date);
+  const oldRecord=oldIndex>=0?db.daily[oldIndex]:null;
+  const changed=!oldRecord || oldRecord.open!=="no" || oldRecord.recipe!=="" ||
+   Number(oldRecord.pTotal)!==roster.pTotal || Number(oldRecord.pPresent)!==0 ||
+   Number(oldRecord.pMeals)!==0 || Number(oldRecord.uTotal)!==roster.uTotal ||
+   Number(oldRecord.uPresent)!==0 || Number(oldRecord.uMeals)!==0;
+  if(changed){
+   if(oldIndex<0)db.daily.push(sundayRecord);else db.daily[oldIndex]=sundayRecord;
+   db.daily.sort((a,b)=>a.date.localeCompare(b.date));
+   if(save()){renderDaily();report();renderDashboard();}
+  }
+  st("dailyStatus","रविवारची साप्ताहिक सुट्टी — शाळा बंद व लाभार्थी ० अशी नोंद आपोआप जतन झाली.");
+ }
 }
 $("dailyDate").addEventListener("change",dailyLoad);
 $("clearDaily").addEventListener("click",()=>{$("dailyDate").value=today();dailyLoad();st("dailyStatus","नवीन नोंदीसाठी तयार.")});
