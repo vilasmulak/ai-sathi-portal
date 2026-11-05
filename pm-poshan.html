@@ -389,7 +389,17 @@ function applySundayRule(tr,date){
 }
 function dailyLoad(){
  let date=$("dailyDate").value,x=db.daily.find(v=>v.date===date),sunday=isSunday(date);
- $("dailyRecipe").value=sunday?"":(x?x.recipe:schedule(date));
+ const plannedRecipe=sunday?"":schedule(date);
+ // आजच्या/पुढील तारखेची आधीची नोंद जुन्या आठवडा-नियमामुळे चुकीची असेल,
+ // तर नियोजित पाककृतीनुसार ती दुरुस्त करा. मागील दिवसांच्या प्रत्यक्ष नोंदी बदलू नका.
+ if(x && !sunday && date>=today() && x.recipe!==plannedRecipe){
+  x.recipe=plannedRecipe;
+  save();
+  renderDaily();
+  report();
+  renderDashboard();
+ }
+ $("dailyRecipe").value=sunday?"":(x?x.recipe:plannedRecipe);
  $("schoolOpen").value=sunday?"no":(x?.open||"yes");$("schoolOpen").disabled=sunday;
  $("pPresent").value=sunday?0:(x?.pPresent??0);$("uPresent").value=sunday?0:(x?.uPresent??0);
  $("pPresent").disabled=sunday;$("uPresent").disabled=sunday;$("dailyRecipe").disabled=sunday;
