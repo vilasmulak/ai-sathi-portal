@@ -240,7 +240,7 @@ footer{padding:22px}
  <div class="status" id="monthStatus"></div>
 </div>
 </section>
-<section class="panel" id="menu"><h2>🍲 मेनू व पाककृती</h2><p>कस्टम महिनानिहाय क्रम: आठवडा १ व ३ = सप्ताह अ; आठवडा २ व ४ = सप्ताह ब. चौथ्या आठवड्यानंतर पुन्हा आठवडा १ सुरू होतो. प्रत्येक महिन्याची १ तारीख नवीन पहिला आठवडा मानली जाते.</p><div class="table-wrap"><table><thead><tr><th>क्र.</th><th>पाककृती</th><th>सप्ताह अ</th><th>सप्ताह ब</th></tr></thead><tbody id="recipeRows"></tbody></table></div><h3>प्रति विद्यार्थी साहित्य</h3>
+<section class="panel" id="menu"><h2>🍲 मेनू व पाककृती</h2><p><b>महिनानिहाय कस्टम आठवडा:</b> प्रत्येक महिन्याची १ तारीख आठवडा १. पहिल्या सोमवारच्या आधीचे दिवस आठवडा १; पहिल्या सोमवारपासून पुढील रविवारपर्यंत आठवडा २. पुढील सोमवारपासून आठवडा ३, त्यानंतर आठवडा ४. चौथ्या आठवड्यानंतर पुढील सोमवारपासून पुन्हा आठवडा १ आणि हे चक्र महिनाअखेरीपर्यंत सुरू राहते. <b>पाककृती चक्र:</b> आठवडा १ व ३ = सप्ताह अ; आठवडा २ व ४ = सप्ताह ब. रविवारची सुट्टी कायम.</p><div class="table-wrap"><table><thead><tr><th>क्र.</th><th>पाककृती</th><th>सप्ताह अ</th><th>सप्ताह ब</th></tr></thead><tbody id="recipeRows"></tbody></table></div><h3>प्रति विद्यार्थी साहित्य</h3>
 <div class="actions recipe-edit-actions">
  <button type="button" class="btn blue" id="toggleRecipeEdit">✏️ प्रमाण बदला</button>
  <button type="button" class="btn green" id="saveRecipeAmounts" style="display:none">💾 प्रमाण जतन करा</button>
@@ -310,16 +310,17 @@ function menuWeekNumber(date){
  const d=new Date(date+"T12:00:00");
  const year=d.getFullYear(), month=d.getMonth(), day=d.getDate();
  const first=new Date(year,month,1,12,0,0);
- // कस्टम MDM नियम: महिन्याची 1 तारीख पहिल्या आठवड्यात.
- // 1 तारीख रविवार असल्यास पुढील सोमवार-रविवारही पहिलाच आठवडा.
+ // महिन्याची 1 तारीख नेहमी आठवडा 1 मध्येच राहते.
+ // पहिला सोमवार हा 1 तारखेलाच असल्यास पुढील सोमवारपासून आठवडा 2 सुरू होतो.
+ // महिना रविवारपासून सुरू झाल्यास 1 तारीख + पुढील सोमवार-रविवार = आठवडा 1.
  const firstDayIsSunday=first.getDay()===0;
  const firstMondayOffset=(8-first.getDay())%7 || 7;
  const firstMondayDay=1+firstMondayOffset;
  if(firstDayIsSunday && day<=8)return 1;
  if(day<firstMondayDay)return 1;
  const mondayBlock=Math.floor((day-firstMondayDay)/7);
- // रविवारपासून सुरू होणाऱ्या महिन्यात पहिला सोमवारही आठवडा 1;
- // अन्य महिन्यांत पहिला सोमवार आठवडा 2. प्रत्येक 4 आठवड्यांनी पुनरावृत्ती.
+ // पहिल्या सोमवारी सुरू होणारा पुढील कालखंड आठवडा 2 (रविवार-प्रारंभ महिन्यातही).
+ // आठवडा 2, 3, 4 नंतर पुन्हा आठवडा 1; ही चक्राकार गणना महिन्यापुरती.
  return ((mondayBlock+(firstDayIsSunday?0:1))%4)+1;
 }
 function schedule(date){
@@ -327,8 +328,9 @@ function schedule(date){
  const day=new Date(date+"T12:00:00").getDay();
  if(day===0)return "";
  const weekNo=menuWeekNumber(date);
- // Weeks 1, 3 and 5 use A; weeks 2 and 4 use B.
- const week=(weekNo===1||weekNo===3||weekNo>=5)?"A":"B";
+ // कस्टम आठवडा 1 व 3 = सप्ताह अ; आठवडा 2 व 4 = सप्ताह ब.
+ // आठवडा 4 नंतर पुन्हा आठवडा 1 असल्याने 5वा/6वा आठवडा क्रमांक नसतो.
+ const week=(weekNo===1||weekNo===3)?"A":"B";
  return recipes.find(r=>r.day===day&&r.week===week)?.id||"";
 }
 function tabs(){document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>goToPanel(b.dataset.panel)))}
