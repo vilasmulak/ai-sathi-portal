@@ -136,8 +136,17 @@ footer{padding:22px}
 .recipe-edit-actions{display:flex;align-items:center;flex-wrap:wrap;background:#f5f8fc;padding:10px;border-radius:13px;border:1px solid #e2eaf3;margin:10px 0 16px}
 .recipe-edit-actions .status{font-size:12px;margin-left:auto}
 .recipe-amount{padding:7px 9px!important}
+
+/* सुरक्षा: Firebase login + Cloud डेटा यशस्वी होईपर्यंत अॅप लपवा */
+body:not(.auth-ok) .app-shell{display:none!important}
+#authGuard{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#eef6ff,#f4fbf7)}
+#authGuard .guard-card{max-width:460px;width:100%;padding:30px;border:1px solid #dce8f3;border-radius:20px;background:#fff;box-shadow:0 14px 40px #183b5b12;text-align:center}
+#authGuard .guard-icon{font-size:42px;margin-bottom:12px}
+#authGuard h2{margin:0 0 10px;color:#173a59}
+#authGuard p{color:#64748b;line-height:1.7;margin:0}
 </style></head>
 <body>
+<div id="authGuard"><div class="guard-card"><div class="guard-icon">🔐</div><h2>सुरक्षित प्रवेश</h2><p id="authGuardMessage">लॉगिन तपासले जात आहे. कृपया प्रतीक्षा करा…</p></div></div>
 <div class="app-shell">
 <aside class="sidebar">
  <div class="brand"><div class="brand-mark">🍲</div><div><h2>PM POSHAN</h2><p>शालेय पोषण आहार व्यवस्थापन</p></div></div>
@@ -775,6 +784,7 @@ auth.onAuthStateChanged(user=>{
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 .then(() => auth.onAuthStateChanged(async user=>{
  if(!user){
+   document.getElementById("authGuardMessage").textContent="लॉगिन आवश्यक आहे. Login पेजवर पाठवत आहोत…";
    st("cloudStatus","AI साथी लॉगिनकडे पाठवत आहे…");
    window.location.replace("login.html?next=pm-poshan.html");
    return;
@@ -793,6 +803,8 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
      st("cloudStatus","☁ नवीन शाळेचा Cloud डेटा तयार होत आहे…");
    }
    cloudReady=true;
+   document.body.classList.add('auth-ok');
+   document.getElementById('authGuard').style.display='none';
    try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}
    initializeUi();
    if(!snap.exists){
@@ -804,9 +816,15 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
    cloudReady=false;
    st("cloudStatus","⚠ Cloud जोडणी अयशस्वी");
    alert("PM POSHAN चा Cloud डेटा लोड झाला नाही. इंटरनेट, Firebase login आणि Firestore Rules तपासा. Cloud मधील जुना डेटा हटवलेला नाही.");
-   // Cloud failure झाल्यास फक्त या ब्राउझरचा उपलब्ध डेटा दाखवा.
-   db=loadLocal();
-   initializeUi();
+   // सुरक्षा: Cloud/Auth पडताळणी अयशस्वी झाल्यास स्थानिक डेटा किंवा अॅप उघडू नका.
+   document.body.classList.remove("auth-ok");
+   document.getElementById("authGuard").style.display="grid";
+   document.getElementById("authGuardMessage").textContent="सुरक्षित Cloud पडताळणी पूर्ण झाली नाही. अॅप उघडलेले नाही. इंटरनेट/Firebase Rules तपासा आणि पुन्हा प्रयत्न करा.";
+   const retry=document.createElement("button");
+   retry.type="button"; retry.className="btn blue"; retry.style.marginTop="18px";
+   retry.textContent="पुन्हा प्रयत्न करा";
+   retry.onclick=()=>window.location.reload();
+   document.querySelector("#authGuard .guard-card").appendChild(retry);
  }
 }))
 .catch(err=>{
